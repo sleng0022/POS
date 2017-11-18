@@ -21,7 +21,7 @@ Here is some steps for using git:
 In case after you pull the latest work, you might have to switch to other branch and pull again
 
 Switch branch <br />
-`git checkout branch_name`
+`git checkout branch_name` <br />
 Pull <br />
 `git pull`
 
