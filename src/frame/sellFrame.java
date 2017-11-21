@@ -7,9 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import common.DoublyLinkList;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.datatransfer.StringSelection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JTextField;
@@ -24,9 +28,15 @@ public class sellFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private boolean isEnterButtonPress;
+	private double numberAfterEnter;
+	private double cashAmount;
+	private boolean isPaymentButtonPress;
 	
 	Object[] columns  = {"Qty", "Description", "Price"};
 	DefaultTableModel model = new DefaultTableModel ();
+	DoublyLinkList<String> item = new DoublyLinkList<String>();
+	DoublyLinkList<String> amount = new DoublyLinkList<String>(); 
 	/**
 	 * Launch the application.
 	 */
@@ -160,6 +170,14 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnAvocado);
 		
 		JButton btnPayment = new JButton("Payment");
+		isPaymentButtonPress = false;
+		btnPayment.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				isPaymentButtonPress = true;
+			}
+		});
 		btnPayment.setBounds(264, 566, 117, 113);
 		contentPane.add(btnPayment);
 		
@@ -168,50 +186,121 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnVoid);
 		
 		JButton btnQty = new JButton("QTY");
+		btnQty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(isEnterButtonPress)
+				{
+					
+				}
+			}
+		});
 		btnQty.setBounds(6, 566, 117, 113);
 		contentPane.add(btnQty);
 		
 		JButton btn7num = new JButton("7");
+		btn7num.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("7");
+			}
+		});
 		btn7num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn7num.setBounds(6, 213, 105, 66);
 		contentPane.add(btn7num);
 		
 		JButton btn8num = new JButton("8");
+		btn8num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("8");
+			}
+		});
 		btn8num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn8num.setBounds(116, 213, 105, 66);
 		contentPane.add(btn8num);
 		
 		JButton btn9num = new JButton("9");
+		btn9num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("9");
+			}
+		});
 		btn9num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn9num.setBounds(226, 213, 105, 66);
 		contentPane.add(btn9num);
 		
 		JButton btn4num = new JButton("4");
+		btn4num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("4");
+			}
+		});
 		btn4num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn4num.setBounds(6, 278, 105, 66);
 		contentPane.add(btn4num);
 		
 		JButton btn5num = new JButton("5");
+		btn5num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("5");
+			}
+		});
 		btn5num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn5num.setBounds(116, 278, 105, 66);
 		contentPane.add(btn5num);
 		
 		JButton btn6num = new JButton("6");
+		btn6num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("6");
+			}
+		});
 		btn6num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn6num.setBounds(226, 278, 105, 66);
 		contentPane.add(btn6num);
 		
 		JButton btn1num = new JButton("1");
+		btn1num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("1");
+			}
+		});
 		btn1num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn1num.setBounds(6, 344, 105, 66);
 		contentPane.add(btn1num);
 		
 		JButton btn2num = new JButton("2");
+		btn2num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				amount.insertLast("2");
+			}
+		});
 		btn2num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn2num.setBounds(116, 344, 105, 66);
 		contentPane.add(btn2num);
 		
 		JButton btn3num = new JButton("3");
+		btn3num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("3");
+			}
+		});
 		btn3num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn3num.setBounds(226, 344, 105, 66);
 		contentPane.add(btn3num);
@@ -223,6 +312,13 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnUp);
 		
 		JButton btn0num = new JButton("0");
+		btn0num.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast("0");
+			}
+		});
 		btn0num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn0num.setBounds(116, 415, 105, 66);
 		contentPane.add(btn0num);
@@ -234,12 +330,40 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnDown);
 		
 		JButton btnDot = new JButton(".");
+		btnDot.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				amount.insertLast(".");
+			}
+		});
 		btnDot.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnDot.setBounds(226, 415, 105, 66);
 		contentPane.add(btnDot);
 		
+		JLabel lblcashAmount = new JLabel("0.00");
+		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblcashAmount.setBounds(625, 508, 71, 36);
+		contentPane.add(lblcashAmount);
+		
 		JButton btnEnter = new JButton("Enter");
+		isEnterButtonPress = false;
+		numberAfterEnter = 0.0;
+		btnEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				isEnterButtonPress = true;
+				numberAfterEnter = Double.parseDouble((amount.PrintiteratorForward()));
+				if(isPaymentButtonPress)
+				{
+					cashAmount = numberAfterEnter;
+					lblcashAmount.setText(Double.toString(cashAmount));
+				}
+			}
+		});
 		btnEnter.setBounds(135, 490, 189, 75);
 		contentPane.add(btnEnter);
+		
+		
 	}
 }
