@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import common.DoublyLinkList;
+import common.EmptyExceptions;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -343,7 +344,7 @@ public class sellFrame extends JFrame {
 		
 		JLabel lblcashAmount = new JLabel("0.00");
 		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblcashAmount.setBounds(625, 508, 71, 36);
+		lblcashAmount.setBounds(625, 508, 84, 36);
 		contentPane.add(lblcashAmount);
 		
 		JButton btnEnter = new JButton("Enter");
@@ -352,12 +353,19 @@ public class sellFrame extends JFrame {
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				isEnterButtonPress = true;
-				numberAfterEnter = Double.parseDouble((amount.PrintiteratorForward()));
-				if(isPaymentButtonPress)
+				try
 				{
-					cashAmount = numberAfterEnter;
-					lblcashAmount.setText(Double.toString(cashAmount));
+					isEnterButtonPress = true;
+					numberAfterEnter = Double.parseDouble((amount.PrintiteratorForward()));
+					if(isPaymentButtonPress)
+					{
+						cashAmount = numberAfterEnter;
+						amount.removeAllFirst();
+						lblcashAmount.setText("$" +Double.toString(cashAmount));
+					}
+				}catch (EmptyExceptions error)
+				{
+					
 				}
 			}
 		});

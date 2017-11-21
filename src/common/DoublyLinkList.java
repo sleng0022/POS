@@ -146,6 +146,23 @@ public class DoublyLinkList<T>
 		return result;
 	}
 	
+	public void removeAllFirst() throws EmptyExceptions
+	{
+		while(size != 1)
+		{
+			this.removeFirst();
+		}
+	}
+	
+	public void removeAllLast() throws EmptyExceptions
+	{
+		while(size != 1)
+		{
+			this.removeLast();
+		}
+	}
+	
+	
 	public T getHead()
 	{
 		Node<T> tmp_head = head;
