@@ -122,6 +122,47 @@ public class DoublyLinkList<T>
 		return result;
 	}
 	
+	public String PrintiteratorForward()
+	{
+		Node<T> tmp_node = head;
+		String result = "";
+		while(tmp_node != null)
+		{
+			result += tmp_node.getElement() + "";
+			tmp_node = tmp_node.getNext();
+		}
+		return result;
+	}
+	
+	public String PrintiteratorBackward()
+	{
+		Node<T> tmp_node = tail;
+		String result = "";
+		while(tmp_node != null)
+		{
+			result += tmp_node.getElement() + "";
+			tmp_node = tmp_node.getPrevious();
+		}
+		return result;
+	}
+	
+	public void removeAllFirst() throws EmptyExceptions
+	{
+		while(size != 1)
+		{
+			this.removeFirst();
+		}
+	}
+	
+	public void removeAllLast() throws EmptyExceptions
+	{
+		while(size != 1)
+		{
+			this.removeLast();
+		}
+	}
+	
+	
 	public T getHead()
 	{
 		Node<T> tmp_head = head;
