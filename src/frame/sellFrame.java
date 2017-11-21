@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
@@ -16,11 +17,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class sellFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	private JTable table;
+	
+	Object[] columns  = {"Qty", "Description", "Price"};
+	DefaultTableModel model = new DefaultTableModel ();
 	/**
 	 * Launch the application.
 	 */
@@ -53,6 +59,16 @@ public class sellFrame extends JFrame {
 		panel.setBounds(345, 48, 412, 375);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 412, 375);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setColumnHeaderView(table);
+		scrollPane.setViewportView(table);
+		model.setColumnIdentifiers(columns);
+		table.setModel(model);
 		
 		JLabel lblNewLabel = new JLabel("Total:");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
@@ -101,6 +117,13 @@ public class sellFrame extends JFrame {
 		contentPane.add(lblEmployeeID);
 		
 		JButton btnNewButton = new JButton("Banana");
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				model.addRow(new Object[] {"1", "banana@1.0", "2.0"});
+			}
+		});
 		btnNewButton.setBounds(6, 53, 98, 38);
 		contentPane.add(btnNewButton);
 		
