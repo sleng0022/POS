@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import common.DoublyLinkList;
 import common.EmptyExceptions;
+import common.itemList;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -17,9 +18,14 @@ import java.awt.Font;
 import java.awt.datatransfer.StringSelection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Scanner;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
@@ -36,17 +42,20 @@ public class sellFrame extends JFrame {
 	
 	Object[] columns  = {"Qty", "Description", "Price"};
 	DefaultTableModel model = new DefaultTableModel ();
-	DoublyLinkList<String> item = new DoublyLinkList<String>();
 	DoublyLinkList<String> amount = new DoublyLinkList<String>(); 
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					sellFrame frame = new sellFrame();
-					frame.setVisible(true);
+				try 
+				{
+					itemList item = new itemList();
+					
+//					sellFrame frame = new sellFrame();
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -98,7 +107,7 @@ public class sellFrame extends JFrame {
 		
 		JLabel lblNewLabel_3 = new JLabel("Change:");
 		lblNewLabel_3.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_3.setBounds(552, 544, 71, 28);
+		lblNewLabel_3.setBounds(552, 549, 71, 28);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel(" Employee ID:");
@@ -371,6 +380,21 @@ public class sellFrame extends JFrame {
 		});
 		btnEnter.setBounds(135, 490, 189, 75);
 		contentPane.add(btnEnter);
+		
+		JLabel lblTotal = new JLabel("0.00");
+		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblTotal.setBounds(625, 468, 84, 36);
+		contentPane.add(lblTotal);
+		
+		JLabel lblTax = new JLabel("0.00");
+		lblTax.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblTax.setBounds(625, 425, 84, 36);
+		contentPane.add(lblTax);
+		
+		JLabel lblChange = new JLabel("0.00");
+		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblChange.setBounds(649, 544, 84, 36);
+		contentPane.add(lblChange);
 		
 		
 	}
