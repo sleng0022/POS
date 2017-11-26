@@ -1,0 +1,15 @@
+package DataAccess;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
+import javax.swing.JSlider;
+
+public class Gson {
+
+	public List<User> fromJson(JSlider reader, Type rEVIEW_TYPE) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

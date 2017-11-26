@@ -1,0 +1,234 @@
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.util.*;
+import com.google.gson.*;
+import DataAccess.*;
+
+
+public class Driver {
+
+	public static void main(String[] args) throws JsonIOException, IOException {
+		Helper.sleep(2000);
+
+		boolean keepRunning = true;
+		while (keepRunning) {
+			keepRunning = printFirstTierMenu();
+		}
+
+		System.out.println("Good bye!");
+	}
+
+	public static boolean printFirstTierMenu() {
+		//clearConsole();
+
+		System.out.println("\t\t\t\tWelcome to the Sale system\n\n");
+
+		System.out.println("1 - Cashier Log in");
+		System.out.println("2 - Supervisor Log in");
+		System.out.println("3 - Exit");
+		System.out.print("\nPlease make a selection and hit enter: \n");
+
+		Scanner scanner = new Scanner(System.in);
+		int selection;
+		try {
+			selection = scanner.nextInt();
+		} catch (Exception e) {
+			return true;
+		}
+		switch (selection) {
+		case 1:
+			User user = Helper.logIn();
+			if (user == null) {
+				return true;
+			}
+
+			// call another method to select register
+			Register register = Helper.logRegister();
+			if (register == null) {
+				return true;
+			}
+
+			// create the UserRegister object
+			UserRegister userRegister = new UserRegister();
+			String guid = UUID.randomUUID().toString();
+
+			userRegister.setUserRegisterId(guid);
+			userRegister.setUserId(user.getUserId());
+			userRegister.setRegisterId(register.getRegisterId());
+			userRegister.setLogonTime(LocalDateTime.now());
+
+			DataHelper.saveUserRegister(userRegister);
+
+			// display the sale, return and write off menu.
+			boolean displaySaleReturnWriteOff = true;
+			while (displaySaleReturnWriteOff) {
+				displaySaleReturnWriteOff = printSaleReturnWriteOffMenu(user, userRegister);
+			}
+			if (displaySaleReturnWriteOff == false) {
+				return true;
+			}
+
+			break;
+		case 2:
+			User supervisorUser = Helper.supervisorLogIn();
+			if (supervisorUser == null) {
+				return true;
+			}
+			;
+			boolean displaySupervisorMenu = true;
+			while (displaySupervisorMenu) {
+				displaySupervisorMenu = printSupervisorMenu(supervisorUser);
+			}
+			if (displaySupervisorMenu == false) {
+				return true;
+			}
+
+			break;
+		case 3:
+			return false;
+		default:
+			break;
+		}
+		return true;
+	}
+
+	public static boolean printSaleReturnWriteOffMenu(User user, UserRegister userRegister) {
+		//clearConsole();
+
+		System.out.println("\n\n1 - Make a sale");
+		System.out.println("2 - Return an item");
+		System.out.println("3 - Log off");
+		System.out.print("\nPlease make a selection and hit enter: ");
+
+		Scanner scanner = new Scanner(System.in);
+		int selection;
+		try {
+			selection = scanner.nextInt();
+		} catch (Exception e) {
+			return true;
+		}
+
+		switch (selection) {
+		case 1:
+			return makeSale(user, userRegister);
+		case 2:
+			showFunctionalityNotAvailable();
+		case 3:
+			// logoff
+			userRegister.setLogoffTime(LocalDateTime.now());
+			DataHelper.saveUserRegister(userRegister);
+			return false;
+		}
+
+		return true;
+	}
+
+	private static boolean makeSale(User user, UserRegister userRegister) {
+		List<Item> items = DataHelper.getItems();
+		// Create the sale object
+		Sale sale = new Sale();
+		String guid = UUID.randomUUID().toString();
+		sale.setSaleId(guid);
+		sale.setUserRegisterId(userRegister.getUserRegisterId());
+		sale.setSaleDateTime(LocalDateTime.now());
+		DataHelper.saveSale(sale);
+
+		List<ItemSale> itemSales = new ArrayList<ItemSale>();
+
+		System.out.println("Enter -1 to finish sale");
+		System.out.println("Enter -2 to cancel entire sale");
+		while (true) {
+			Scanner scanner = new Scanner(System.in);
+			try {
+				System.out.print("\nEnter item number: ");
+				int itemId = scanner.nextInt();
+				if (itemId == -1) {
+					sale.setSaleStatus("Completed");
+					DataHelper.saveSale(sale);
+
+					// adjust qty on hand
+					for (int i = 0; i < itemSales.size(); i++) {
+						for (int j = 0; j < items.size(); j++) {
+							if (itemSales.get(i).getItemId() == items.get(j).getItemId()) {
+								Item itemToUpdate = items.get(j);
+								itemToUpdate.setQuantityOnHand(itemToUpdate.getQuantityOnHand()-1);
+								DataHelper.saveItem(itemToUpdate);
+							}
+						}
+					}
+
+					break;
+				}
+
+				if (itemId == -2) {
+					sale.setSaleStatus("Cancelled");
+					DataHelper.saveSale(sale);
+					break;
+				}
+
+				for (int i = 0; i < items.size(); i++) {
+					if (itemId == items.get(i).getItemId()) {
+						ItemSale itemSale = new ItemSale();
+						String itemSaleGuid = UUID.randomUUID().toString();
+						itemSale.setItemSaleId(itemSaleGuid);
+						itemSale.setSaleId(sale.getSaleId());
+						itemSale.setItemId(itemId);
+						DataHelper.saveItemSale(itemSale);
+						itemSales.add(itemSale);
+						break;
+					}
+
+					if (i == items.size() - 1) {
+						System.out.println("Invalid item number");
+					}
+				}
+
+			} catch (Exception e) {
+			}
+		}
+
+		return true;
+	}
+	
+    /** Super visor menu **/
+	private static boolean printSupervisorMenu(User user) {
+		//clearConsole();
+		System.out.println("1  - Add a new item");
+		System.out.println("2  - Set item order threshold");
+		System.out.println("3  - Order an item");
+		System.out.println("4  - Log off");
+		System.out.print("\nPlease make a selection and hit enter: \n");
+
+		Scanner scanner = new Scanner(System.in);
+		int selection;
+		try {
+			selection = scanner.nextInt();
+		} catch (Exception e) {
+			return true;
+		}
+
+		switch (selection) {
+		case 1:
+			return Helper.addItem();
+		case 2:
+			return Helper.orderItem();
+		case 3:
+			// logoff
+			return false;
+		}
+
+		return true;
+	}
+
+	private static void clearConsole() {
+		for (int i = 0; i < 500; i++) {
+			System.out.println();
+		}
+	}
+	
+	private static void showFunctionalityNotAvailable() {
+		System.out.println("Functionality not available currently");
+		Helper.sleep(2000);
+	}
+}

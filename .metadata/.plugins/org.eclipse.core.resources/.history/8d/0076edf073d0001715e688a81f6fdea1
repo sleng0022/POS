@@ -1,0 +1,278 @@
+
+import static org.junit.Assert.*;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import DataAccess.*;
+import junit.framework.Assert;
+
+public class DataHelperTest {
+
+	@Before
+	public void init() {
+		DataHelper.fileDirectory = "DataFilesTest";
+	}
+
+	@Test
+	public void getEmployeesTest() {
+		List<Employee> employees = DataHelper.getEmployees();
+		Employee employee = employees.get(0);
+		assertEquals("John", employee.getFirstName());
+	}
+
+	@Test
+	public void saveEmployeeTest() {
+
+		Employee yasir = new Employee();
+		yasir.setEmployeeId(3);
+		yasir.setFirstName("Yasir");
+		yasir.setLastName("Alanazi");
+		yasir.setEmailAddress("Yasir@test.com");
+		yasir.setPhoneNumber("612443779");
+		yasir.setStreetAddress("2353 Youngman");
+		yasir.setCity("st.paul");
+		yasir.setZipCode("55116");
+
+		DataHelper.saveEmployee(yasir);
+
+		List<Employee> employees = DataHelper.getEmployees();
+		Employee employee = employees.get(2);
+
+		assertEquals("bader", employee.getFirstName());
+
+	}
+
+	@Test
+	public void getUsersTest() {
+
+		List<User> users = DataHelper.getUsers();
+		User user = users.get(1);
+		assertEquals("augustine", user.getUserName());
+
+	}
+
+	@Test
+	public void saveUserTest() {
+		User user = new User();
+
+		user.setUserId(5);
+		user.setUserName("bader");
+		user.setPassword("test1234");
+		user.setRole("Cashier");
+		user.setEmployeeId(3);
+
+		DataHelper.saveUser(user);
+
+		List<User> users = DataHelper.getUsers();
+		User newuser = users.get(3);
+
+		assertEquals("bader", newuser.getUserName());
+
+	}
+
+	@Test
+	public void getRegistersTest() {
+
+		List<Register> registers = DataHelper.getRegisters();
+		Register register = registers.get(0);
+		assertEquals("POS1", register.getRegisterName());
+
+	}
+
+	@Test
+	public void saveRegisterTest() {
+
+		Register register = new Register();
+		register.setRegisterId(104);
+		register.setRegisterName("POS4");
+
+		DataHelper.saveRegister(register);
+
+		List<Register> registers = DataHelper.getRegisters();
+		Register newregister = registers.get(3);
+		assertEquals("POS4", newregister.getRegisterName());
+
+	}
+
+	@Test
+	public void getUserRegistersTest() {
+
+		List<UserRegister> userRegisters = DataHelper.getUserRegisters();
+		UserRegister userRegister = userRegisters.get(0);
+		assertEquals("303030", userRegister.getUserRegisterId());
+
+	}
+
+	@Test
+	public void saveUserRegisterTest() {
+
+		UserRegister userRegister = new UserRegister();
+
+		userRegister.setUserRegisterId("404040");
+		userRegister.setUserId(1);
+		userRegister.setRegisterId(103);
+		userRegister.setLogonTime(LocalDateTime.now());
+		userRegister.setLogoffTime(LocalDateTime.now());
+
+		DataHelper.saveUserRegister(userRegister);
+
+		List<UserRegister> userRegisters = DataHelper.getUserRegisters();
+		UserRegister newuserRegister = userRegisters.get(4);
+		assertEquals("404040", userRegister.getUserRegisterId());
+
+	}
+
+	@Test
+	public void getSalesTest() {
+
+		List<Sale> sales = DataHelper.getSales();
+		Sale sale = sales.get(0);
+		assertEquals("9990001", sale.getSaleId());
+
+	}
+
+	@Test
+	public void saveSaleTest() {
+
+		Sale sale = new Sale();
+
+		sale.setSaleId("9990002");
+		sale.setSaleStatus("completed");
+		sale.setUserRegisterId("404040");
+		sale.setSaleDateTime(LocalDateTime.now());
+
+		DataHelper.saveSale(sale);
+
+		List<Sale> sales = DataHelper.getSales();
+		Sale newsale = sales.get(1);
+		assertEquals("9990002", newsale.getSaleId());
+
+	}
+
+	@Test
+	public void getItemSalesTest() {
+
+		List<ItemSale> itemSales = DataHelper.getItemSales();
+		ItemSale itemSale = itemSales.get(0);
+		assertEquals("9990002", itemSale.getSaleId());
+	}
+
+	@Test
+	public void saveItemSaleTest() {
+
+		ItemSale itemSale = new ItemSale();
+
+		itemSale.setItemSaleId("9990002-1");
+		itemSale.setItemId(2);
+		itemSale.setSaleId("9990002");
+
+		DataHelper.saveItemSale(itemSale);
+
+		List<ItemSale> itemSales = DataHelper.getItemSales();
+		ItemSale newitemSale = itemSales.get(0);
+		assertEquals("9990002-1", itemSale.getItemSaleId());
+	}
+
+	@Test
+	public void getItemsTest() {
+
+		List<Item> items = DataHelper.getItems();
+		Item item = items.get(0);
+		assertEquals("Milk", item.getItemName());
+
+	}
+
+	@Test
+	public void saveItemTest() {
+
+		Item item = new Item();
+
+		item.setItemId(8);
+		item.setItemName("beef");
+		item.setItemDescription("Ground beef");
+		item.setPrice((float) 4.33);
+		item.setQuantityOnHand(7);
+		item.setOrderThreshold(20);
+
+		DataHelper.saveItem(item);
+
+		List<Item> items = DataHelper.getItems();
+		Item newitem = items.get(7);
+		assertEquals("beef", newitem.getItemName());
+
+	}
+
+	@Test
+	public void getInventoryOrdersTest() {
+
+		List<InventoryOrder> InventoryOrders = DataHelper.getInventoryOrders();
+		InventoryOrder inventoryOrder = InventoryOrders.get(0);
+		assertEquals("101", inventoryOrder.getInventoryOrderId());
+	}
+
+	@Test
+	public void getEmployeeByIdTest() {
+
+		List<Employee> employees = DataHelper.getEmployees();
+		Employee employee = employees.get(0);
+		DataHelper.getEmployeeById(1).getFirstName();
+		assertEquals("John", employee.getFirstName());
+
+	}
+
+	@Test
+	public void getUserByIdTest() {
+
+		List<User> users = DataHelper.getUsers();
+		User user = users.get(1);
+		DataHelper.getUserById(2).getUserName();
+		assertEquals("augustine", user.getUserName());
+
+	}
+
+	@Test
+	public void getSaleByIdTest() {
+
+		List<Sale> sales = DataHelper.getSales();
+		Sale sale = sales.get(0);
+		DataHelper.getSaleById("9990001");
+		assertEquals("9990001", sale.getSaleId());
+
+	}
+
+	@Test
+	public void getItemSaleByIdTest() {
+
+		List<ItemSale> itemSales = DataHelper.getItemSales();
+		ItemSale itemSale = itemSales.get(0);
+		DataHelper.getItemSaleById("9990002-1");
+		assertEquals("9990002-1", itemSale.getItemSaleId());
+
+	}
+
+	@Test
+	public void getItemSalesBySaleIdTest() {
+
+		List<ItemSale> itemSales = DataHelper.getItemSales();
+		ItemSale itemSale = itemSales.get(0);
+		DataHelper.getItemSalesBySaleId("9990002");
+		assertEquals("9990002", itemSale.getSaleId());
+
+	}
+
+	@Test
+	public void getItemByIdTest() {
+
+		List<Item> items = DataHelper.getItems();
+		Item item = items.get(0);
+		DataHelper.getItemById(1).getItemName();
+		assertEquals("Milk", item.getItemName());
+
+	}
+
+}

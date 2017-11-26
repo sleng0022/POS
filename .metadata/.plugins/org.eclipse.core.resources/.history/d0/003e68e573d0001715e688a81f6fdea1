@@ -1,0 +1,14 @@
+package DataAccess;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class DataHelperTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

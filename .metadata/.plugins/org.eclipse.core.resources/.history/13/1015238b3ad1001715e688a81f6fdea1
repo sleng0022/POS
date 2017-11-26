@@ -1,0 +1,579 @@
+package DataAccess;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.BoundedRangeModel;
+import javax.swing.JSlider;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+public class DataHelper {
+
+	public static String fileDirectory = "DataFiles";
+
+	public static List<Employee> getEmployees() {
+
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<Employee>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader;
+			reader = new JsonReader(new FileReader("./" + fileDirectory + "/Employee.json"));
+
+			List<Employee> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveEmployee(Employee employee) {
+
+		try {
+			List<Employee> employees = getEmployees();
+			boolean newEmployee = true;
+			for (int i = 0; i < employees.size(); i++) {
+				if (employees.get(i).getEmployeeId() == employee.getEmployeeId()) {
+					employees.set(i, employee);
+					newEmployee = false;
+					break;
+				}
+			}
+
+			if (newEmployee) {
+				employees.add(employee);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/Employee.json");
+
+			Gson gson = new GsonBuilder().create();
+			gson.toJson(employees, writer);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<User> getUsers() {
+
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<User>>() {
+
+				public Type getType() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			}.getType();
+			Gson gson = new Gson();
+
+			JSlider reader;
+			reader = new JSlider((BoundedRangeModel) new FileReader("./" + fileDirectory + "/User.json"));
+
+			List<User> data = gson.fromJson(reader, REVIEW_TYPE);
+			Object clone = reader.clone();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveUser(User user) {
+
+		try {
+			List<User> users = getUsers();
+			boolean newUser = true;
+			for (int i = 0; i < users.size(); i++) {
+				if (users.get(i).getUserId() == user.getUserId()) {
+					users.set(i, user);
+					newUser = false;
+					break;
+				}
+			}
+
+			if (newUser) {
+				users.add(user);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/User.json");
+
+			Gson gson = new GsonBuilder().create();
+			gson.toJson(users, writer);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<Register> getRegisters() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<Register>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/Register.json"));
+
+			List<Register> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public static void saveRegister(Register register) {
+		try {
+			List<Register> registers = getRegisters();
+
+			boolean newRegister = true;
+			for (int i = 0; i < registers.size(); i++) {
+				if (registers.get(i).getRegisterId() == register.getRegisterId()) {
+					registers.set(i, register);
+					newRegister = false;
+					break;
+				}
+			}
+
+			if (newRegister) {
+				registers.add(register);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/Register.json");
+
+			Gson gson = new GsonBuilder().create();
+			gson.toJson(registers, writer);
+
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<UserRegister> getUserRegisters() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<UserRegister>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/UserRegister.json"));
+
+			List<UserRegister> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveUserRegister(UserRegister userRegister) {
+		try {
+			List<UserRegister> userRegisters = getUserRegisters();
+
+			boolean newRegister = true;
+
+			if (userRegisters != null) {
+				for (int i = 0; i < userRegisters.size(); i++) {
+					if (userRegisters.get(i).getUserRegisterId().equals(userRegister.getUserRegisterId())) {
+						userRegisters.set(i, userRegister);
+						newRegister = false;
+						break;
+					}
+				}
+			} else {
+				userRegisters = new ArrayList<UserRegister>();
+			}
+
+			if (newRegister) {
+				userRegisters.add(userRegister);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/UserRegister.json");
+			try {
+				Gson gson = new GsonBuilder().create();
+				gson.toJson(userRegisters, writer);
+			} finally {
+				writer.close();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<Sale> getSales() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<Sale>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/Sale.json"));
+
+			List<Sale> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveSale(Sale sale) {
+		try {
+			List<Sale> sales = getSales();
+
+			boolean newSale = true;
+
+			if (sales != null) {
+				for (int i = 0; i < sales.size(); i++) {
+					if (sales.get(i).getSaleId().equals(sale.getSaleId())) {
+						sales.set(i, sale);
+						newSale = false;
+						break;
+					}
+				}
+			} else {
+				sales = new ArrayList<Sale>();
+			}
+
+			if (newSale) {
+				sales.add(sale);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/Sale.json");
+			try {
+				Gson gson = new GsonBuilder().create();
+				gson.toJson(sales, writer);
+			} finally {
+				writer.close();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<ItemSale> getItemSales() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<ItemSale>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/ItemSale.json"));
+
+			List<ItemSale> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveItemSale(ItemSale itemSale) {
+		try {
+			List<ItemSale> itemSales = getItemSales();
+
+			boolean newItemSale = true;
+
+			if (itemSales != null) {
+				for (int i = 0; i < itemSales.size(); i++) {
+					if (itemSales.get(i).getItemSaleId().equals(itemSale.getItemSaleId())) {
+						itemSales.set(i, itemSale);
+						newItemSale = false;
+						break;
+					}
+				}
+			} else {
+				itemSales = new ArrayList<ItemSale>();
+			}
+
+			if (newItemSale) {
+				itemSales.add(itemSale);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/ItemSale.json");
+			try {
+				Gson gson = new GsonBuilder().create();
+				gson.toJson(itemSales, writer);
+			} finally {
+				writer.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<Item> getItems() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<Item>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/Item.json"));
+
+			List<Item> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveItem(Item item) {
+		try {
+			List<Item> items = getItems();
+
+			boolean newItem = true;
+
+			for (int i = 0; i < items.size(); i++) {
+
+				if (items.get(i).getItemId() == item.getItemId()) {
+
+					items.set(i, item);
+					newItem = false;
+					break;
+				}
+			}
+
+			if (newItem) {
+
+				items.add(item);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/Item.json");
+			try {
+				Gson gson = new GsonBuilder().create();
+				gson.toJson(items, writer);
+			} finally {
+				writer.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public static List<InventoryOrder> getInventoryOrders() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<InventoryOrder>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/InventoryOrder.json"));
+
+			List<InventoryOrder> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveInventoryOrder(InventoryOrder inventoryOrder) {
+		try {
+			List<InventoryOrder> inventoryOrders = getInventoryOrders();
+
+			boolean newInventoryOrder = true;
+
+			if (inventoryOrders != null) {
+				for (int i = 0; i < inventoryOrders.size(); i++) {
+					if (inventoryOrders.get(i).getInventoryOrderId().equals(inventoryOrder.getInventoryOrderId())) {
+						inventoryOrders.set(i, inventoryOrder);
+						newInventoryOrder = false;
+						break;
+					}
+				}
+			} else {
+				inventoryOrders = new ArrayList<InventoryOrder>();
+			}
+
+			if (newInventoryOrder) {
+				inventoryOrders.add(inventoryOrder);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/InventoryOrder.json");
+			try {
+				Gson gson = new GsonBuilder().create();
+				gson.toJson(inventoryOrders, writer);
+			} finally {
+				writer.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<Supplier> getSuppliers() {
+		try {
+			Type REVIEW_TYPE = new TypeToken<List<Supplier>>() {
+			}.getType();
+			Gson gson = new Gson();
+
+			JsonReader reader = new JsonReader(new FileReader("./" + fileDirectory + "/Supplier.json"));
+
+			List<Supplier> data = gson.fromJson(reader, REVIEW_TYPE);
+			reader.close();
+			return data;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void saveSupplier(Supplier supplier) {
+		try {
+			List<Supplier> suppliers = getSuppliers();
+
+			boolean newSupplier = true;
+			for (int i = 0; i < suppliers.size(); i++) {
+				if (suppliers.get(i).getSupplierId().equals(supplier.getSupplierId())) {
+					suppliers.set(i, supplier);
+					newSupplier = false;
+					break;
+				}
+			}
+
+			if (newSupplier) {
+				suppliers.add(supplier);
+			}
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/Supplier.json");
+			try {
+				Gson gson = new GsonBuilder().create();
+				gson.toJson(suppliers, writer);
+			} finally {
+				writer.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void deleteOldOrderRecords() {
+		List<InventoryOrder> inventoryOrders = DataHelper.getInventoryOrders();
+		Iterator<InventoryOrder> recordsToDelete = inventoryOrders.iterator();
+		LocalDateTime currentDateTime = LocalDateTime.now();
+
+		int counter = 0;
+		while (recordsToDelete.hasNext()) {
+			if (ChronoUnit.YEARS.between(recordsToDelete.next().getOrderSubmittedDateTime(), currentDateTime) >= 1) {
+				recordsToDelete.remove();
+				counter++;
+			}
+		}
+
+		try {
+
+			Writer writer = new FileWriter("./" + fileDirectory + "/InventoryOrder.json");
+			Gson gson = new GsonBuilder().create();
+			gson.toJson(inventoryOrders, writer);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Removed " + counter + " record(s) from Inventory orders");
+	}
+	
+	public static Employee getEmployeeById(int employeeId) {
+		List<Employee> employees = DataHelper.getEmployees();
+		for (int i = 0; i < employees.size(); i++) {
+			if (employees.get(i).getEmployeeId() == employeeId) {
+				return employees.get(i);
+			}
+		}
+		return null;
+	}
+
+	public static User getUserById(int userId) {
+		List<User> users = DataHelper.getUsers();
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUserId() == userId) {
+				return users.get(i);
+			}
+		}
+		return null;
+	}
+
+	public static Register getRegisterById(int registerId) {
+		List<Register> registers = DataHelper.getRegisters();
+		for (int i = 0; i < registers.size(); i++) {
+			if (registers.get(i).getRegisterId() == registerId) {
+				return registers.get(i);
+			}
+		}
+		return null;
+	}
+
+	public static UserRegister getUserRegisterById(String userRegisterId) {
+		List<UserRegister> userRegisters = DataHelper.getUserRegisters();
+		for (int i = 0; i < userRegisters.size(); i++) {
+			if (userRegisters.get(i).getUserRegisterId().equals(userRegisterId)) {
+				return userRegisters.get(i);
+			}
+		}
+		return null;
+	}
+
+	public static Sale getSaleById(String saleId) {
+		List<Sale> sales = DataHelper.getSales();
+		for (int i = 0; i < sales.size(); i++) {
+			if (sales.get(i).getSaleId().equals(saleId)) {
+				return sales.get(i);
+			}
+		}
+		return null;
+	}
+
+	public static ItemSale getItemSaleById(String itemSaleId) {
+		List<ItemSale> itemSales = DataHelper.getItemSales();
+		for (int i = 0; i < itemSales.size(); i++) {
+			if (itemSales.get(i).getItemSaleId().equals(itemSaleId)) {
+				return itemSales.get(i);
+			}
+		}
+		return null;
+	}
+
+	public static List<ItemSale> getItemSalesBySaleId(String saleId) {
+		List<ItemSale> itemSalesBySaleId = new ArrayList<ItemSale>();
+		List<ItemSale> itemSales = DataHelper.getItemSales();
+		for (int i = 0; i < itemSales.size(); i++) {
+			if (itemSales.get(i).getSaleId().equals(saleId)) {
+				itemSalesBySaleId.add(itemSales.get(i));
+			}
+		}
+		return itemSalesBySaleId;
+	}
+
+	public static Item getItemById(int itemId) {
+		List<Item> items = DataHelper.getItems();
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getItemId() == itemId) {
+				return items.get(i);
+			}
+		}
+		return null;
+	}
+}
