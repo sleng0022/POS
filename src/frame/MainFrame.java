@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 public class MainFrame {
 
 	private JFrame frame;
+	private JFrame frame1;
+
 
 	/**
 	 * Launch the application.
