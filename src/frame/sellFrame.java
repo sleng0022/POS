@@ -74,7 +74,7 @@ public class sellFrame extends JFrame {
 		lblNewLabel_3.setBounds(552, 544, 71, 28);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel(" Employee ID:");
+		JButton lblNewLabel_4 = new JButton(" Employee ID:");
 		lblNewLabel_4.setBounds(6, 6, 98, 16);
 		contentPane.add(lblNewLabel_4);
 		
