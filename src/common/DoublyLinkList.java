@@ -1,5 +1,7 @@
 package common;
 
+import com.sun.xml.internal.ws.developer.MemberSubmissionEndpointReference.Elements;
+
 public class DoublyLinkList<T>
 {
 	private Node<T> head;
@@ -94,7 +96,7 @@ public class DoublyLinkList<T>
 		while(tmp_node != null)
 		{
 			element = tmp_node.getElement();
-			if(element == item)
+			if(element.equals(item))
 			{
 				result = 1;
 				return result;
@@ -112,7 +114,7 @@ public class DoublyLinkList<T>
 		while(tmp_node != null)
 		{
 			element = tmp_node.getElement();
-			if(element == item)
+			if(element.equals(item))
 			{
 				result = 1;
 				return result;
@@ -174,5 +176,36 @@ public class DoublyLinkList<T>
 	{
 		T tmp_tail = tail.getElement();
 		return tmp_tail;
+	}
+	
+	public int getItemPosition(T item)
+	{
+		Node<T> temp = head;
+		T element = null;
+		for(int i = 0; i<size ; i++)
+		{
+			element = temp.getElement();
+			if( item.equals(element))
+			{
+				return i;
+			}
+			temp = temp.getNext();
+		}
+		return -1;
+	}
+	
+	public T getItem(int pos)
+	{
+		Node<T> temp = head;
+		
+		for(int i = 0; i<size ; i++)
+		{
+			if(i == pos)
+			{
+				return temp.getElement();
+			}
+			temp = temp.getNext();
+		}
+		return null;
 	}
 }

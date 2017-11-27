@@ -1,0 +1,259 @@
+
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import DataAccess.*;
+
+public class Helper {
+
+	/** Log in User with unlimited tries **/
+	public static User logIn() {
+
+		List<User> users = DataHelper.getUsers();
+
+		Scanner input = new Scanner(System.in);
+
+		boolean keepRunning = true;
+
+		while (keepRunning) {
+			System.out.println("Enter -1 to exit.\n");
+			System.out.print("Enter username : ");
+			String username = input.next();
+			if (username.equals("-1")) {
+				return null;
+			}
+			System.out.print("Enter password : ");
+			String password = input.next();
+
+			for (int i = 0; i < users.size(); i++) {
+
+				User user = users.get(i);
+				if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+
+					System.out.println("\n\nLogin Successful!\n\n");
+					return user;
+				}
+			}
+
+			System.out.println("Username or password entered is incorrect. Please try again");
+		}
+
+		return null;
+	}
+
+	/** Log in Super visor with unlimited tries **/
+	public static User supervisorLogIn() {
+
+		List<User> users = DataHelper.getUsers();
+
+		Scanner input = new Scanner(System.in);
+
+		boolean keepRunning = true;
+
+		while (keepRunning) {
+			System.out.println("Enter -1 to exit.\n");
+			System.out.print("Enter username : ");
+			String username = input.next();
+			if (username.equals("-1")) {
+				return null;
+			}
+			System.out.print("Enter password : ");
+			String password = input.next();
+
+			for (int i = 0; i < users.size(); i++) {
+				User user = users.get(i);
+
+				if (user.getUserName().equals(username) && user.getPassword().equals(password)
+						&& user.getRole().equals("Supervisor")) {
+					System.out.println("\nLogin Successful");
+					return user;
+				}
+			}
+
+			{
+				System.out.println("Username or password entered is incorrect. Please try again");
+			}
+		}
+		return null;
+	}
+
+	/** Add new items to the list **/
+	public static boolean addItem() {
+		Scanner input = new Scanner(System.in);
+
+		Item item = new Item();
+		try {
+			List<Item> items = DataHelper.getItems();
+
+			int newItemId = 0;
+			for (int i = 0; i < items.size(); i++) {
+				Item item1 = items.get(i);
+				newItemId = item1.getItemId() > newItemId ? item1.getItemId() : newItemId;
+			}
+
+			newItemId++;
+
+			System.out.print("Please enter item name: ");
+			String itemName = input.nextLine();
+			System.out.print("Please enter item description: ");
+			String itemDescription = input.nextLine();
+			System.out.print("Please enter item price: ");
+			float price = input.nextFloat();
+			System.out.print("Please enter item quantity on hand: ");
+			int quantityOnHand = input.nextInt();
+			System.out.print("Please enter item order threshold: ");
+			int orderThreshold = input.nextInt();
+
+			System.out.print("Do you want to save this item? (Y/N): ");
+			String saveItem = input.next().toUpperCase();
+			if (!saveItem.equals("Y")) {
+				return true;
+			}
+
+			item.setItemId(newItemId);
+			item.setItemName(itemName);
+			item.setItemDescription(itemDescription);
+			item.setPrice(price);
+			item.setQuantityOnHand(quantityOnHand);
+			item.setOrderThreshold(orderThreshold);
+
+			DataHelper.saveItem(item);
+		} catch (Exception e) {
+			System.out.println("Invalid input");
+			return true;
+		}
+
+		System.out.println("Item has been added successfully");
+
+		return true;
+	}
+
+	/** Asks user to enter register number and check if the number exists **/
+	public static Register logRegister() {
+
+		List<Register> registers = DataHelper.getRegisters();
+
+		Scanner input = new Scanner(System.in);
+
+		boolean keepRunning = true;
+
+		while (keepRunning) {
+
+			System.out.print("Enter a register number: ");
+
+			try {
+				int registerNumber = input.nextInt();
+				if (registerNumber == -1) {
+					break;
+				}
+
+				for (int i = 0; i < registers.size(); i++) {
+					if (registers.get(i).getRegisterId() == registerNumber) {
+						System.out.println("Register is set.");
+						return registers.get(i);
+					}
+
+					if (i == registers.size() - 1) {
+						System.out.println("\nRegister Id not found.\n");
+					}
+				}
+
+			} catch (Exception e) {
+				System.out.println("\nPlease enter a valid register number.\n");
+				input.nextLine();// need to swallow the EOF token
+			}
+		}
+
+		return null;
+	}
+
+
+	/** Get a unique Id for each user using random generator **/
+	private static int getUniqueUserId() {
+		List<User> users = DataHelper.getUsers();
+		List<Integer> userIds = new ArrayList<Integer>();
+		for (int i = 0; i < users.size(); i++) {
+			userIds.add(users.get(i).getUserId());
+		}
+
+		Random randomGenerator = new Random();
+		int randomNum = 0;
+		boolean findNumber = true;
+		while (findNumber) {
+			randomNum = randomGenerator.nextInt(10000);
+			for (int i = 0; i < userIds.size(); i++) {
+				if (userIds.get(i) == randomNum) {
+					break;
+				}
+				if (i == userIds.size() - 1) {
+					findNumber = false;
+				}
+			}
+
+		}
+		return randomNum;
+	}
+
+	/** Order new items **/
+	public static boolean orderItem() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter -1 to cancel.");
+		System.out.print("Please enter the item id to order: ");
+		int itemId = scanner.nextInt();
+
+		List<Item> items = DataHelper.getItems();
+		List<InventoryOrder> inventoryOrders = DataHelper.getInventoryOrders();
+
+		items = items == null ? new ArrayList<Item>() : items;
+
+		for (int i = 0; i < items.size(); i++) {
+
+			Item item = items.get(i);
+			if (item.getItemId() == itemId) {
+				boolean itemAlreadyOnOrder = false;
+				if (item.getQuantityOnHand() < item.getOrderThreshold()) { 
+					if (inventoryOrders != null) {
+						for (int j = 0; j < inventoryOrders.size(); j++) {
+							if (item.getItemId() == inventoryOrders.get(j).getItemId()
+									&& inventoryOrders.get(j).getOrderFulfilledDateTime() == null) {
+								itemAlreadyOnOrder = true;
+							}
+						}
+					}
+					if (itemAlreadyOnOrder) {
+						System.out.println("This item is already on order");
+					} else {
+						InventoryOrder newOrder = new InventoryOrder();
+						newOrder.setInventoryOrderId(UUID.randomUUID().toString());
+						newOrder.setItemId(item.getItemId());
+						newOrder.setSupplierId(1); // default supplier
+						newOrder.setOrderQuantity(item.getOrderThreshold());
+						newOrder.setOrderSubmittedDateTime(LocalDateTime.now());
+
+						DataHelper.saveInventoryOrder(newOrder);
+						System.out.println("The order has been placed.");
+					}
+				} else {
+					System.out.println("The quantity on hand for this item is " + item.getQuantityOnHand()
+							+ " which is at or above threshold of " + item.getOrderThreshold() + ".");
+				}
+			}
+		}
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("\n--Press ENTER to return.--");
+		sc.nextLine();
+		return true;
+	}
+
+	public static void sleep(int milliseconds) {
+		try {
+			Thread.sleep(milliseconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+}
