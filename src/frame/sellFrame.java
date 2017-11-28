@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
@@ -37,8 +38,11 @@ public class sellFrame extends JFrame {
 	private JTable table;
 	private boolean isEnterButtonPress;
 	private double numberAfterEnter;
-	private double cashAmount;
+	private double enteringValue;
 	private boolean isPaymentButtonPress;
+	private boolean isQuantityButtonPress;
+	private double totalPrice;
+	private double change;
 	
 	Object[] columns  = {"Qty", "Description", "Price"};
 	DefaultTableModel model = new DefaultTableModel ();
@@ -47,13 +51,14 @@ public class sellFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			
 			public void run() {
 				try 
 				{
-					itemList item = new itemList();
-					
 					sellFrame frame = new sellFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -65,14 +70,23 @@ public class sellFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public sellFrame() {
+	public sellFrame() throws IOException {
+		
+		itemList item = new itemList();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 779, 707);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JLabel lblTotal = new JLabel("0.00");
+		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblTotal.setBounds(625, 468, 84, 36);
+		contentPane.add(lblTotal);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -94,6 +108,11 @@ public class sellFrame extends JFrame {
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
 		lblNewLabel.setBounds(552, 473, 71, 31);
 		contentPane.add(lblNewLabel);
+		
+		JLabel lblChange = new JLabel("0.00");
+		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblChange.setBounds(649, 544, 84, 36);
+		contentPane.add(lblChange);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tax:");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
@@ -136,46 +155,119 @@ public class sellFrame extends JFrame {
 		lblEmployeeID.setBounds(95, 6, 124, 16);
 		contentPane.add(lblEmployeeID);
 		
-		JButton btnNewButton = new JButton("Banana");
-		btnNewButton.addActionListener(new ActionListener() 
+		JButton btnBananaButton = new JButton("Banana");
+		btnBananaButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				model.addRow(new Object[] {"1", "banana@1.0", "2.0"});
+				totalPrice += enteringValue*(item.getPriceWithDescription("banana"));
+				model.addRow(new Object[] {enteringValue,"banana"+"@"+item.getPriceWithDescription("banana"), enteringValue*item.getPriceWithDescription("banana")});
+				lblTotal.setText(Double.toString(totalPrice));
 			}
 		});
-		btnNewButton.setBounds(6, 53, 98, 38);
-		contentPane.add(btnNewButton);
+		btnBananaButton.setBounds(6, 53, 98, 38);
+		contentPane.add(btnBananaButton);
 		
-		JButton btnGum = new JButton("Mengo");
-		btnGum.setBounds(6, 96, 98, 38);
-		contentPane.add(btnGum);
+		JButton btnMengo = new JButton("Mengo");
+		btnMengo.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("mengo"));
+				model.addRow(new Object[] {enteringValue,"Mengo"+"@"+item.getPriceWithDescription("mengo"), enteringValue*item.getPriceWithDescription("mengo")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
+		btnMengo.setBounds(6, 96, 98, 38);
+		contentPane.add(btnMengo);
 		
 		JButton btnApple = new JButton("Apple");
+		btnApple.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("apple"));
+				model.addRow(new Object[] {enteringValue,"Apple"+"@"+item.getPriceWithDescription("apple"), enteringValue*item.getPriceWithDescription("apple")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
 		btnApple.setBounds(6, 139, 98, 38);
 		contentPane.add(btnApple);
 		
-		JButton button = new JButton("Apple");
-		button.setBounds(116, 53, 98, 38);
-		contentPane.add(button);
+		JButton buttonBlueBerry = new JButton("Blue Berry");
+		buttonBlueBerry.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("blue berry"));
+				model.addRow(new Object[] {enteringValue,"Blue Berry"+"@"+item.getPriceWithDescription("blue berry"), enteringValue*item.getPriceWithDescription("blue berry")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
+		buttonBlueBerry.setBounds(116, 53, 98, 38);
+		contentPane.add(buttonBlueBerry);
 		
 		JButton btnOrange = new JButton("Orange");
+		btnOrange.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("orange"));
+				model.addRow(new Object[] {enteringValue,"orange"+"@"+item.getPriceWithDescription("orange"), enteringValue*item.getPriceWithDescription("orange")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
 		btnOrange.setBounds(116, 96, 98, 38);
 		contentPane.add(btnOrange);
 		
 		JButton btnPineapple = new JButton("Pineapple");
+		btnPineapple.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("pineapple"));
+				model.addRow(new Object[] {enteringValue,"Pineapple"+"@"+item.getPriceWithDescription("pineapple"), enteringValue*item.getPriceWithDescription("pineapple")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
 		btnPineapple.setBounds(116, 139, 98, 38);
 		contentPane.add(btnPineapple);
 		
 		JButton btnStrawberry = new JButton("Strawberry");
+		btnStrawberry.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("strawberry"));
+				model.addRow(new Object[] {enteringValue,"Strawberry"+"@"+item.getPriceWithDescription("strawberry"), enteringValue*item.getPriceWithDescription("strawberry")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
 		btnStrawberry.setBounds(226, 139, 98, 38);
 		contentPane.add(btnStrawberry);
 		
 		JButton btnDurian = new JButton("Durian");
+		btnDurian.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("durian"));
+				model.addRow(new Object[] {enteringValue,"Durian"+"@"+item.getPriceWithDescription("durian"), enteringValue*item.getPriceWithDescription("durian")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
 		btnDurian.setBounds(226, 96, 98, 38);
 		contentPane.add(btnDurian);
 		
 		JButton btnAvocado = new JButton("Avocado");
+		btnAvocado.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				totalPrice += enteringValue*(item.getPriceWithDescription("avocado"));
+				model.addRow(new Object[] {enteringValue,"Avocado"+"@"+item.getPriceWithDescription("avocado"), enteringValue*item.getPriceWithDescription("avocado")});
+				lblTotal.setText(Double.toString(totalPrice));
+			}
+		});
 		btnAvocado.setBounds(226, 53, 98, 38);
 		contentPane.add(btnAvocado);
 		
@@ -199,10 +291,7 @@ public class sellFrame extends JFrame {
 		btnQty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(isEnterButtonPress)
-				{
-					
-				}
+				isQuantityButtonPress = true;
 			}
 		});
 		btnQty.setBounds(6, 566, 117, 113);
@@ -368,9 +457,15 @@ public class sellFrame extends JFrame {
 					numberAfterEnter = Double.parseDouble((amount.PrintiteratorForward()));
 					if(isPaymentButtonPress)
 					{
-						cashAmount = numberAfterEnter;
+						enteringValue = numberAfterEnter;
+						change = enteringValue - totalPrice;
 						amount.removeAllFirst();
-						lblcashAmount.setText("$" +Double.toString(cashAmount));
+						lblcashAmount.setText("$" +Double.toString(enteringValue));
+						lblChange.setText("$" + Double.toString(change));
+					}else if(isQuantityButtonPress)
+					{
+						enteringValue = numberAfterEnter;
+						amount.removeAllFirst();
 					}
 				}catch (EmptyExceptions error)
 				{
@@ -381,20 +476,14 @@ public class sellFrame extends JFrame {
 		btnEnter.setBounds(135, 490, 189, 75);
 		contentPane.add(btnEnter);
 		
-		JLabel lblTotal = new JLabel("0.00");
-		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal.setBounds(625, 468, 84, 36);
-		contentPane.add(lblTotal);
+		
 		
 		JLabel lblTax = new JLabel("0.00");
 		lblTax.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblTax.setBounds(625, 425, 84, 36);
 		contentPane.add(lblTax);
 		
-		JLabel lblChange = new JLabel("0.00");
-		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblChange.setBounds(649, 544, 84, 36);
-		contentPane.add(lblChange);
+		
 		
 		
 	}
