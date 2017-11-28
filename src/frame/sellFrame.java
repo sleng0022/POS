@@ -54,8 +54,8 @@ public class sellFrame extends JFrame {
 				{
 					itemList item = new itemList();
 					
-//					sellFrame frame = new sellFrame();
-//					frame.setVisible(true);
+					sellFrame frame = new sellFrame();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
