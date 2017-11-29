@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 public class sellFrame extends JFrame {
 
@@ -85,7 +86,7 @@ public class sellFrame extends JFrame {
 		
 		JLabel lblTotal = new JLabel("0.00");
 		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal.setBounds(625, 468, 84, 36);
+		lblTotal.setBounds(625, 469, 84, 36);
 		contentPane.add(lblTotal);
 		
 		JPanel panel = new JPanel();
@@ -104,30 +105,36 @@ public class sellFrame extends JFrame {
 		model.setColumnIdentifiers(columns);
 		table.setModel(model);
 		
-		JLabel lblNewLabel = new JLabel("Total:");
+		JLabel lblNewLabel = new JLabel("Total: $");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
 		lblNewLabel.setBounds(552, 473, 71, 31);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblChange = new JLabel("0.00");
 		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblChange.setBounds(649, 544, 84, 36);
+		lblChange.setBounds(625, 544, 84, 36);
 		contentPane.add(lblChange);
 		
-		JLabel lblNewLabel_1 = new JLabel("Tax:");
+		JLabel lblNewLabel_1 = new JLabel("Tax: $");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_1.setBounds(553, 435, 42, 26);
+		lblNewLabel_1.setBounds(563, 435, 60, 26);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Cash:");
+		JLabel lblNewLabel_2 = new JLabel("Cash: $");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_2.setBounds(552, 516, 61, 16);
+		lblNewLabel_2.setBounds(552, 516, 71, 16);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Change:");
+		JLabel lblNewLabel_3 = new JLabel("Change: $");
 		lblNewLabel_3.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_3.setBounds(552, 549, 71, 28);
+		lblNewLabel_3.setBounds(528, 549, 85, 28);
 		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblcashAmount = new JLabel("");
+		lblcashAmount.setHorizontalAlignment(SwingConstants.LEFT);
+		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblcashAmount.setBounds(625, 508, 84, 36);
+		contentPane.add(lblcashAmount);
 		
 		JLabel lblNewLabel_4 = new JLabel(" Employee ID:");
 		lblNewLabel_4.setBounds(6, 6, 98, 16);
@@ -278,6 +285,7 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				isPaymentButtonPress = true;
+				lblcashAmount.setText("");
 			}
 		});
 		btnPayment.setBounds(264, 566, 117, 113);
@@ -302,6 +310,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("7");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn7num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn7num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -314,6 +327,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("8");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn8num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn8num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -326,6 +344,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("9");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn9num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn9num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -338,6 +361,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("4");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn4num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn4num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -350,6 +378,14 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("5");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn5num.getText();
+					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+							
+				}
 			}
 		});
 		btn5num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -362,6 +398,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("6");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn6num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn6num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -374,6 +415,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("1");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn1num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn1num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -386,6 +432,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				amount.insertLast("2");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn2num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn2num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -398,6 +449,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("3");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn3num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn3num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -416,6 +472,11 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast("0");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btn0num.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btn0num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -434,16 +495,16 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				amount.insertLast(".");
+				if(isPaymentButtonPress)
+				{
+					String enteringNum = lblcashAmount.getText() + btnDot.getText();
+					lblcashAmount.setText(enteringNum);
+				}
 			}
 		});
 		btnDot.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btnDot.setBounds(226, 415, 105, 66);
 		contentPane.add(btnDot);
-		
-		JLabel lblcashAmount = new JLabel("0.00");
-		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblcashAmount.setBounds(625, 508, 84, 36);
-		contentPane.add(lblcashAmount);
 		
 		JButton btnEnter = new JButton("Enter");
 		isEnterButtonPress = false;
@@ -457,11 +518,10 @@ public class sellFrame extends JFrame {
 					numberAfterEnter = Double.parseDouble((amount.PrintiteratorForward()));
 					if(isPaymentButtonPress)
 					{
-						enteringValue = numberAfterEnter;
-						change = enteringValue - totalPrice;
+						isPaymentButtonPress = false;
+						change = Double.parseDouble(lblcashAmount.getText()) - totalPrice;
 						amount.removeAllFirst();
-						lblcashAmount.setText("$" +Double.toString(enteringValue));
-						lblChange.setText("$" + Double.toString(change));
+						lblChange.setText(Double.toString(change));
 					}else if(isQuantityButtonPress)
 					{
 						enteringValue = numberAfterEnter;
@@ -480,7 +540,7 @@ public class sellFrame extends JFrame {
 		
 		JLabel lblTax = new JLabel("0.00");
 		lblTax.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTax.setBounds(625, 425, 84, 36);
+		lblTax.setBounds(625, 429, 84, 36);
 		contentPane.add(lblTax);
 		
 		
