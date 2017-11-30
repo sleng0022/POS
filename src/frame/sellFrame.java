@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.datatransfer.StringSelection;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -26,8 +27,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -48,6 +51,7 @@ public class sellFrame extends JFrame {
 	private boolean isPaymentButtonPress;
 	private boolean isQuantityButtonPress;
 	private double totalPrice;
+	private double cashierTotalSale;
 	private double change;
 	
 	Object[] columns  = {"Qty", "Description", "Price"};
@@ -154,17 +158,18 @@ public class sellFrame extends JFrame {
 		contentPane.add(Date);
 		
 		
-		String timeStamp = new SimpleDateFormat("E, MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()); 
+		String timeStamp = new SimpleDateFormat("E MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()); 
 		JLabel lblDate = new JLabel(timeStamp);
 		lblDate.setBounds(572, 6, 185, 16);
 		contentPane.add(lblDate);
 		
-		JLabel lblDrawNum = new JLabel("");
+		JLabel lblDrawNum = new JLabel("1");
 		lblDrawNum.setBounds(344, 6, 84, 16);
 		contentPane.add(lblDrawNum);
 		
 		JLabel lblEmployeeID = new JLabel("");
 		lblEmployeeID.setBounds(95, 6, 124, 16);
+		lblEmployeeID.setText("19201");
 		contentPane.add(lblEmployeeID);
 		
 		JButton btnBananaButton = new JButton("Banana");
@@ -526,8 +531,8 @@ public class sellFrame extends JFrame {
 					{
 						isPaymentButtonPress = false;
 						change = Double.parseDouble(lblcashAmount.getText()) - totalPrice;
-						amount.removeAllFirst();
 						lblChange.setText(Double.toString(change));
+						amount.removeAllFirst();
 					}else if(isQuantityButtonPress)
 					{
 						enteringValue = numberAfterEnter;
@@ -543,8 +548,38 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnEnter);
 		
 		JButton btnLogOut = new JButton("Log Out");
-		btnLogOut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnLogOut.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				FileWriter writer = null;
+				String FILE_HEADER = "EmployeeID, Date, Sale($)";
+				String DLIMETER_COMMA = ",";
+				String DLIMETER_NEW_LINE = "\n";
+				try 
+				{
+					writer = new FileWriter("/Users/sinithleng/git/POS/data/employee_sell_today.csv");
+					writer.append(FILE_HEADER.toString());
+					writer.append(DLIMETER_NEW_LINE);
+					writer.append(lblEmployeeID.getText());
+					writer.append(DLIMETER_COMMA);
+					writer.append(lblDate.getText() );
+					writer.append(DLIMETER_COMMA);
+					writer.append(Double.toString(cashierTotalSale));
+					writer.append(DLIMETER_NEW_LINE);
+					cashierTotalSale = 0;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} finally
+				{
+					try {
+						writer.close();
+					}catch (Exception e)
+					{
+						
+					}
+				}
 			}
 		});
 		btnLogOut.setBackground(new Color(255, 0, 0));
@@ -564,6 +599,32 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnMenu);
 		
 		JButton btnPrintRecipet = new JButton("Print Receipt");
+		btnPrintRecipet.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				MessageFormat header = new MessageFormat("Loan Calculator Print");
+				MessageFormat footer = new MessageFormat("Page {0, number, integer}") ;
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+					cashierTotalSale += totalPrice;
+					totalPrice = 0;
+					if(model.getRowCount() > 0)
+					{
+						for(int i =model.getRowCount()-1; i>-1; i--)
+						{
+							model.removeRow(i);
+						}
+					}
+					
+					
+				}catch(java.awt.print.PrinterException e)
+				{
+					System.err.format("Cannot print.", e.getMessage());
+				}
+			}
+		});
 		btnPrintRecipet.setBounds(6, 691, 365, 43);
 		contentPane.add(btnPrintRecipet);
 		
