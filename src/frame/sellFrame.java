@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.glass.events.KeyEvent;
+
 import common.DoublyLinkList;
 import common.EmptyExceptions;
 import common.itemList;
@@ -32,6 +34,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class sellFrame extends JFrame {
 
@@ -291,8 +296,8 @@ public class sellFrame extends JFrame {
 		btnPayment.setBounds(264, 566, 117, 113);
 		contentPane.add(btnPayment);
 		
-		JButton btnVoid = new JButton("Void");
-		btnVoid.addActionListener(new ActionListener() 
+		JButton btnVoidAll = new JButton("Void All");
+		btnVoidAll.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -305,8 +310,8 @@ public class sellFrame extends JFrame {
 				}
 			}
 		});
-		btnVoid.setBounds(135, 566, 117, 113);
-		contentPane.add(btnVoid);
+		btnVoidAll.setBounds(135, 566, 117, 50);
+		contentPane.add(btnVoidAll);
 		
 		JButton btnQty = new JButton("QTY");
 		btnQty.addActionListener(new ActionListener() {
@@ -473,12 +478,6 @@ public class sellFrame extends JFrame {
 		btn3num.setBounds(226, 344, 105, 66);
 		contentPane.add(btn3num);
 		
-		JButton btnUp = new JButton("");
-		btnUp.setIcon(new ImageIcon("/Users/sinithleng/git/POS/image/arrowsUp.png"));
-		btnUp.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnUp.setBounds(6, 415, 105, 66);
-		contentPane.add(btnUp);
-		
 		JButton btn0num = new JButton("0");
 		btn0num.addActionListener(new ActionListener() 
 		{
@@ -495,12 +494,6 @@ public class sellFrame extends JFrame {
 		btn0num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		btn0num.setBounds(116, 415, 105, 66);
 		contentPane.add(btn0num);
-		
-		JButton btnDown = new JButton("");
-		btnDown.setIcon(new ImageIcon("/Users/sinithleng/git/POS/image/arrowsDown.png"));
-		btnDown.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnDown.setBounds(6, 488, 105, 66);
-		contentPane.add(btnDown);
 		
 		JButton btnDot = new JButton(".");
 		btnDot.addActionListener(new ActionListener() 
@@ -546,7 +539,7 @@ public class sellFrame extends JFrame {
 				}
 			}
 		});
-		btnEnter.setBounds(135, 490, 189, 75);
+		btnEnter.setBounds(116, 490, 208, 75);
 		contentPane.add(btnEnter);
 		
 		JButton btnLogOut = new JButton("Log Out");
@@ -574,8 +567,24 @@ public class sellFrame extends JFrame {
 		btnPrintRecipet.setBounds(6, 691, 365, 43);
 		contentPane.add(btnPrintRecipet);
 		
+		JButton btnVoid = new JButton("Void");
+		btnVoid.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				int[] row = table.getSelectedRows();
+				for(int i=0;i<row.length;i++)
+				{
+				     model.removeRow(row[i]-i);
+				}
+			}
+		});
+		btnVoid.setBounds(135, 628, 117, 50);
+		contentPane.add(btnVoid);
 		
-		
-		
+		JButton btnReturn = new JButton("Return Item");
+		btnReturn.setBounds(6, 422, 105, 122);
+		contentPane.add(btnReturn);
+	
 	}
 }
