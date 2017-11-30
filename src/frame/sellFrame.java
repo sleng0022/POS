@@ -78,7 +78,7 @@ public class sellFrame extends JFrame {
 		itemList item = new itemList();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 779, 707);
+		setBounds(100, 100, 794, 765);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -536,12 +536,30 @@ public class sellFrame extends JFrame {
 		btnEnter.setBounds(135, 490, 189, 75);
 		contentPane.add(btnEnter);
 		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnLogOut.setBackground(new Color(255, 0, 0));
+		btnLogOut.setBounds(690, 673, 84, 44);
+		contentPane.add(btnLogOut);
+		
 		
 		
 		JLabel lblTax = new JLabel("0.00");
 		lblTax.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblTax.setBounds(625, 429, 84, 36);
 		contentPane.add(lblTax);
+		
+		JButton btnMenu = new JButton("Menu");
+		btnMenu.setBackground(Color.WHITE);
+		btnMenu.setBounds(603, 673, 84, 44);
+		contentPane.add(btnMenu);
+		
+		JButton btnPrintRecipet = new JButton("Print Receipt");
+		btnPrintRecipet.setBounds(6, 691, 365, 43);
+		contentPane.add(btnPrintRecipet);
 		
 		
 		

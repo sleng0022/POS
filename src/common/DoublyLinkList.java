@@ -150,7 +150,7 @@ public class DoublyLinkList<T>
 	
 	public void removeAllFirst() throws EmptyExceptions
 	{
-		while(size != 1)
+		while(size != 0)
 		{
 			this.removeFirst();
 		}
