@@ -21,6 +21,7 @@ import java.awt.datatransfer.StringSelection;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.JTextField;
@@ -603,13 +604,39 @@ public class sellFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				MessageFormat header = new MessageFormat("Loan Calculator Print");
-				MessageFormat footer = new MessageFormat("Page {0, number, integer}") ;
+//				MessageFormat header = new MessageFormat("Loan Calculator Print");
+//				MessageFormat footer = new MessageFormat("Page {0, number, integer}") ;
+				FileWriter writer = null;
+				String DLIMETER_COMMA = ",";
+				String DLIMETER_NEW_LINE = "\n";
+				String FILE_HEADER = "Qty, Description, Price";
+				Random rand = new Random();
 				try
 				{
-					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+					writer = new FileWriter("/Users/sinithleng/git/POS/data/reciept.csv");
+					writer.append(FILE_HEADER.toString());
+					for(int row=0; row<model.getRowCount(); row++)
+					{
+						for(int col=0; col<model.getColumnCount(); col++)
+						{
+							writer.append((model.getValueAt(row, col).toString()));
+							writer.append(DLIMETER_COMMA);
+						}
+						writer.append(DLIMETER_NEW_LINE);
+					}
+					writer.append("Reciept ID");
+					int randomNum = rand.nextInt(1000);
+					writer.append(DLIMETER_COMMA);
+					writer.append(Integer.toString(randomNum));
+					
+//					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+					lblTax.setText("0.00");
+					lblTotal.setText("0.00");
+					lblcashAmount.setText("0.00");
+					lblChange.setText("0.00");
 					cashierTotalSale += totalPrice;
 					totalPrice = 0;
+					
 					if(model.getRowCount() > 0)
 					{
 						for(int i =model.getRowCount()-1; i>-1; i--)
@@ -617,9 +644,9 @@ public class sellFrame extends JFrame {
 							model.removeRow(i);
 						}
 					}
+					writer.close();
 					
-					
-				}catch(java.awt.print.PrinterException e)
+				}catch(Exception e)
 				{
 					System.err.format("Cannot print.", e.getMessage());
 				}
