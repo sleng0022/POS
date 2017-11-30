@@ -292,6 +292,19 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnPayment);
 		
 		JButton btnVoid = new JButton("Void");
+		btnVoid.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if(model.getRowCount() > 0)
+				{
+					for(int i =model.getRowCount()-1; i>-1; i--)
+					{
+						model.removeRow(i);
+					}
+				}
+			}
+		});
 		btnVoid.setBounds(135, 566, 117, 113);
 		contentPane.add(btnVoid);
 		
