@@ -158,7 +158,7 @@ public class DoublyLinkList<T>
 	
 	public void removeAllLast() throws EmptyExceptions
 	{
-		while(size != 1)
+		while(size != 0)
 		{
 			this.removeLast();
 		}
