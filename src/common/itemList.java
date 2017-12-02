@@ -29,7 +29,7 @@ public class itemList
 		LastOrder = null;
 		qty = 0;
 		
-		BufferedReader br = new BufferedReader(new FileReader("/Users/sinithleng/git/POS/data/itemList.csv"));
+		BufferedReader br = new BufferedReader(new FileReader("./data/itemList.csv"));
 		String line = null;
 		int iteration = 0;
 		while((line = br.readLine()) != null)
