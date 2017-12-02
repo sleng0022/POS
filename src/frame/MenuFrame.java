@@ -17,7 +17,24 @@ import java.awt.SystemColor;
 public class MenuFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			
+			public void run() {
+				try 
+				{
+					MenuFrame frame = new MenuFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -48,9 +65,22 @@ public class MenuFrame extends JFrame {
 		btnSellItem.setBounds(297, 229, 212, 59);
 		contentPane.add(btnSellItem);
 		
-		JButton button = new JButton("SELL & RETURN ITEM ");
-		button.setBounds(297, 303, 212, 59);
-		contentPane.add(button);
+		JButton btnInventoryManagement = new JButton("INVENTORY MANAGEMENT");
+		btnInventoryManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				InventoryFrame frame ;
+				try {
+					frame = new InventoryFrame();
+					frame.setVisible(true);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnInventoryManagement.setBounds(297, 303, 212, 59);
+		contentPane.add(btnInventoryManagement);
 		
 		JLabel label = new JLabel(" Employee ID:");
 		label.setBounds(6, 6, 98, 16);
@@ -69,11 +99,10 @@ public class MenuFrame extends JFrame {
 		contentPane.add(label_3);
 		
 		JButton btnLogOutButton = new JButton("LOG OUT");
-		btnLogOutButton.setForeground(Color.BLACK);
-		btnLogOutButton.setBackground(Color.RED);
+		btnLogOutButton.setForeground(Color.RED);
+		btnLogOutButton.setBackground(SystemColor.window);
 		btnLogOutButton.setOpaque(true);
 		btnLogOutButton.setBounds(297, 374, 212, 48);
-		btnLogOutButton.setBorderPainted(false);
 		contentPane.add(btnLogOutButton);
 	}
 }

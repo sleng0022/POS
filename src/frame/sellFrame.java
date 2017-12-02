@@ -13,8 +13,11 @@ import com.sun.glass.events.KeyEvent;
 import common.DoublyLinkList;
 import common.EmptyExceptions;
 import common.itemList;
+import common.receipt;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.datatransfer.StringSelection;
@@ -58,7 +61,7 @@ public class sellFrame extends JFrame {
 	Object[] columns  = {"Qty", "Description", "Price"};
 	DefaultTableModel model = new DefaultTableModel ();
 	DoublyLinkList<String> amount = new DoublyLinkList<String>(); 
-	
+	static sellFrame sellframe;
 	/**
 	 * Launch the application.
 	 */
@@ -70,8 +73,8 @@ public class sellFrame extends JFrame {
 			public void run() {
 				try 
 				{
-					sellFrame frame = new sellFrame();
-					frame.setVisible(true);
+					sellframe = new sellFrame();
+					sellframe.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -86,6 +89,7 @@ public class sellFrame extends JFrame {
 	public sellFrame() throws IOException {
 		
 		itemList item = new itemList();
+		receipt rec = new receipt();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 794, 765);
@@ -601,6 +605,7 @@ public class sellFrame extends JFrame {
 			{
 				MenuFrame frame = new MenuFrame();
 				frame.setVisible(true);
+				
 			}
 		});
 		btnMenu.setBackground(Color.WHITE);
@@ -612,8 +617,6 @@ public class sellFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-//				MessageFormat header = new MessageFormat("Loan Calculator Print");
-//				MessageFormat footer = new MessageFormat("Page {0, number, integer}") ;
 				FileWriter writer = null;
 				String DLIMETER_COMMA = ",";
 				String DLIMETER_NEW_LINE = "\n";
@@ -621,8 +624,9 @@ public class sellFrame extends JFrame {
 				Random rand = new Random();
 				try
 				{
-					writer = new FileWriter("./data/reciept.csv");
+					writer = new FileWriter("./data/receipt.csv");
 					writer.append(FILE_HEADER.toString());
+					writer.append(DLIMETER_NEW_LINE);
 					for(int row=0; row<model.getRowCount(); row++)
 					{
 						for(int col=0; col<model.getColumnCount(); col++)
@@ -631,13 +635,14 @@ public class sellFrame extends JFrame {
 							writer.append(DLIMETER_COMMA);
 						}
 						writer.append(DLIMETER_NEW_LINE);
+						writer.append(DLIMETER_NEW_LINE);
+						writer.append(DLIMETER_NEW_LINE);
 					}
 					writer.append("Reciept ID");
 					int randomNum = rand.nextInt(1000);
 					writer.append(DLIMETER_COMMA);
 					writer.append(Integer.toString(randomNum));
 					
-//					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
 					lblTax.setText("0.00");
 					lblTotal.setText("0.00");
 					lblcashAmount.setText("0.00");
@@ -679,6 +684,20 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnVoid);
 		
 		JButton btnReturn = new JButton("Return Item");
+		btnReturn.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				String recieptNumber = (String)JOptionPane.showInputDialog(sellframe, "Receipt#:","Returning Items", JOptionPane.PLAIN_MESSAGE,null,null,"####");
+				
+					for(int i = 0; i<rec.size(); i++)
+					{
+						model.addRow(new Object[] {rec.getQtyItem(i),rec.getItemDescription(i), rec.getPriceItem(i)});
+					}
+				
+				
+			}
+		});
 		btnReturn.setBounds(6, 422, 105, 122);
 		contentPane.add(btnReturn);
 	
