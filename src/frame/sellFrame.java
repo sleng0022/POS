@@ -595,6 +595,14 @@ public class sellFrame extends JFrame {
 		contentPane.add(lblTax);
 		
 		JButton btnMenu = new JButton("Menu");
+		btnMenu.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				MenuFrame frame = new MenuFrame();
+				frame.setVisible(true);
+			}
+		});
 		btnMenu.setBackground(Color.WHITE);
 		btnMenu.setBounds(603, 673, 84, 44);
 		contentPane.add(btnMenu);
@@ -613,7 +621,7 @@ public class sellFrame extends JFrame {
 				Random rand = new Random();
 				try
 				{
-					writer = new FileWriter("/Users/sinithleng/git/POS/data/reciept.csv");
+					writer = new FileWriter("./data/reciept.csv");
 					writer.append(FILE_HEADER.toString());
 					for(int row=0; row<model.getRowCount(); row++)
 					{
