@@ -44,6 +44,8 @@ import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class sellFrame extends JFrame {
 
@@ -89,7 +91,7 @@ public class sellFrame extends JFrame {
 	public sellFrame() throws IOException {
 		
 		itemList item = new itemList();
-		receipt rec = new receipt();
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 794, 765);
@@ -110,6 +112,13 @@ public class sellFrame extends JFrame {
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.addPropertyChangeListener(new PropertyChangeListener() 
+		{
+			public void propertyChange(PropertyChangeEvent evt) 
+			{
+				
+			}
+		});
 		scrollPane.setBounds(0, 0, 412, 375);
 		panel.add(scrollPane);
 		
@@ -620,28 +629,27 @@ public class sellFrame extends JFrame {
 				FileWriter writer = null;
 				String DLIMETER_COMMA = ",";
 				String DLIMETER_NEW_LINE = "\n";
-				String FILE_HEADER = "Qty, Description, Price";
+				String FILE_HEADER = "Reciept ID,Qty, Description, Price";
 				Random rand = new Random();
 				try
 				{
+					int randomNum = rand.nextInt(1000);
+					
 					writer = new FileWriter("./data/receipt.csv");
 					writer.append(FILE_HEADER.toString());
 					writer.append(DLIMETER_NEW_LINE);
 					for(int row=0; row<model.getRowCount(); row++)
 					{
+						writer.append(Integer.toString(randomNum));
+						writer.append(DLIMETER_COMMA);
 						for(int col=0; col<model.getColumnCount(); col++)
 						{
 							writer.append((model.getValueAt(row, col).toString()));
 							writer.append(DLIMETER_COMMA);
 						}
 						writer.append(DLIMETER_NEW_LINE);
-						writer.append(DLIMETER_NEW_LINE);
-						writer.append(DLIMETER_NEW_LINE);
 					}
-					writer.append("Reciept ID");
-					int randomNum = rand.nextInt(1000);
-					writer.append(DLIMETER_COMMA);
-					writer.append(Integer.toString(randomNum));
+					writer.close();
 					
 					lblTax.setText("0.00");
 					lblTotal.setText("0.00");
@@ -688,14 +696,21 @@ public class sellFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				String recieptNumber = (String)JOptionPane.showInputDialog(sellframe, "Receipt#:","Returning Items", JOptionPane.PLAIN_MESSAGE,null,null,"####");
-				
+				try
+				{
+					receipt rec = new receipt();
+					String recieptNumber = (String)JOptionPane.showInputDialog(sellframe, "Receipt#:","Returning Items", JOptionPane.PLAIN_MESSAGE,null,null,"####");
+					int rec_id = Integer.parseInt(recieptNumber);
+					
 					for(int i = 0; i<rec.size(); i++)
 					{
-						model.addRow(new Object[] {rec.getQtyItem(i),rec.getItemDescription(i), rec.getPriceItem(i)});
+						model.addRow(new Object[] {rec.getQtyItem(i,rec_id),rec.getItemDescription(i,rec_id), rec.getPriceItem(i,rec_id)});
 					}
-				
-				
+				}catch(IOException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnReturn.setBounds(6, 422, 105, 122);

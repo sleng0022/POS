@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class receipt 
 {
+	static DoublyLinkList<Integer> id = new DoublyLinkList<Integer>();
 	static DoublyLinkList<Double> qty = new DoublyLinkList<Double>();
 	static DoublyLinkList<String> item = new DoublyLinkList<String>();
 	static DoublyLinkList<Double> price = new DoublyLinkList<Double>();
@@ -25,10 +26,12 @@ public class receipt
 				continue;
 			}
 			String cols[] = line.split(",");
-			qty.insertLast(Double.parseDouble(cols[0]));
-			item.insertLast(cols[1]);
-			price.insertLast(Double.parseDouble(cols[2]));
+			id.insertLast(Integer.parseInt(cols[0]));
+			qty.insertLast(Double.parseDouble(cols[1]));
+			item.insertLast(cols[2]);
+			price.insertLast(Double.parseDouble(cols[3]));
 		}
+		br.close();
 	}
 	
 	public int size()
@@ -36,18 +39,30 @@ public class receipt
 		return item.size();
 	}
 	
-	public Double getQtyItem(int pos)
+	public Double getQtyItem(int pos, int receiptID)
 	{
-		return qty.getItem(pos);
+		if(id.getItem(pos).equals(receiptID))
+		{
+			return qty.getItem(pos);
+		}
+		return 0.0;
 	}
 	
-	public String getItemDescription(int pos)
+	public String getItemDescription(int pos, int receiptID)
 	{
-		return item.getItem(pos);
+		if(id.getItem(pos).equals(receiptID))
+		{
+			return item.getItem(pos);
+		}
+		return "INVALID";
 	}
 	
-	public Double getPriceItem(int pos)
+	public Double getPriceItem(int pos, int receiptID)
 	{
-		return price.getItem(pos);
+		if(id.getItem(pos).equals(receiptID))
+		{
+			return price.getItem(pos);
+		}
+		return 0.0;
 	}
 }
