@@ -36,7 +36,6 @@ public class MainFrame {
     final JFrame frame = new JFrame("Point of sales  Demo");
     
     final JButton btnLoginAsCashier = new JButton("Register as Cashier");
-    final JButton btnLoginAsAdmin = new JButton("Register as Admin");
 
     btnLoginAsCashier.addActionListener(
             new ActionListener(){
@@ -49,18 +48,7 @@ public class MainFrame {
                     }
                 }
             });
-    btnLoginAsAdmin.addActionListener(
-            new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    LoginDialog loginDlg = new LoginDialog(frame);
-                    loginDlg.setVisible(true);
-                    // if logon successfully
-                    if(loginDlg.isSucceeded()){
-                    	btnLoginAsCashier.setText("Hi " + loginDlg.getUsername() + "!");
-                    }
-                }
-            });
-
+  
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(500, 200);
@@ -68,11 +56,7 @@ public class MainFrame {
     frame.getContentPane().add(btnLoginAsCashier);
     frame.setVisible(true);
     
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(500, 200);
-    frame.setLayout(new FlowLayout());
-    frame.getContentPane().add(btnLoginAsAdmin);
-    frame.setVisible(true);
+   
     
 }
 
