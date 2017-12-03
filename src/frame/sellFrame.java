@@ -579,7 +579,7 @@ public class sellFrame extends JFrame {
 				String DLIMETER_NEW_LINE = "\n";
 				try 
 				{
-					writer = new FileWriter("/Users/sinithleng/git/POS/data/employee_sell_today.csv");
+					writer = new FileWriter("./data/employee_sell_today.csv");
 					writer.append(FILE_HEADER.toString());
 					writer.append(DLIMETER_NEW_LINE);
 					writer.append(lblEmployeeID.getText());
@@ -589,17 +589,12 @@ public class sellFrame extends JFrame {
 					writer.append(numFormat.format(cashierTotalSale));
 					writer.append(DLIMETER_NEW_LINE);
 					cashierTotalSale = 0;
+					writer.close();
+					sellframe.dispose();
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} finally
-				{
-					try {
-						writer.close();
-					}catch (Exception e)
-					{
-						
-					}
 				}
 			}
 		});
