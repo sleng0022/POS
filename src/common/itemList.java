@@ -46,6 +46,7 @@ public class itemList
 			lastOrder.insertLast(cols[3]);
 			totalQty.insertLast(cols[4]);
 		}
+		br.close();
 	}
 	
 	public String getItemDescription(int ID)
