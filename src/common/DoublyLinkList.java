@@ -208,4 +208,35 @@ public class DoublyLinkList<T>
 		}
 		return null;
 	}
+	
+	public void setItem(int pos, T elements)
+	{
+		Node<T> temp = head;
+		
+		for(int i = 0; i<size ; i++)
+		{
+			if(i == pos)
+			{
+				temp.setElement(elements);
+				break;
+			}
+			temp = temp.getNext();
+		}
+	}
+	
+	public T setAndGetItem(int pos, T elements)
+	{
+		Node<T> temp = head;
+		
+		for(int i = 0; i<size ; i++)
+		{
+			if(i == pos)
+			{
+				temp.setElement(elements);
+				return temp.getElement();
+			}
+			temp = temp.getNext();
+		}
+		return null;
+	}
 }

@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.datatransfer.StringSelection;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -43,6 +44,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -171,11 +174,21 @@ public class sellFrame extends JFrame {
 		Date.setBounds(538, 6, 42, 16);
 		contentPane.add(Date);
 		
-		
-		String timeStamp = new SimpleDateFormat("E MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()); 
-		JLabel lblDate = new JLabel(timeStamp);
+		JLabel lblDate = new JLabel();
 		lblDate.setBounds(572, 6, 185, 16);
 		contentPane.add(lblDate);
+		Timer simpleTimer = new Timer(500, new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				Calendar now = Calendar.getInstance();
+				lblDate.setText(DateFormat.getDateTimeInstance().format(now.getTime()));
+		     }
+		}
+		);
+		simpleTimer.setRepeats(true);
+		simpleTimer.setCoalesce(true);
+		simpleTimer.start();
 		
 		JLabel lblDrawNum = new JLabel("1");
 		lblDrawNum.setBounds(344, 6, 84, 16);
@@ -194,6 +207,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("banana"));
 				model.addRow(new Object[] {enteringValue,"banana"+"@"+item.getPriceWithDescription("banana"), enteringValue*item.getPriceWithDescription("banana")});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "banana");
 			}
 		});
 		btnBananaButton.setBounds(6, 53, 98, 38);
@@ -207,6 +221,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("mengo"));
 				model.addRow(new Object[] {enteringValue,"Mengo"+"@"+item.getPriceWithDescription("mengo"), enteringValue*item.getPriceWithDescription("mengo")});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "mengo");
 			}
 		});
 		btnMengo.setBounds(6, 96, 98, 38);
@@ -220,6 +235,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("apple"));
 				model.addRow(new Object[] {enteringValue,"Apple"+"@"+item.getPriceWithDescription("apple"), numFormat.format(enteringValue*item.getPriceWithDescription("apple"))});
 				lblTotal.setText(numFormat.format((totalPrice)));
+				item.setUpdateNewQuantity((int)enteringValue, "apple");
 			}
 		});
 		btnApple.setBounds(6, 139, 98, 38);
@@ -233,6 +249,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("blue berry"));
 				model.addRow(new Object[] {enteringValue,"Blue Berry"+"@"+item.getPriceWithDescription("blue berry"), numFormat.format(enteringValue*item.getPriceWithDescription("blue berry"))});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "blue berry");
 			}
 		});
 		buttonBlueBerry.setBounds(116, 53, 98, 38);
@@ -245,6 +262,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("orange"));
 				model.addRow(new Object[] {enteringValue,"orange"+"@"+item.getPriceWithDescription("orange"), numFormat.format(enteringValue*item.getPriceWithDescription("orange"))});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "orange");
 			}
 		});
 		btnOrange.setBounds(116, 96, 98, 38);
@@ -258,6 +276,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("pineapple"));
 				model.addRow(new Object[] {enteringValue,"Pineapple"+"@"+item.getPriceWithDescription("pineapple"), numFormat.format(enteringValue*item.getPriceWithDescription("pineapple"))});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "pineapple");
 			}
 		});
 		btnPineapple.setBounds(116, 139, 98, 38);
@@ -271,6 +290,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("strawberry"));
 				model.addRow(new Object[] {enteringValue,"Strawberry"+"@"+item.getPriceWithDescription("strawberry"), numFormat.format(enteringValue*item.getPriceWithDescription("strawberry"))});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "strawberry");
 			}
 		});
 		btnStrawberry.setBounds(226, 139, 98, 38);
@@ -284,6 +304,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("durian"));
 				model.addRow(new Object[] {enteringValue,"Durian"+"@"+item.getPriceWithDescription("durian"), numFormat.format(enteringValue*item.getPriceWithDescription("durian"))});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "durian");
 			}
 		});
 		btnDurian.setBounds(226, 96, 98, 38);
@@ -297,6 +318,7 @@ public class sellFrame extends JFrame {
 				totalPrice += enteringValue*(item.getPriceWithDescription("avocado"));
 				model.addRow(new Object[] {enteringValue,"Avocado"+"@"+item.getPriceWithDescription("avocado"), numFormat.format(enteringValue*item.getPriceWithDescription("avocado"))});
 				lblTotal.setText(numFormat.format(totalPrice));
+				item.setUpdateNewQuantity((int)enteringValue, "avocado");
 			}
 		});
 		btnAvocado.setBounds(226, 53, 98, 38);
@@ -574,7 +596,7 @@ public class sellFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				FileWriter writer = null;
-				String FILE_HEADER = "EmployeeID, Date, Sale($)";
+				String FILE_HEADER = "EmployeeID, Date, Time Log In, Time Log Out, Sale($)";
 				String DLIMETER_COMMA = ",";
 				String DLIMETER_NEW_LINE = "\n";
 				try 
@@ -584,7 +606,7 @@ public class sellFrame extends JFrame {
 					writer.append(DLIMETER_NEW_LINE);
 					writer.append(lblEmployeeID.getText());
 					writer.append(DLIMETER_COMMA);
-					writer.append(lblDate.getText() );
+					writer.append(lblDate.getText());
 					writer.append(DLIMETER_COMMA);
 					writer.append(numFormat.format(cashierTotalSale));
 					writer.append(DLIMETER_NEW_LINE);
@@ -660,6 +682,8 @@ public class sellFrame extends JFrame {
 					cashierTotalSale += totalPrice;
 					totalPrice = 0;
 					
+					item.updateItemListFile();
+					
 					if(model.getRowCount() > 0)
 					{
 						for(int i =model.getRowCount()-1; i>-1; i--)
@@ -727,4 +751,6 @@ public class sellFrame extends JFrame {
 		contentPane.add(btnReturn);
 	
 	}
+	
+
 }

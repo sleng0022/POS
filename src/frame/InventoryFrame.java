@@ -50,8 +50,27 @@ public class InventoryFrame extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		btnMenu.setBounds(332, 427, 117, 29);
+		btnMenu.setBounds(282, 375, 141, 44);
 		contentPane.add(btnMenu);
+		
+		JButton btnAddremoveItem = new JButton("Add/Remove Item");
+		btnAddremoveItem.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+			}
+		});
+		btnAddremoveItem.setBounds(282, 219, 141, 50);
+		contentPane.add(btnAddremoveItem);
+		
+		JButton btnListOrder = new JButton("List Order");
+		btnListOrder.setBounds(282, 297, 141, 50);
+		contentPane.add(btnListOrder);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.setBounds(282, 452, 141, 44);
+		contentPane.add(btnLogOut);
 	}
 
 }
