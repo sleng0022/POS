@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class itemList 
@@ -22,6 +23,7 @@ public class itemList
 	static DoublyLinkList<Integer> CurrentQty = new DoublyLinkList<Integer>();
 	static DoublyLinkList<Integer> id_num = new DoublyLinkList<Integer>();
 	
+	
 	public itemList() throws IOException
 	{
 		id = 0;
@@ -32,6 +34,9 @@ public class itemList
 		BufferedReader br = new BufferedReader(new FileReader("./data/itemList.csv"));
 		String line = null;
 		int iteration = 0;
+		
+		
+		
 		while((line = br.readLine()) != null)
 		{
 			if(iteration == 0)
@@ -49,6 +54,8 @@ public class itemList
 		}
 		br.close();
 	}
+	
+	
 	
 	public String getItemDescription(int ID)
 	{
@@ -110,19 +117,6 @@ public class itemList
 		return qty;
 	}
 	
-	public void updateQuantityItems()
-	{
-		try
-		{
-			FileWriter writer = new FileWriter("./data/itemList.csv");
-			
-		}catch (IOException e1) 
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-	
 	public void setUpdateNewQuantity(int newQty, String name)
 	{
 		int position = 0;
@@ -170,4 +164,5 @@ public class itemList
 			e1.printStackTrace();
 		}
 	}
+	
 }
