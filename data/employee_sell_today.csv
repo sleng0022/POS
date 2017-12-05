@@ -1,2 +1,2 @@
-EmployeeID, Date, Time, Sale($)
-19201,Dec 3, 2017 5:07:32 PM,0.00
+EmployeeID, Date, Log In Time,Log Out Time,Sale
+19201,3-Dec,8:30 PM,12:37,200

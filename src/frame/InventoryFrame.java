@@ -8,13 +8,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import common.EmployeeSale;
 import common.ReadInventory;
+import common.TrackEachRegisterSaleToday;
 import common.itemList;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -32,9 +35,15 @@ public class InventoryFrame extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTable table;
+	private JScrollPane scrollPane;
+	private ReadInventory item;
+	private TrackEachRegisterSaleToday registerSaleToday;
+	private EmployeeSale saleEmployee;
 	
 	/* Items List */
 	Object[] itemListcolumns  = {"Id", "Description", "Last Order", "Current Qty"};
+	Object[] saleTodayColumn = {"RegisterID", "Date", "TotalSale"};
+	Object[] employeeSaleColumn = {"Employee ID", "Date", "Time Log In", "Time Log Out", "Sale"};
 	DefaultTableModel modelItemList = new DefaultTableModel ();
 	
 	/**
@@ -59,7 +68,9 @@ public class InventoryFrame extends JFrame {
 	 */
 	public InventoryFrame() throws IOException {
 		
-		ReadInventory item = new ReadInventory();
+		item = new ReadInventory();
+		registerSaleToday = new TrackEachRegisterSaleToday();
+		saleEmployee = new EmployeeSale();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 794, 765);
@@ -85,7 +96,7 @@ public class InventoryFrame extends JFrame {
 		contentPane.add(btnLogOut);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Current Quantity", "Sale Today", "Add/Remove Items", "Ordering", "Last Order"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Current Quantity", "Employee Sale Today", "Register Sale Today", "Add/Remove Items", "Ordering", "Last Order"}));
 		comboBox.setBounds(76, 47, 184, 27);
 		contentPane.add(comboBox);
 		
@@ -138,7 +149,7 @@ public class InventoryFrame extends JFrame {
 		textField_1.setBounds(516, 155, 147, 26);
 		contentPane.add(textField_1);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(19, 317, 747, 308);
 		contentPane.add(scrollPane);
 		
@@ -152,28 +163,69 @@ public class InventoryFrame extends JFrame {
 		btnRemove.setBounds(644, 276, 117, 29);
 		contentPane.add(btnRemove);
 		
-		
-		
 		JButton btnGo = new JButton("Go");
 		btnGo.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
-			{
-				scrollPane.setViewportView(table);
-				modelItemList.setColumnIdentifiers(itemListcolumns);
-				table.setModel(modelItemList);
-				
+			{	
 				if((String)comboBox.getSelectedItem()=="List Items")
 				{
-					
-					for(int i=0; i<item.getSize(); i++)
-					{
-						modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getLastOrderDate(i), item.getcurrentInStockQty(i)});
-					}
+					ListItemOption();
+				}else if((String)comboBox.getSelectedItem()=="Register Sale Today")
+				{
+					AllRegisterSaleToday();
+				}else if((String)comboBox.getSelectedItem()=="Employee Sale Today")
+				{
+					EmployeeSaleToday();
 				}
 			}
 		});
 		btnGo.setBounds(253, 46, 47, 29);
 		contentPane.add(btnGo);
 	}
+	
+	private void resetModel()
+	{
+		modelItemList.setRowCount(0);
+	}
+	
+	private void ListItemOption()
+	{
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(itemListcolumns);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<item.getSize(); i++)
+		{
+			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getLastOrderDate(i), item.getcurrentInStockQty(i)});
+		}
+	}
+	
+	private void AllRegisterSaleToday()
+	{
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(saleTodayColumn);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<registerSaleToday.getSize(); i++)
+		{
+			modelItemList.addRow(new Object[] {registerSaleToday.getRegisterID(i), registerSaleToday.gettodaySaleDate(i), registerSaleToday.gettodayTotalSale(i)});
+		}
+	}
+	
+	private void EmployeeSaleToday()
+	{
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(employeeSaleColumn);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<saleEmployee.getSize(); i++)
+		{
+			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
+		}
+	}
+	
 }
