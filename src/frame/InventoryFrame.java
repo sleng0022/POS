@@ -96,7 +96,7 @@ public class InventoryFrame extends JFrame {
 		contentPane.add(btnLogOut);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Current Quantity", "Employee Sale Today", "Register Sale Today", "Add/Remove Items", "Ordering", "Last Order"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Employee Sale Today", "Register Sale Today", "Ordering", "Add/Remove Item"}));
 		comboBox.setBounds(76, 47, 184, 27);
 		contentPane.add(comboBox);
 		
