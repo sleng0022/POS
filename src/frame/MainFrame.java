@@ -11,7 +11,8 @@ import javax.swing.JFrame;
 public class MainFrame {
 
 	private JFrame frame;
-	private JFrame frame1;
+//	private JFrame frame1;
+	
 
 
 	/**
@@ -23,37 +24,40 @@ public class MainFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame window = new MainFrame();
-					window.frame.setVisible(false);
-					window.frame.dispose();
+					LoginDialog window = new LoginDialog(null);
+					window.getFrame().setVisible(false);
+					window.getFrame().dispose();
 				} catch (Exception e) 
 				{
 					e.printStackTrace();
 				}
 			}
 		});
-	}public static void main(String[] args) {
+	}
+	public static void main(String[] args) {
     final JFrame frame = new JFrame("Point of sales  Demo");
-    
-    final JButton btnLoginAsCashier = new JButton("Register as Cashier");
-
-    btnLoginAsCashier.addActionListener(
-            new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    LoginDialog loginDlg = new LoginDialog(frame);
-                    loginDlg.setVisible(true);
-                    // if logon successfully
-                    if(loginDlg.isSucceeded()){
-                    	btnLoginAsCashier.setText("Hi " + loginDlg.getUsername() + "!");
-                    }
-                }
-            });
-  
-
+//    LoginDialog Login= new LoginDialog(frame);
+//
+//    final JButton btnLoginAsCashier = new JButton("Register as Cashier");
+//
+//    btnLoginAsCashier.addActionListener(
+//            new ActionListener(){
+//                public void actionPerformed(ActionEvent e) {
+//                    LoginDialog loginDlg = new LoginDialog(frame);
+//                    loginDlg.setVisible(true);
+//                    // if logon successfully
+//                    if(loginDlg.isSucceeded()){
+//                    	btnLoginAsCashier.setText("Hi " + loginDlg.getUsername() + "!");
+//                    }
+//                }
+//            });
+//  
+LoginDialog LoginDialog= new LoginDialog(null);
+LoginDialog.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(500, 200);
     frame.setLayout(new FlowLayout());
-    frame.getContentPane().add(btnLoginAsCashier);
+    frame.getContentPane().add(frame);
     frame.setVisible(true);
     
    

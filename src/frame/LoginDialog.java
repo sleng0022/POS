@@ -9,7 +9,9 @@ import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.border.*;
- 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class LoginDialog extends JDialog {
  
     private JTextField tfUsername;
@@ -22,13 +24,34 @@ public class LoginDialog extends JDialog {
     private JButton btnCancel;
     private boolean succeeded;
     private JButton btnLoginAsAdmin;
-
- 
+    private JTextField tfDrawer;
+    private JLabel lbDrawer;
+    
+    public static void main1(String[] args) 
+	{
+    	LoginDialog Login= new LoginDialog(frame);
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginDialog window = new LoginDialog(null);
+					window.getFrame().setVisible(false);
+					window.getFrame().dispose();
+				} catch (Exception e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		});
+	
+	}
     public LoginDialog(Frame parent) {
         super(parent, "Login", true);
+        
         //
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints cs = new GridBagConstraints();
+        
  
         cs.fill = GridBagConstraints.HORIZONTAL;
  
@@ -43,6 +66,7 @@ public class LoginDialog extends JDialog {
         cs.gridy = 0;
         cs.gridwidth = 2;
         panel.add(tfUsername, cs);
+        
  
         lbPassword = new JLabel("Password: ");
         cs.gridx = 0;
@@ -55,8 +79,20 @@ public class LoginDialog extends JDialog {
         cs.gridy = 1;
         cs.gridwidth = 2;
         panel.add(pfPassword, cs);
-        panel.setBorder(new LineBorder(Color.GRAY));
+        lbDrawer = new JLabel("Drawer: ");
+        cs.gridx = 0;
+        cs.gridy = 2;
+        cs.gridwidth = 3;
+        panel.add(lbDrawer, cs);
  
+        tfDrawer = new JTextField(20);
+        cs.gridx = 1;
+        cs.gridy = 2;
+        cs.gridwidth = 3;
+        panel.add(tfDrawer, cs);
+        panel.setBorder(new LineBorder(Color.GRAY));
+//        public static void main(String[] args) {
+        	
         btnLogin = new JButton("Login");
         btnLoginAsAdmin = new JButton("Log in As Admin");
  
@@ -107,6 +143,16 @@ public class LoginDialog extends JDialog {
         setResizable(false);
         setLocationRelativeTo(parent);
     }
+	
+//    }
+    JLabel Date = new JLabel("Date:");
+	
+	
+	
+	String timeStamp = new SimpleDateFormat("E MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()); 
+	JLabel lblDate = new JLabel(timeStamp);
+	private static JFrame frame;
+
  
     public String getUsername() {
         return tfUsername.getText().trim();
@@ -119,4 +165,28 @@ public class LoginDialog extends JDialog {
     public boolean isSucceeded() {
         return succeeded;
     }
+
+	public String getDrawer() {
+		return tfDrawer.getText().trim();
+	}
+
+	public void setTfDrawer(JTextField tfDrawer) {
+		this.tfDrawer = tfDrawer;
+	}
+
+	public JLabel getLbDrawer() {
+		return lbDrawer;
+	}
+
+	public void setLbDrawer(JLabel lbDrawer) {
+		this.lbDrawer = lbDrawer;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 }

@@ -15,8 +15,8 @@ public class Login {
     public static boolean authenticate(String username, String password) throws IOException {
     	System.out.println(System.getProperty("user.dir"));
     	
-    	 BufferedReader br = new BufferedReader(new FileReader("data/Login2.csv"));
-    	 
+    	 BufferedReader br = new BufferedReader(new FileReader("./data/Login2.csv"));
+    	 LoginDialog loginDialog = new LoginDialog(null);
     	
     	 
 		    String line =  null;
@@ -29,7 +29,12 @@ public class Login {
 		
 		    for (Map.Entry<String, String> entry : map.entrySet())
 		    {		     		        
-		        if (entry.getKey().equals(username) && entry.getValue().equals(password)){
+		        if (entry.getKey().equals(username) && entry.getValue().equals(password))
+			       
+
+
+		        {
+		        	
 		        	return true;
 		        }
 		    
@@ -45,5 +50,7 @@ public class Login {
       //  }
      
     }
+
+	
 }
 
