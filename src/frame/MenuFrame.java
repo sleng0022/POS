@@ -5,12 +5,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
@@ -94,9 +97,21 @@ public class MenuFrame extends JFrame {
 		label_2.setBounds(566, 6, 42, 16);
 		contentPane.add(label_2);
 		
-		JLabel label_3 = new JLabel("Sat 12/02/2017 13:30:42");
+		JLabel label_3 = new JLabel();
 		label_3.setBounds(603, 6, 185, 16);
 		contentPane.add(label_3);
+		Timer simpleTimer = new Timer(500, new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				Calendar now = Calendar.getInstance();
+				label_3.setText(DateFormat.getDateTimeInstance().format(now.getTime()));
+		     }
+		}
+		);
+		simpleTimer.setRepeats(true);
+		simpleTimer.setCoalesce(true);
+		simpleTimer.start();
 		
 		JButton btnLogOutButton = new JButton("LOG OUT");
 		btnLogOutButton.setForeground(Color.RED);
