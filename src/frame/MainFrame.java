@@ -5,18 +5,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainFrame {
 
 	JFrame frame;
 	private JTextField textFieldEmloyeeID;
-	private JTextField textFieldEmployeePassword;
+	private JPasswordField textFieldEmployeePassword;
 	private static MainFrame window;
 	/**
 	 * Launch the application.
@@ -57,10 +61,11 @@ public class MainFrame {
 		frame.getContentPane().add(textFieldEmloyeeID);
 		textFieldEmloyeeID.setColumns(10);
 		
-		textFieldEmployeePassword = new JTextField();
+		textFieldEmployeePassword = new JPasswordField();
 		textFieldEmployeePassword.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		textFieldEmployeePassword.setColumns(10);
 		textFieldEmployeePassword.setBounds(255, 324, 304, 59);
+		textFieldEmployeePassword.setEchoChar('*');
 		frame.getContentPane().add(textFieldEmployeePassword);
 		
 		JLabel lblEmployeeId = new JLabel("Employee ID");
@@ -83,14 +88,16 @@ public class MainFrame {
 		lblDrawer.setBounds(120, 407, 123, 35);
 		frame.getContentPane().add(lblDrawer);
 		
+		
 		JButton btnLogIn = new JButton("LOG IN");
 		btnLogIn.addActionListener(new ActionListener()
 		{
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) 
 			{
 				Login userLogIn = new Login();
 				
-				if(userLogIn.authenticate(textFieldEmloyeeID.getText(), Integer.parseInt(textFieldEmployeePassword.getText())))
+				if(userLogIn.authenticate(textFieldEmloyeeID.getText(), textFieldEmployeePassword.getPassword()))
 				{
 					MenuFrame menuframe = new MenuFrame();
 					menuframe.setVisible(true);
