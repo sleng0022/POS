@@ -1,15 +1,20 @@
 package frame;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 public class MainFrame {
@@ -88,18 +93,59 @@ public class MainFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				Login userLogIn = new Login();
-				
-				if(userLogIn.authenticate(textFieldEmloyeeID.getText(), Integer.parseInt(textFieldEmployeePassword.getText())))
+				MainFrame Login = new MainFrame();
+//				if (textFieldEmployeePassword.equals(Login)&&textFieldEmloyeeID.equals(Login)){
+				if (Login(getPassword(), getUsername())){
+				JOptionPane.showMessageDialog(frame, "! You have successfully logged in.");
+				MenuFrame Menu = new MenuFrame();
+				Menu.setVisible(true);
+				}
+				else{
+					JOptionPane.showMessageDialog(frame, "Invalid username or password");	
+				}
+				}
+			
+private Object getPassword() {
+	 return textFieldEmloyeeID.getText().trim();
+			}
 				{
 					MenuFrame frame = new MenuFrame();
 					frame.setVisible(true);
 				};
-			}
+			
 		});
 		btnLogIn.setBounds(614, 627, 130, 67);
 		frame.getContentPane().add(btnLogIn);
 	}
 
+	public boolean Login(Object username, Object password) {
+		String line =  null;
+	    HashMap<String,String> map = new HashMap<String, String>();
+
+        
+        map.put("Aziz", "123");
+        map.put("Sinith", "123");
+	    	
+
+		    for (Map.Entry<String, String> entry : map.entrySet())
+		    {		     		        
+		        if (entry.getKey().equals(username) && entry.getValue().equals(password))
+			       
+
+
+		        {
+		        	
+		        	return true;
+		        }
+		    }
+		    return false;
+	}
+	protected Object getUsername() {
+		return textFieldEmployeePassword.getText().trim();
+	}
+	 public JTextField getUserName()
+	    {
+	    		return this.textFieldEmployeePassword;
+	    }
 
 }
