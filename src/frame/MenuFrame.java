@@ -20,7 +20,8 @@ import java.awt.SystemColor;
 public class MenuFrame extends JFrame {
 
 	private JPanel contentPane;
-	
+	private static MenuFrame menuframe;
+
 	public static void main(String[] args) 
 	{
 		EventQueue.invokeLater(new Runnable()
@@ -29,8 +30,9 @@ public class MenuFrame extends JFrame {
 			public void run() {
 				try 
 				{
-					MenuFrame frame = new MenuFrame();
-					frame.setVisible(true);
+					menuframe = new MenuFrame();
+					menuframe.setVisible(true);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -72,10 +74,11 @@ public class MenuFrame extends JFrame {
 		btnInventoryManagement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				InventoryFrame frame ;
+				InventoryFrame InventoryFrame ;
 				try {
-					frame = new InventoryFrame();
-					frame.setVisible(true);
+					InventoryFrame = new InventoryFrame();
+					InventoryFrame.setVisible(true);
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -114,6 +117,14 @@ public class MenuFrame extends JFrame {
 		simpleTimer.start();
 		
 		JButton btnLogOutButton = new JButton("LOG OUT");
+		btnLogOutButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				MainFrame window = new MainFrame();
+				window.frame.setVisible(true);
+			}
+		});
 		btnLogOutButton.setForeground(Color.RED);
 		btnLogOutButton.setBackground(SystemColor.window);
 		btnLogOutButton.setOpaque(true);

@@ -14,10 +14,10 @@ import java.awt.event.ActionEvent;
 
 public class MainFrame {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField textFieldEmloyeeID;
 	private JTextField textFieldEmployeePassword;
-
+	private static MainFrame window;
 	/**
 	 * Launch the application.
 	 */
@@ -92,8 +92,8 @@ public class MainFrame {
 				
 				if(userLogIn.authenticate(textFieldEmloyeeID.getText(), Integer.parseInt(textFieldEmployeePassword.getText())))
 				{
-					MenuFrame frame = new MenuFrame();
-					frame.setVisible(true);
+					MenuFrame menuframe = new MenuFrame();
+					menuframe.setVisible(true);
 				};
 			}
 		});

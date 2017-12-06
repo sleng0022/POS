@@ -613,6 +613,8 @@ public class sellFrame extends JFrame {
 					cashierTotalSale = 0;
 					writer.close();
 					sellframe.dispose();
+					MainFrame window = new MainFrame();
+					window.frame.setVisible(true);
 					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

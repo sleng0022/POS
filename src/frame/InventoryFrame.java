@@ -103,6 +103,14 @@ public class InventoryFrame extends JFrame {
 		contentPane.add(btnMenu);
 		
 		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				MainFrame window = new MainFrame();
+				window.frame.setVisible(true);
+			}
+		});
 		btnLogOut.setBounds(626, 679, 141, 44);
 		contentPane.add(btnLogOut);
 		
