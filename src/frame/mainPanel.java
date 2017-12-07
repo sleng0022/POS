@@ -20,7 +20,8 @@ public class mainPanel extends JPanel {
 	CardLayout cl = new CardLayout();
 	JPanel panelCont = new JPanel();
 	private boolean isValidUser;
-	
+	Login userLogIn = new Login();
+	JComboBox comboBoxRegister;
 	/**
 	 * Create the panel.
 	 */
@@ -56,7 +57,7 @@ public class mainPanel extends JPanel {
 		lblPassword.setBounds(185, 287, 100, 27);
 		this.add(lblPassword);
 		
-		JComboBox comboBoxRegister = new JComboBox();
+		comboBoxRegister = new JComboBox();
 		comboBoxRegister.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4"}));
 		comboBoxRegister.setBounds(297, 344, 64, 27);
 		this.add(comboBoxRegister);
@@ -77,11 +78,20 @@ public class mainPanel extends JPanel {
 	
 	public void getTextValue()
 	{
-		Login userLogIn = new Login();
+		
 		if(userLogIn.authenticate(textFieldEmloyeeID.getText(), textFieldEmployeePassword.getPassword()))
 		{
 			isValidUser = true;
 		};
 	}
-
+	
+	public String getEmployeeID()
+	{
+		return userLogIn.getUserName();
+	}
+	
+	public String getDrawer()
+	{
+		return (String)comboBoxRegister.getSelectedItem();
+	}
 }

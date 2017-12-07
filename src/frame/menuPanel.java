@@ -20,6 +20,9 @@ import java.awt.FlowLayout;
 
 public class menuPanel extends JPanel 
 {
+
+	private JLabel labelUserID;
+	private JLabel lblDrawer;
 	/**
 	 * Create the panel.
 	 */
@@ -43,7 +46,7 @@ public class menuPanel extends JPanel
 			}
 		});
 		setLayout(null);
-		btnSellItem.setBounds(142, 136, 212, 29);
+		btnSellItem.setBounds(223, 217, 212, 29);
 		this.add(btnSellItem);
 		
 		JButton btnInventoryManagement = new JButton("INVENTORY MANAGEMENT");
@@ -61,7 +64,7 @@ public class menuPanel extends JPanel
 				}
 			}
 		});
-		btnInventoryManagement.setBounds(142, 168, 212, 29);
+		btnInventoryManagement.setBounds(223, 258, 212, 29);
 		this.add(btnInventoryManagement);
 		
 		JLabel label = new JLabel(" Employee ID:");
@@ -69,15 +72,15 @@ public class menuPanel extends JPanel
 		this.add(label);
 		
 		JLabel label_1 = new JLabel("Draw#");
-		label_1.setBounds(208, 11, 40, 16);
+		label_1.setBounds(276, 11, 40, 16);
 		this.add(label_1);
 		
 		JLabel label_2 = new JLabel("Date:");
-		label_2.setBounds(399, 11, 33, 16);
+		label_2.setBounds(477, 11, 33, 16);
 		this.add(label_2);
 		
 		JLabel label_3 = new JLabel();
-		label_3.setBounds(246, 53, 0, 0);
+		label_3.setBounds(533, 11, 163, 16);
 		this.add(label_3);
 		Timer simpleTimer = new Timer(500, new ActionListener()
 		{
@@ -104,9 +107,27 @@ public class menuPanel extends JPanel
 		btnLogOutButton.setForeground(Color.RED);
 		btnLogOutButton.setBackground(SystemColor.window);
 		btnLogOutButton.setOpaque(true);
-		btnLogOutButton.setBounds(142, 198, 212, 29);
+		btnLogOutButton.setBounds(223, 304, 212, 29);
 		this.add(btnLogOutButton);
 		
+		lblDrawer = new JLabel("");
+		lblDrawer.setBounds(328, 11, 61, 16);
+		add(lblDrawer);
+		
+		labelUserID = new JLabel("");
+		labelUserID.setBounds(104, 11, 78, 16);
+		add(labelUserID);
+		
 	}
-
+	
+	public void setEmployeeID(String name)
+	{
+		labelUserID.setText(name);
+	}
+	
+	public void setDrawer(String num)
+	{
+		lblDrawer.setText(num);
+	}
+	
 }

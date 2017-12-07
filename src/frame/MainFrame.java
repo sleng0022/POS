@@ -58,6 +58,8 @@ public class MainFrame {
 		
 		frame.getContentPane().setLayout(cl);
 		frame.getContentPane().add(mainP, "1");
+		frame.getContentPane().add(menuP, "2");
+		
 		btnLogIn.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -65,6 +67,8 @@ public class MainFrame {
 				mainP.getTextValue();
 				if(mainP.isUserValid())
 				{
+					menuP.setEmployeeID(mainP.getEmployeeID());
+					menuP.setDrawer(mainP.getDrawer());
 					cl.show(frame.getContentPane(), "2");
 				}else
 				{
@@ -72,11 +76,10 @@ public class MainFrame {
 				}
 			}
 		});
-		btnLogIn.setBounds(404, 337, 100, 37);
+		btnLogIn.setBounds(404, 341, 100, 37);
 		mainP.add(btnLogIn);
 		
 		
-		frame.getContentPane().add(menuP, "2");
 		cl.show(frame.getContentPane(), "1");
 		
 		
