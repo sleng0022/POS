@@ -23,49 +23,14 @@ public class menuPanel extends JPanel
 
 	private JLabel labelUserID;
 	private JLabel lblDrawer;
+	private String logIn;
 	/**
 	 * Create the panel.
 	 */
 	public menuPanel() 
 	{
-
-		JButton btnSellItem = new JButton("SELL & RETURN ITEM ");
-		btnSellItem.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				sellFrame frame;
-				try {
-					frame = new sellFrame();
-					frame.setVisible(true);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		setLayout(null);
-		btnSellItem.setBounds(223, 217, 212, 29);
-		this.add(btnSellItem);
+		logIn = "";
 		
-		JButton btnInventoryManagement = new JButton("INVENTORY MANAGEMENT");
-		btnInventoryManagement.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				InventoryFrame InventoryFrame ;
-				try {
-					InventoryFrame = new InventoryFrame();
-					InventoryFrame.setVisible(true);
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnInventoryManagement.setBounds(223, 258, 212, 29);
-		this.add(btnInventoryManagement);
 		
 		JLabel label = new JLabel(" Employee ID:");
 		label.setBounds(6, 11, 86, 16);
@@ -94,21 +59,7 @@ public class menuPanel extends JPanel
 		simpleTimer.setRepeats(true);
 		simpleTimer.setCoalesce(true);
 		simpleTimer.start();
-		
-		JButton btnLogOutButton = new JButton("LOG OUT");
-		btnLogOutButton.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				MainFrame window = new MainFrame();
-				window.frame.setVisible(true);
-			}
-		});
-		btnLogOutButton.setForeground(Color.RED);
-		btnLogOutButton.setBackground(SystemColor.window);
-		btnLogOutButton.setOpaque(true);
-		btnLogOutButton.setBounds(223, 304, 212, 29);
-		this.add(btnLogOutButton);
+		setLayout(null);
 		
 		lblDrawer = new JLabel("");
 		lblDrawer.setBounds(328, 11, 61, 16);
@@ -130,4 +81,14 @@ public class menuPanel extends JPanel
 		lblDrawer.setText(num);
 	}
 	
+	public void setLogIn()
+	{
+		Calendar now = Calendar.getInstance();
+		logIn = DateFormat.getDateTimeInstance().format(now.getTime());
+	}
+	
+	public String getLogIn()
+	{
+		return logIn;
+	}
 }

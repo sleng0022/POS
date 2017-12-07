@@ -95,8 +95,8 @@ public class InventoryFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				MenuFrame frame = new MenuFrame();
-				frame.setVisible(true);
+//				MenuFrame frame = new MenuFrame();
+//				frame.setVisible(true);
 			}
 		});
 		btnMenu.setBounds(473, 679, 141, 44);
@@ -107,8 +107,8 @@ public class InventoryFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				MainFrame window = new MainFrame();
-				window.frame.setVisible(true);
+//				MainFrame window = new MainFrame();
+//				window.frame.setVisible(true);
 			}
 		});
 		btnLogOut.setBounds(626, 679, 141, 44);
