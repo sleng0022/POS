@@ -1,27 +1,29 @@
  package frame;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Login {
  
 	private String userName;
 	private boolean isValidUser;
-	HashMap<String, Integer> map;
+	HashMap<String, char[]> map;
+	char[] pwd = {'1', '2', '3'};
 	
 	public Login()
 	{
 		map = new HashMap<>();
 		isValidUser = false;
         
-        map.put("Aziz", 123);
-        map.put("Sinith", 123);
+        map.put("Aziz", pwd);
+        map.put("Sinith", pwd);
 	}
 	
-    public boolean authenticate(String name, int pwd) 
+    public boolean authenticate(String name, char[] pwd) 
     {
     		if(map.containsKey(name))
     		{
-    			if(map.get(name) == pwd)
+    			if(Arrays.equals(map.get(name), pwd))
     			{
     				isValidUser = true;
     				this.userName = name;

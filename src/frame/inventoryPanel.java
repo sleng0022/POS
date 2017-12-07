@@ -1,47 +1,35 @@
 package frame;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import common.EmployeeSale;
 import common.ReadInventory;
 import common.TrackEachRegisterSaleToday;
-import common.itemList;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Vector;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-public class InventoryFrame extends JFrame {
-
-	private JPanel contentPane;
+public class inventoryPanel extends JPanel
+{
 	private JTextField SearchtextField;
 	private JTextField IDtextField;
 	private JTextField textFieldRCdate;
 	private JTextField textFieldPrice;
 	private JTextField textFieldTotal;
-	private JTable table;
 	private JScrollPane scrollPane;
+	private JTable table;
 	private ReadInventory item;
 	private TrackEachRegisterSaleToday registerSaleToday;
 	private EmployeeSale saleEmployee;
@@ -56,121 +44,72 @@ public class InventoryFrame extends JFrame {
 	private JTextField textFieldExpiration;
 	private JTextField textFieldComment;
 	private JTextField textFieldDescription;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InventoryFrame frame = new InventoryFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
-	 * Create the frame.
-	 * @throws IOException 
+	 * Create the panel.
 	 */
-	public InventoryFrame() throws IOException {
+	public inventoryPanel() throws IOException
+	{
 		
 		item = new ReadInventory();
 		registerSaleToday = new TrackEachRegisterSaleToday();
 		saleEmployee = new EmployeeSale();
+		setLayout(null);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 794, 765);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JButton btnMenu = new JButton("MENU");
-		btnMenu.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-//				MenuFrame frame = new MenuFrame();
-//				frame.setVisible(true);
-			}
-		});
-		btnMenu.setBounds(473, 679, 141, 44);
-		contentPane.add(btnMenu);
-		
-		JButton btnLogOut = new JButton("Log Out");
-		btnLogOut.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-//				MainFrame window = new MainFrame();
-//				window.frame.setVisible(true);
-			}
-		});
-		btnLogOut.setBounds(626, 679, 141, 44);
-		contentPane.add(btnLogOut);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Employee Sale Today", "Register Sale Today", "Outstanding Order", "Add/Remove Item"}));
-		comboBox.setBounds(76, 47, 184, 27);
-		contentPane.add(comboBox);
+		comboBox.setBounds(82, 39, 187, 27);
+		this.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("Option");
-		lblNewLabel.setBounds(19, 51, 61, 16);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setBounds(27, 43, 43, 16);
+		this.add(lblNewLabel);
 		
 		JLabel lblSearch = new JLabel("Search ");
-		lblSearch.setBounds(382, 51, 61, 16);
-		contentPane.add(lblSearch);
+		lblSearch.setBounds(586, 43, 45, 16);
+		this.add(lblSearch);
 		
 		SearchtextField = new JTextField();
-		SearchtextField.setBounds(439, 46, 130, 26);
-		contentPane.add(SearchtextField);
+		SearchtextField.setBounds(635, 38, 130, 26);
+		this.add(SearchtextField);
 		SearchtextField.setColumns(10);
 		
 		JLabel lblId = new JLabel("ID");
-		lblId.setBounds(40, 108, 25, 16);
-		contentPane.add(lblId);
+		lblId.setBounds(56, 82, 14, 16);
+		this.add(lblId);
 		
 		IDtextField = new JTextField();
 		IDtextField.setColumns(10);
-		IDtextField.setBounds(76, 103, 130, 26);
-		contentPane.add(IDtextField);
+		IDtextField.setBounds(82, 78, 130, 26);
+		this.add(IDtextField);
 		
 		JLabel lblReceiveOrderDate = new JLabel("Receive Order Date");
-		lblReceiveOrderDate.setBounds(253, 108, 135, 16);
-		contentPane.add(lblReceiveOrderDate);
+		lblReceiveOrderDate.setBounds(267, 82, 119, 16);
+		this.add(lblReceiveOrderDate);
 		
 		textFieldRCdate = new JTextField();
 		textFieldRCdate.setColumns(10);
-		textFieldRCdate.setBounds(382, 103, 147, 26);
-		contentPane.add(textFieldRCdate);
+		textFieldRCdate.setBounds(391, 77, 130, 26);
+		this.add(textFieldRCdate);
 		
 		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setBounds(40, 147, 35, 16);
-		contentPane.add(lblPrice);
+		lblPrice.setBounds(40, 121, 30, 16);
+		this.add(lblPrice);
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
-		textFieldPrice.setBounds(76, 141, 130, 26);
-		contentPane.add(textFieldPrice);
+		textFieldPrice.setBounds(82, 116, 130, 26);
+		this.add(textFieldPrice);
 		
 		JLabel lblTotalQuantity = new JLabel("Total Quantity");
-		lblTotalQuantity.setBounds(273, 147, 102, 16);
-		contentPane.add(lblTotalQuantity);
+		lblTotalQuantity.setBounds(290, 121, 90, 16);
+		this.add(lblTotalQuantity);
 		
 		textFieldTotal = new JTextField();
 		textFieldTotal.setColumns(10);
-		textFieldTotal.setBounds(382, 141, 147, 26);
-		contentPane.add(textFieldTotal);
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(19, 317, 747, 308);
-		contentPane.add(scrollPane);
+		textFieldTotal.setBounds(391, 116, 130, 26);
+		this.add(textFieldTotal);
 		
 		table = new JTable();
 		
@@ -182,8 +121,8 @@ public class InventoryFrame extends JFrame {
 				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldRCdate.getText(), textFieldTotal.getText()});
 			}
 		});
-		btnAdd.setBounds(530, 276, 117, 29);
-		contentPane.add(btnAdd);
+		btnAdd.setBounds(655, 228, 75, 29);
+		this.add(btnAdd);
 		
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() 
@@ -198,44 +137,44 @@ public class InventoryFrame extends JFrame {
 
 			}
 		});
-		btnRemove.setBounds(644, 276, 117, 29);
-		contentPane.add(btnRemove);
+		btnRemove.setBounds(742, 228, 93, 29);
+		this.add(btnRemove);
 		
 		JLabel lblSupplier = new JLabel("Supplier");
-		lblSupplier.setBounds(19, 194, 61, 16);
-		contentPane.add(lblSupplier);
+		lblSupplier.setBounds(586, 121, 51, 16);
+		this.add(lblSupplier);
 		
 		textFieldSupplier = new JTextField();
 		textFieldSupplier.setColumns(10);
-		textFieldSupplier.setBounds(76, 189, 130, 26);
-		contentPane.add(textFieldSupplier);
+		textFieldSupplier.setBounds(655, 116, 130, 26);
+		this.add(textFieldSupplier);
 		
 		JLabel lblThresholdOrder = new JLabel("Threshold Order");
-		lblThresholdOrder.setBounds(541, 147, 117, 16);
-		contentPane.add(lblThresholdOrder);
+		lblThresholdOrder.setBounds(284, 157, 102, 16);
+		this.add(lblThresholdOrder);
 		
 		textFieldThreshold = new JTextField();
 		textFieldThreshold.setColumns(10);
-		textFieldThreshold.setBounds(644, 142, 109, 26);
-		contentPane.add(textFieldThreshold);
+		textFieldThreshold.setBounds(401, 152, 130, 26);
+		this.add(textFieldThreshold);
 		
 		JLabel lblExpirationDate = new JLabel("Expiration Date");
-		lblExpirationDate.setBounds(273, 194, 97, 16);
-		contentPane.add(lblExpirationDate);
+		lblExpirationDate.setBounds(560, 157, 97, 16);
+		this.add(lblExpirationDate);
 		
 		textFieldExpiration = new JTextField();
 		textFieldExpiration.setColumns(10);
-		textFieldExpiration.setBounds(382, 189, 130, 26);
-		contentPane.add(textFieldExpiration);
+		textFieldExpiration.setBounds(665, 154, 130, 26);
+		this.add(textFieldExpiration);
 		
 		JLabel lblComment = new JLabel("Comment");
-		lblComment.setBounds(12, 234, 68, 16);
-		contentPane.add(lblComment);
+		lblComment.setBounds(21, 157, 61, 16);
+		this.add(lblComment);
 		
 		textFieldComment = new JTextField();
 		textFieldComment.setColumns(10);
-		textFieldComment.setBounds(76, 227, 211, 26);
-		contentPane.add(textFieldComment);
+		textFieldComment.setBounds(92, 157, 130, 26);
+		this.add(textFieldComment);
 		
 		JButton btnGo = new JButton("Go");
 		btnGo.addActionListener(new ActionListener() 
@@ -261,17 +200,17 @@ public class InventoryFrame extends JFrame {
 				}
 			}
 		});
-		btnGo.setBounds(253, 46, 47, 29);
-		contentPane.add(btnGo);
+		btnGo.setBounds(267, 38, 75, 29);
+		this.add(btnGo);
 		
 		textFieldDescription = new JTextField();
 		textFieldDescription.setColumns(10);
-		textFieldDescription.setBounds(626, 103, 130, 26);
-		contentPane.add(textFieldDescription);
+		textFieldDescription.setBounds(645, 77, 130, 26);
+		this.add(textFieldDescription);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(541, 108, 79, 16);
-		contentPane.add(lblDescription);
+		lblDescription.setBounds(554, 82, 73, 16);
+		this.add(lblDescription);
 		
 		JButton btnNewButton = new JButton("Save");
 		btnNewButton.addActionListener(new ActionListener() 
@@ -291,8 +230,12 @@ public class InventoryFrame extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(419, 276, 117, 29);
-		contentPane.add(btnNewButton);
+		btnNewButton.setBounds(572, 228, 75, 29);
+		this.add(btnNewButton);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(21, 290, 814, 314);
+		add(scrollPane);
 	}
 	
 	private void resetModel()

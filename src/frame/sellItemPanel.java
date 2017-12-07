@@ -1,62 +1,38 @@
 package frame;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import com.sun.glass.events.KeyEvent;
 
 import common.DoublyLinkList;
 import common.EmptyExceptions;
 import common.itemList;
 import common.receipt;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.datatransfer.StringSelection;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Random;
-import java.util.Scanner;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-
-public class sellFrame extends JFrame {
-
-	private JPanel contentPane;
+public class sellItemPanel extends JPanel
+{
+//	private JPanel contentPane;
 	private JTable table;
 	private boolean isEnterButtonPress;
 	private double numberAfterEnter;
@@ -68,62 +44,40 @@ public class sellFrame extends JFrame {
 	private double cashierTotalSale;
 	private double newPrice;
 	private double change;
+	private JLabel lblEmployeeID;
+	private JLabel lblDrawNum;
+	
+	private String logOut;
 	
 	Object[] columns  = {"Qty", "Description", "Price"};
 	DefaultTableModel model = new DefaultTableModel ();
 	DoublyLinkList<String> amount = new DoublyLinkList<String>(); 
-	static sellFrame sellframe;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) 
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			
-			public void run() {
-				try 
-				{
-					sellframe = new sellFrame();
-					sellframe.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	static JFrame sellframe;
 
 	/**
-	 * Create the frame.
+	 * Create the panel.
 	 * @throws IOException 
 	 */
-	public sellFrame() throws IOException 
-	{
-		
+	public sellItemPanel() throws IOException 
+	{	
 		itemList item = new itemList();
 		
 		NumberFormat numFormat = new DecimalFormat("#0.00");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 794, 765);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setLayout(null);
+
+//		setBounds(100, 100, 794, 765);
+//		contentPane = new JPanel();
+//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		contentPane.setLayout(null);
 		
 		JLabel lblTotal = new JLabel("0.00");
 		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal.setBounds(625, 469, 84, 36);
-		contentPane.add(lblTotal);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(345, 48, 412, 375);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
+		lblTotal.setBounds(625, 477, 98, 33);
+		this.add(lblTotal);
+	
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 412, 375);
-		panel.add(scrollPane);
+		scrollPane.setBounds(352, 40, 430, 375);
+		this.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setColumnHeaderView(table);
@@ -133,50 +87,45 @@ public class sellFrame extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Total: $");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel.setBounds(552, 473, 71, 31);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setBounds(540, 484, 62, 21);
+		this.add(lblNewLabel);
 		
 		JLabel lblChange = new JLabel("0.00");
 		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblChange.setBounds(625, 544, 84, 36);
-		contentPane.add(lblChange);
-		
-		JLabel lblNewLabel_1 = new JLabel("Tax: $");
-		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_1.setBounds(563, 435, 60, 26);
-		contentPane.add(lblNewLabel_1);
+		lblChange.setBounds(629, 551, 94, 52);
+		this.add(lblChange);
 		
 		JLabel lblNewLabel_2 = new JLabel("Cash: $");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_2.setBounds(552, 516, 71, 16);
-		contentPane.add(lblNewLabel_2);
+		lblNewLabel_2.setBounds(540, 517, 84, 33);
+		this.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Change: $");
 		lblNewLabel_3.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_3.setBounds(528, 549, 85, 28);
-		contentPane.add(lblNewLabel_3);
+		lblNewLabel_3.setBounds(518, 558, 84, 41);
+		this.add(lblNewLabel_3);
 		
 		JLabel lblcashAmount = new JLabel("");
 		lblcashAmount.setHorizontalAlignment(SwingConstants.LEFT);
 		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblcashAmount.setBounds(625, 508, 84, 36);
-		contentPane.add(lblcashAmount);
+		lblcashAmount.setBounds(625, 529, 115, 33);
+		this.add(lblcashAmount);
 		
 		JLabel lblNewLabel_4 = new JLabel(" Employee ID:");
-		lblNewLabel_4.setBounds(6, 6, 98, 16);
-		contentPane.add(lblNewLabel_4);
+		lblNewLabel_4.setBounds(17, 11, 86, 16);
+		this.add(lblNewLabel_4);
 		
 		JLabel lblDraw = new JLabel("Draw#");
-		lblDraw.setBounds(284, 6, 48, 16);
-		contentPane.add(lblDraw);
+		lblDraw.setBounds(342, 11, 40, 16);
+		this.add(lblDraw);
 		
 		JLabel Date = new JLabel("Date:");
-		Date.setBounds(538, 6, 42, 16);
-		contentPane.add(Date);
+		Date.setBounds(568, 11, 33, 16);
+		this.add(Date);
 		
 		JLabel lblDate = new JLabel();
-		lblDate.setBounds(572, 6, 185, 16);
-		contentPane.add(lblDate);
+		lblDate.setBounds(606, 11, 157, 16);
+		this.add(lblDate);
 		Timer simpleTimer = new Timer(500, new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -190,14 +139,13 @@ public class sellFrame extends JFrame {
 		simpleTimer.setCoalesce(true);
 		simpleTimer.start();
 		
-		JLabel lblDrawNum = new JLabel("1");
-		lblDrawNum.setBounds(344, 6, 84, 16);
-		contentPane.add(lblDrawNum);
+		JLabel lblDrawNum = new JLabel("");
+		lblDrawNum.setBounds(394, 11, 40, 16);
+		this.add(lblDrawNum);
 		
-		JLabel lblEmployeeID = new JLabel("");
-		lblEmployeeID.setBounds(95, 6, 124, 16);
-		lblEmployeeID.setText("19201");
-		contentPane.add(lblEmployeeID);
+		lblEmployeeID = new JLabel("");
+		lblEmployeeID.setBounds(115, 11, 84, 16);
+		this.add(lblEmployeeID);
 		
 		JButton btnBananaButton = new JButton("Banana");
 		btnBananaButton.addActionListener(new ActionListener() 
@@ -210,8 +158,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "banana");
 			}
 		});
-		btnBananaButton.setBounds(6, 53, 98, 38);
-		contentPane.add(btnBananaButton);
+		btnBananaButton.setBounds(15, 76, 88, 29);
+		this.add(btnBananaButton);
 		
 		JButton btnMengo = new JButton("Mengo");
 		btnMengo.addActionListener(new ActionListener() 
@@ -224,8 +172,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "mengo");
 			}
 		});
-		btnMengo.setBounds(6, 96, 98, 38);
-		contentPane.add(btnMengo);
+		btnMengo.setBounds(113, 76, 86, 29);
+		this.add(btnMengo);
 		
 		JButton btnApple = new JButton("Apple");
 		btnApple.addActionListener(new ActionListener() 
@@ -238,8 +186,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "apple");
 			}
 		});
-		btnApple.setBounds(6, 139, 98, 38);
-		contentPane.add(btnApple);
+		btnApple.setBounds(204, 76, 80, 29);
+		this.add(btnApple);
 		
 		JButton buttonBlueBerry = new JButton("Blue Berry");
 		buttonBlueBerry.addActionListener(new ActionListener() 
@@ -252,8 +200,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "blue berry");
 			}
 		});
-		buttonBlueBerry.setBounds(116, 53, 98, 38);
-		contentPane.add(buttonBlueBerry);
+		buttonBlueBerry.setBounds(17, 117, 86, 29);
+		this.add(buttonBlueBerry);
 		
 		JButton btnOrange = new JButton("Orange");
 		btnOrange.addActionListener(new ActionListener() {
@@ -265,8 +213,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "orange");
 			}
 		});
-		btnOrange.setBounds(116, 96, 98, 38);
-		contentPane.add(btnOrange);
+		btnOrange.setBounds(115, 117, 89, 29);
+		this.add(btnOrange);
 		
 		JButton btnPineapple = new JButton("Pineapple");
 		btnPineapple.addActionListener(new ActionListener() 
@@ -279,8 +227,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "pineapple");
 			}
 		});
-		btnPineapple.setBounds(116, 139, 98, 38);
-		contentPane.add(btnPineapple);
+		btnPineapple.setBounds(17, 158, 84, 29);
+		this.add(btnPineapple);
 		
 		JButton btnStrawberry = new JButton("Strawberry");
 		btnStrawberry.addActionListener(new ActionListener() 
@@ -293,8 +241,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "strawberry");
 			}
 		});
-		btnStrawberry.setBounds(226, 139, 98, 38);
-		contentPane.add(btnStrawberry);
+		btnStrawberry.setBounds(113, 158, 91, 29);
+		this.add(btnStrawberry);
 		
 		JButton btnDurian = new JButton("Durian");
 		btnDurian.addActionListener(new ActionListener() 
@@ -307,8 +255,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "durian");
 			}
 		});
-		btnDurian.setBounds(226, 96, 98, 38);
-		contentPane.add(btnDurian);
+		btnDurian.setBounds(204, 117, 86, 29);
+		this.add(btnDurian);
 		
 		JButton btnAvocado = new JButton("Avocado");
 		btnAvocado.addActionListener(new ActionListener() 
@@ -321,8 +269,8 @@ public class sellFrame extends JFrame {
 				item.setUpdateNewQuantity((int)enteringValue, "avocado");
 			}
 		});
-		btnAvocado.setBounds(226, 53, 98, 38);
-		contentPane.add(btnAvocado);
+		btnAvocado.setBounds(207, 158, 98, 29);
+		this.add(btnAvocado);
 		
 		JButton btnPayment = new JButton("Payment");
 		isPaymentButtonPress = false;
@@ -340,8 +288,8 @@ public class sellFrame extends JFrame {
 				}
 			}
 		});
-		btnPayment.setBounds(264, 566, 117, 113);
-		contentPane.add(btnPayment);
+		btnPayment.setBounds(196, 494, 160, 91);
+		this.add(btnPayment);
 		
 		JButton btnVoidAll = new JButton("Void All");
 		btnVoidAll.addActionListener(new ActionListener() 
@@ -358,8 +306,8 @@ public class sellFrame extends JFrame {
 				lblTotal.setText(numFormat.format(0.00));
 			}
 		});
-		btnVoidAll.setBounds(135, 566, 117, 50);
-		contentPane.add(btnVoidAll);
+		btnVoidAll.setBounds(17, 494, 169, 43);
+		this.add(btnVoidAll);
 		
 		JButton btnQty = new JButton("QTY");
 		btnQty.addActionListener(new ActionListener() {
@@ -368,8 +316,8 @@ public class sellFrame extends JFrame {
 				isQuantityButtonPress = true;
 			}
 		});
-		btnQty.setBounds(6, 566, 117, 113);
-		contentPane.add(btnQty);
+		btnQty.setBounds(125, 419, 75, 62);
+		this.add(btnQty);
 		
 		JButton btn7num = new JButton("7");
 		btn7num.addActionListener(new ActionListener() {
@@ -384,8 +332,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn7num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn7num.setBounds(6, 213, 105, 66);
-		contentPane.add(btn7num);
+		btn7num.setBounds(17, 330, 86, 33);
+		this.add(btn7num);
 		
 		JButton btn8num = new JButton("8");
 		btn8num.addActionListener(new ActionListener() 
@@ -401,8 +349,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn8num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn8num.setBounds(116, 213, 105, 66);
-		contentPane.add(btn8num);
+		btn8num.setBounds(115, 330, 75, 33);
+		this.add(btn8num);
 		
 		JButton btn9num = new JButton("9");
 		btn9num.addActionListener(new ActionListener() 
@@ -418,8 +366,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn9num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn9num.setBounds(226, 213, 105, 66);
-		contentPane.add(btn9num);
+		btn9num.setBounds(209, 330, 75, 33);
+		this.add(btn9num);
 		
 		JButton btn4num = new JButton("4");
 		btn4num.addActionListener(new ActionListener() 
@@ -435,8 +383,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn4num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn4num.setBounds(6, 278, 105, 66);
-		contentPane.add(btn4num);
+		btn4num.setBounds(19, 285, 84, 33);
+		this.add(btn4num);
 		
 		JButton btn5num = new JButton("5");
 		btn5num.addActionListener(new ActionListener() 
@@ -455,8 +403,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn5num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn5num.setBounds(116, 278, 105, 66);
-		contentPane.add(btn5num);
+		btn5num.setBounds(115, 285, 75, 33);
+		this.add(btn5num);
 		
 		JButton btn6num = new JButton("6");
 		btn6num.addActionListener(new ActionListener() 
@@ -472,8 +420,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn6num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn6num.setBounds(226, 278, 105, 66);
-		contentPane.add(btn6num);
+		btn6num.setBounds(209, 285, 75, 33);
+		this.add(btn6num);
 		
 		JButton btn1num = new JButton("1");
 		btn1num.addActionListener(new ActionListener() 
@@ -489,8 +437,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn1num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn1num.setBounds(6, 344, 105, 66);
-		contentPane.add(btn1num);
+		btn1num.setBounds(17, 240, 86, 33);
+		this.add(btn1num);
 		
 		JButton btn2num = new JButton("2");
 		btn2num.addActionListener(new ActionListener() 
@@ -506,8 +454,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn2num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn2num.setBounds(116, 344, 105, 66);
-		contentPane.add(btn2num);
+		btn2num.setBounds(115, 240, 75, 33);
+		this.add(btn2num);
 		
 		JButton btn3num = new JButton("3");
 		btn3num.addActionListener(new ActionListener() 
@@ -523,8 +471,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn3num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn3num.setBounds(226, 344, 105, 66);
-		contentPane.add(btn3num);
+		btn3num.setBounds(204, 240, 75, 33);
+		this.add(btn3num);
 		
 		JButton btn0num = new JButton("0");
 		btn0num.addActionListener(new ActionListener() 
@@ -540,8 +488,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btn0num.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btn0num.setBounds(116, 415, 105, 66);
-		contentPane.add(btn0num);
+		btn0num.setBounds(115, 375, 75, 33);
+		this.add(btn0num);
 		
 		JButton btnDot = new JButton(".");
 		btnDot.addActionListener(new ActionListener() 
@@ -557,8 +505,8 @@ public class sellFrame extends JFrame {
 			}
 		});
 		btnDot.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		btnDot.setBounds(226, 415, 105, 66);
-		contentPane.add(btnDot);
+		btnDot.setBounds(204, 375, 75, 33);
+		this.add(btnDot);
 		
 		JButton btnEnter = new JButton("Enter");
 		isEnterButtonPress = false;
@@ -587,63 +535,8 @@ public class sellFrame extends JFrame {
 				}
 			}
 		});
-		btnEnter.setBounds(116, 490, 208, 75);
-		contentPane.add(btnEnter);
-		
-		JButton btnLogOut = new JButton("Log Out");
-		btnLogOut.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				FileWriter writer = null;
-				String FILE_HEADER = "EmployeeID, Date, Time Log In, Time Log Out, Sale($)";
-				String DLIMETER_COMMA = ",";
-				String DLIMETER_NEW_LINE = "\n";
-				try 
-				{
-					writer = new FileWriter("./data/employee_sell_today.csv");
-					writer.append(FILE_HEADER.toString());
-					writer.append(DLIMETER_NEW_LINE);
-					writer.append(lblEmployeeID.getText());
-					writer.append(DLIMETER_COMMA);
-					writer.append(lblDate.getText());
-					writer.append(DLIMETER_COMMA);
-					writer.append(numFormat.format(cashierTotalSale));
-					writer.append(DLIMETER_NEW_LINE);
-					cashierTotalSale = 0;
-					writer.close();
-					sellframe.dispose();
-					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnLogOut.setBackground(new Color(255, 0, 0));
-		btnLogOut.setBounds(690, 673, 84, 44);
-		contentPane.add(btnLogOut);
-		
-		
-		
-		JLabel lblTax = new JLabel("0.00");
-		lblTax.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTax.setBounds(625, 429, 84, 36);
-		contentPane.add(lblTax);
-		
-		JButton btnMenu = new JButton("Menu");
-		btnMenu.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				MenuFrame frame = new MenuFrame();
-				frame.setVisible(true);
-				
-			}
-		});
-		btnMenu.setBackground(Color.WHITE);
-		btnMenu.setBounds(603, 673, 84, 44);
-		contentPane.add(btnMenu);
+		btnEnter.setBounds(208, 414, 76, 67);
+		this.add(btnEnter);
 		
 		JButton btnPrintRecipet = new JButton("Print Receipt");
 		btnPrintRecipet.addActionListener(new ActionListener() 
@@ -675,7 +568,6 @@ public class sellFrame extends JFrame {
 					}
 					writer.close();
 					
-					lblTax.setText("0.00");
 					lblTotal.setText("0.00");
 					lblcashAmount.setText("0.00");
 					lblChange.setText("0.00");
@@ -699,8 +591,8 @@ public class sellFrame extends JFrame {
 				}
 			}
 		});
-		btnPrintRecipet.setBounds(6, 691, 365, 43);
-		contentPane.add(btnPrintRecipet);
+		btnPrintRecipet.setBounds(17, 620, 324, 84);
+		this.add(btnPrintRecipet);
 		
 		JButton btnVoid = new JButton("Void");
 		btnVoid.addActionListener(new ActionListener() 
@@ -713,13 +605,13 @@ public class sellFrame extends JFrame {
 					totalPrice -= Double.parseDouble((model.getValueAt(row[i]-i, 2).toString()));
 				     model.removeRow(row[i]-i);
 				}
-
+	
 				lblTotal.setText(numFormat.format(totalPrice));
-
+	
 			}
 		});
-		btnVoid.setBounds(135, 628, 117, 50);
-		contentPane.add(btnVoid);
+		btnVoid.setBounds(17, 543, 169, 42);
+		this.add(btnVoid);
 		
 		JButton btnReturn = new JButton("Return Item");
 		btnReturn.addActionListener(new ActionListener() 
@@ -743,14 +635,34 @@ public class sellFrame extends JFrame {
 				}catch(IOException e1)
 				{
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+						e1.printStackTrace();
+					}
 				}
-			}
-		});
-		btnReturn.setBounds(6, 422, 105, 122);
-		contentPane.add(btnReturn);
+			});
+			btnReturn.setBounds(17, 377, 97, 84);
+			this.add(btnReturn);
+		
+		}
 	
+	public void setEmployeeID(String name)
+	{
+		lblEmployeeID.setText(name);
 	}
 	
+	public void setDrawer(String num)
+	{
+		lblDrawNum.setText(num);
+	}
+	
+	public void setLogOut()
+	{
+		Calendar now = Calendar.getInstance();
+		logOut = DateFormat.getDateTimeInstance().format(now.getTime());
+	}
+	
+	public String getLogOut()
+	{
+		return logOut;
+	}
 
 }
