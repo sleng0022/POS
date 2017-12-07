@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class EmployeeSale 
 {
-	static ArrayList<Integer> EmployeeID = new ArrayList<Integer>();
+	static ArrayList<String> EmployeeID = new ArrayList<String>();
+	static ArrayList<Integer> drawerNum = new ArrayList<Integer>();
 	static ArrayList<String> date = new ArrayList<String>();
 	static ArrayList<String> TimeLogIn = new ArrayList<String>();
 	static ArrayList<String> TimeLogOut = new ArrayList<String>();
@@ -16,7 +17,8 @@ public class EmployeeSale
 	
 	
 	private int size;
-	private int employeeID;
+	private String employeeID;
+	private int drawer;
 	private String dateSale;
 	private String timeLogin;
 	private String timeLogOut;
@@ -38,11 +40,12 @@ public class EmployeeSale
 				continue;
 			}
 			String cols[] = line.split(",");
-			EmployeeID.add(Integer.parseInt(cols[0]));
-			date.add(cols[1]);
-			TimeLogIn.add(cols[2]);
-			TimeLogOut.add(cols[3]);
-			TotalSale.add(Double.parseDouble(cols[4]));
+			EmployeeID.add(cols[0]);
+			drawerNum.add(Integer.parseInt(cols[1]));
+			date.add(cols[2]);
+			TimeLogIn.add(cols[3]);
+			TimeLogOut.add(cols[4]);
+			TotalSale.add(Double.parseDouble(cols[5]));
 			size++;
 		}
 		br.close();
@@ -53,7 +56,7 @@ public class EmployeeSale
 		return this.size;
 	}
 	
-	public int getEmployeeID(int index)
+	public String getEmployeeID(int index)
 	{
 		return this.employeeID = EmployeeID.get(index);
 	}
@@ -76,5 +79,10 @@ public class EmployeeSale
 	public double getsaleToday(int index)
 	{
 		return this.saleToday = TotalSale.get(index);
+	}
+	
+	public int getDrawer(int index)
+	{
+		return this.drawer = drawerNum.get(index);
 	}
 }

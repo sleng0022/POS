@@ -37,7 +37,7 @@ public class inventoryPanel extends JPanel
 	/* Items List */
 	Object[] itemListcolumns  = {"Id", "Description", "Last Order", "Current Qty"};
 	Object[] saleTodayColumn = {"RegisterID", "Date", "TotalSale"};
-	Object[] employeeSaleColumn = {"Employee ID", "Date", "Time Log In", "Time Log Out", "Sale"};
+	Object[] employeeSaleColumn = {"Employee ID", "Drawer", "Date", "Time Log In", "Time Log Out", "Sale"};
 	DefaultTableModel modelItemList = new DefaultTableModel ();
 	private JTextField textFieldSupplier;
 	private JTextField textFieldThreshold;
@@ -278,7 +278,7 @@ public class inventoryPanel extends JPanel
 		
 		for(int i=0; i<saleEmployee.getSize(); i++)
 		{
-			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
+			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getDrawer(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
 		}
 	}
 	

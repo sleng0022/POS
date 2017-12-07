@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -657,7 +658,8 @@ public class sellItemPanel extends JPanel
 	public void setLogOut()
 	{
 		Calendar now = Calendar.getInstance();
-		logOut = DateFormat.getDateTimeInstance().format(now.getTime());
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd, HH:mm");
+		logOut = df.format(now.getTime());
 	}
 	
 	public String getLogOut()

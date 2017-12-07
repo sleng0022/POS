@@ -120,6 +120,7 @@ public class MainFrame {
 					menuP.setEmployeeID(mainP.getEmployeeID());
 					menuP.setDrawer(mainP.getDrawer());
 					menuP.setLogIn();
+					mainP.saveEmployeeTimeStamp();
 					cl.show(frame.getContentPane(), "2");
 				}else
 				{
@@ -151,31 +152,6 @@ public class MainFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-//				FileWriter writer = null;
-//				String FILE_HEADER = "EmployeeID, Date, Time Log In, Time Log Out, Sale($)";
-//				String DLIMETER_COMMA = ",";
-//				String DLIMETER_NEW_LINE = "\n";
-//				try 
-//				{
-//					writer = new FileWriter("./data/employee_sell_today.csv");
-//					writer.append(FILE_HEADER.toString());
-//					writer.append(DLIMETER_NEW_LINE);
-//					writer.append(lblEmployeeID.getText());
-//					writer.append(DLIMETER_COMMA);
-//					writer.append(lblDate.getText());
-//					writer.append(DLIMETER_COMMA);
-//					writer.append(numFormat.format(cashierTotalSale));
-//					writer.append(DLIMETER_NEW_LINE);
-//					cashierTotalSale = 0;
-//					writer.close();
-//					sellframe.dispose();
-//					MainFrame window = new MainFrame();
-//					window.frame.setVisible(true);
-//					
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 				sellP.setEmployeeID(mainP.getEmployeeID());
 				sellP.setDrawer(mainP.getDrawer());
 				sellP.setLogOut();
