@@ -60,25 +60,38 @@ public class MainFrame {
 	 */
 	public MainFrame() throws IOException 
 	{
-		sellItemPanel sellP = new sellItemPanel();	
+		sellItemPanel sellP = new sellItemPanel();
+		inventoryPanel inventoryP = new inventoryPanel();
 		initialize();
 		
 		frame.getContentPane().setLayout(cl);
 		frame.getContentPane().add(mainP, "1");
 		frame.getContentPane().add(menuP, "2");
 		frame.getContentPane().add(sellP, "3");
+		frame.getContentPane().add(inventoryP, "4");
+		
 		JButton buttonSellMenu = new JButton("SELL & RETURN ITEM ");
 		buttonSellMenu.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				
 				cl.show(frame.getContentPane(), "3");
+				sellP.setEmployeeID(mainP.getEmployeeID());
+				sellP.setDrawer(mainP.getDrawer());	//bug
 			}
 		});
 		buttonSellMenu.setBounds(250, 218, 212, 29);
 		menuP.add(buttonSellMenu);
 		
 		JButton buttonInventory = new JButton("INVENTORY MANAGEMENT");
+		buttonInventory.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cl.show(frame.getContentPane(), "4");
+			}
+		});
 		buttonInventory.setBounds(250, 259, 212, 29);
 		menuP.add(buttonInventory);
 		
@@ -163,12 +176,36 @@ public class MainFrame {
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 //				}
+				sellP.setEmployeeID(mainP.getEmployeeID());
+				sellP.setDrawer(mainP.getDrawer());
+				sellP.setLogOut();
 				cl.show(frame.getContentPane(), "1");
 			}
 		});
 		sellLogOutbutton.setBounds(669, 664, 94, 56);
 		sellP.add(sellLogOutbutton);
 		
+		JButton btnMenu = new JButton("MENU");
+		btnMenu.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cl.show(frame.getContentPane(), "2");
+			}
+		});
+		btnMenu.setBounds(473, 679, 141, 44);
+		inventoryP.add(btnMenu);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cl.show(frame.getContentPane(), "1");
+			}
+		});
+		btnLogOut.setBounds(626, 679, 141, 44);
+		inventoryP.add(btnLogOut);
 	}
 
 	/**
@@ -177,7 +214,7 @@ public class MainFrame {
 	private void initialize() 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 794, 765);
+		frame.setBounds(100, 100, 864, 765);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}

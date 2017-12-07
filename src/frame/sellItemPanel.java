@@ -44,11 +44,15 @@ public class sellItemPanel extends JPanel
 	private double cashierTotalSale;
 	private double newPrice;
 	private double change;
+	private JLabel lblEmployeeID;
+	private JLabel lblDrawNum;
+	
+	private String logOut;
 	
 	Object[] columns  = {"Qty", "Description", "Price"};
 	DefaultTableModel model = new DefaultTableModel ();
 	DoublyLinkList<String> amount = new DoublyLinkList<String>(); 
-	static sellFrame sellframe;
+	static JFrame sellframe;
 
 	/**
 	 * Create the panel.
@@ -136,11 +140,11 @@ public class sellItemPanel extends JPanel
 		simpleTimer.start();
 		
 		JLabel lblDrawNum = new JLabel("");
-		lblDrawNum.setBounds(394, 11, 20, 16);
+		lblDrawNum.setBounds(394, 11, 40, 16);
 		this.add(lblDrawNum);
 		
-		JLabel lblEmployeeID = new JLabel("");
-		lblEmployeeID.setBounds(115, 11, 62, 16);
+		lblEmployeeID = new JLabel("");
+		lblEmployeeID.setBounds(115, 11, 84, 16);
 		this.add(lblEmployeeID);
 		
 		JButton btnBananaButton = new JButton("Banana");
@@ -639,5 +643,26 @@ public class sellItemPanel extends JPanel
 			this.add(btnReturn);
 		
 		}
+	
+	public void setEmployeeID(String name)
+	{
+		lblEmployeeID.setText(name);
+	}
+	
+	public void setDrawer(String num)
+	{
+		lblDrawNum.setText(num);
+	}
+	
+	public void setLogOut()
+	{
+		Calendar now = Calendar.getInstance();
+		logOut = DateFormat.getDateTimeInstance().format(now.getTime());
+	}
+	
+	public String getLogOut()
+	{
+		return logOut;
+	}
 
 }
