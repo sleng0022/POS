@@ -68,7 +68,7 @@ public class sellItemPanel extends JPanel
 		
 		JLabel lblTotal = new JLabel("0.00");
 		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal.setBounds(669, 424, 45, 25);
+		lblTotal.setBounds(625, 477, 98, 33);
 		this.add(lblTotal);
 	
 		JScrollPane scrollPane = new JScrollPane();
@@ -83,28 +83,28 @@ public class sellItemPanel extends JPanel
 		
 		JLabel lblNewLabel = new JLabel("Total: $");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel.setBounds(595, 427, 62, 21);
+		lblNewLabel.setBounds(540, 484, 62, 21);
 		this.add(lblNewLabel);
 		
 		JLabel lblChange = new JLabel("0.00");
 		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblChange.setBounds(669, 494, 45, 25);
+		lblChange.setBounds(629, 551, 94, 52);
 		this.add(lblChange);
 		
 		JLabel lblNewLabel_2 = new JLabel("Cash: $");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_2.setBounds(595, 460, 62, 21);
+		lblNewLabel_2.setBounds(540, 517, 84, 33);
 		this.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Change: $");
 		lblNewLabel_3.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_3.setBounds(573, 497, 84, 21);
+		lblNewLabel_3.setBounds(518, 558, 84, 41);
 		this.add(lblNewLabel_3);
 		
 		JLabel lblcashAmount = new JLabel("");
 		lblcashAmount.setHorizontalAlignment(SwingConstants.LEFT);
 		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblcashAmount.setBounds(427, 19, 0, 0);
+		lblcashAmount.setBounds(625, 529, 115, 33);
 		this.add(lblcashAmount);
 		
 		JLabel lblNewLabel_4 = new JLabel(" Employee ID:");
@@ -533,43 +533,6 @@ public class sellItemPanel extends JPanel
 		});
 		btnEnter.setBounds(208, 414, 76, 67);
 		this.add(btnEnter);
-		
-		JButton btnLogOut = new JButton("Log Out");
-		btnLogOut.setForeground(Color.RED);
-		btnLogOut.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				FileWriter writer = null;
-				String FILE_HEADER = "EmployeeID, Date, Time Log In, Time Log Out, Sale($)";
-				String DLIMETER_COMMA = ",";
-				String DLIMETER_NEW_LINE = "\n";
-				try 
-				{
-					writer = new FileWriter("./data/employee_sell_today.csv");
-					writer.append(FILE_HEADER.toString());
-					writer.append(DLIMETER_NEW_LINE);
-					writer.append(lblEmployeeID.getText());
-					writer.append(DLIMETER_COMMA);
-					writer.append(lblDate.getText());
-					writer.append(DLIMETER_COMMA);
-					writer.append(numFormat.format(cashierTotalSale));
-					writer.append(DLIMETER_NEW_LINE);
-					cashierTotalSale = 0;
-					writer.close();
-					sellframe.dispose();
-					MainFrame window = new MainFrame();
-					window.frame.setVisible(true);
-					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnLogOut.setBackground(new Color(255, 0, 0));
-		btnLogOut.setBounds(669, 664, 94, 56);
-		this.add(btnLogOut);
 		
 		JButton btnPrintRecipet = new JButton("Print Receipt");
 		btnPrintRecipet.addActionListener(new ActionListener() 

@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class MainFrame {
@@ -82,13 +83,20 @@ public class MainFrame {
 		menuP.add(buttonInventory);
 		
 		JButton buttonLogOut = new JButton("LOG OUT");
+		buttonLogOut.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cl.show(frame.getContentPane(), "1");
+			}
+		});
 		buttonLogOut.setOpaque(true);
 		buttonLogOut.setForeground(Color.RED);
 		buttonLogOut.setBackground(SystemColor.window);
 		buttonLogOut.setBounds(250, 297, 212, 29);
 		menuP.add(buttonLogOut);
 		
-		
+
 		btnLogIn.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -113,8 +121,53 @@ public class MainFrame {
 		
 		
 		JButton sellMenubutton = new JButton("Menu");
-		sellMenubutton.setBackground(Color.WHITE);
+		sellMenubutton.setBackground(SystemColor.window);
+		sellMenubutton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cl.show(frame.getContentPane(), "2");
+			}
+		});
+		sellMenubutton.setBounds(559, 664, 94, 56);
 		sellP.add(sellMenubutton);
+		
+		JButton sellLogOutbutton = new JButton("Log Out");
+		sellLogOutbutton.setBackground(SystemColor.window);
+		sellLogOutbutton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+//				FileWriter writer = null;
+//				String FILE_HEADER = "EmployeeID, Date, Time Log In, Time Log Out, Sale($)";
+//				String DLIMETER_COMMA = ",";
+//				String DLIMETER_NEW_LINE = "\n";
+//				try 
+//				{
+//					writer = new FileWriter("./data/employee_sell_today.csv");
+//					writer.append(FILE_HEADER.toString());
+//					writer.append(DLIMETER_NEW_LINE);
+//					writer.append(lblEmployeeID.getText());
+//					writer.append(DLIMETER_COMMA);
+//					writer.append(lblDate.getText());
+//					writer.append(DLIMETER_COMMA);
+//					writer.append(numFormat.format(cashierTotalSale));
+//					writer.append(DLIMETER_NEW_LINE);
+//					cashierTotalSale = 0;
+//					writer.close();
+//					sellframe.dispose();
+//					MainFrame window = new MainFrame();
+//					window.frame.setVisible(true);
+//					
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+				cl.show(frame.getContentPane(), "1");
+			}
+		});
+		sellLogOutbutton.setBounds(669, 664, 94, 56);
+		sellP.add(sellLogOutbutton);
 		
 	}
 
