@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -185,6 +188,7 @@ public class inventoryPanel extends JPanel
 						isAllTextFieldEditable(false);
 					}else if((String)comboBox.getSelectedItem()=="Register Sale Today")
 					{
+						registerSaleToday = new TrackEachRegisterSaleToday();
 						AllRegisterSaleToday();
 						isAllTextFieldEditable(false);
 					}else if((String)comboBox.getSelectedItem()=="Employee Sale Today")
@@ -193,7 +197,6 @@ public class inventoryPanel extends JPanel
 						isAllTextFieldEditable(false);
 					}else if((String)comboBox.getSelectedItem()=="Add/Remove Item")
 					{
-						item = new ReadInventory();
 						EditItem();
 						isAllTextFieldEditable(true);
 					}else if((String)comboBox.getSelectedItem()=="Outstanding Order")
@@ -313,8 +316,16 @@ public class inventoryPanel extends JPanel
 		
 		for(int i=0; i<item.getSize(); i++)
 		{
-			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getPrice(i), item.getLastOrderDate(i), item.getLastOrderQty(i), 
+				modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getPrice(i), item.getLastOrderDate(i), item.getLastOrderQty(i), 
 					item.getcurrentInStockQty(i), item.getSupplier(i), item.getExpirationDate(i), item.getThreshold(i), item.getComment(i)});
+		}
+		
+		for(int i=0; i<modelItemList.getRowCount(); i++)
+		{
+			if(removeRecord(i) == true)
+			{
+				modelItemList.removeRow(i);
+			}
 		}
 	}
 	
@@ -352,4 +363,28 @@ public class inventoryPanel extends JPanel
 			modelItemList.addRow(new Object[] {orderItem.getDate(i), orderItem.getItemOrder(i), orderItem.getQtyOrder(i)});
 		}
 	}
+	
+	private boolean removeRecord(int index)
+	{
+		String[] todayDate;
+		
+		Calendar now = Calendar.getInstance();
+		DateFormat df = new SimpleDateFormat("MM/dd/yy");
+		todayDate = df.format(now.getTime()).split("/");
+		
+		String[] array = item.getLastOrderDate(index).split("/");
+			
+		if(((Integer.parseInt(todayDate[2])) - (Integer.parseInt(array[2])) >= 1)) //compare year
+		{
+			if((Integer.parseInt(todayDate[0])) >= (Integer.parseInt(array[0])))
+			{
+				if((Integer.parseInt(todayDate[0])) >= (Integer.parseInt(array[0])))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 }

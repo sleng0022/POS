@@ -1,10 +1,11 @@
-Id, Item, Price,Last Order, Total Qty, Current Qty,Supplier,Expiration,Threshold,comment
-0,banana,0.75,9/10/10,10,9,a,12/10/10,5,na
-1,orange,1,9/10/10,20,10,b,13/11/2010,0,na
-2,durian,11,6/10/10,30,27,c,14/12/2010,0,na
-3,mengo,5.75,5/10/10,20,36,d,15/13/2010,0,na
-4,avocado,2,7/10/10,50,47,e,16/14/2010,0,na
-5,apple,1.65,9/10/10,100,97,f,17/15/2010,0,na
-6,pineapple,3.25,10/10/10,70,68,g,18/16/2010,0,na
-7,strawberry,8,11/10/10,23,21,h,19/17/2010,0,na
-8,blue berry,4.23,9/10/10,64,64,i,20/18/2010,0,na
+Id, Item, Price,Last Order, Total Qty, Current Qty, Supplier, Expiration, Threshold, Comment
+0,banana,0.75,9/10/17,100,50,a,12/10/20,40,na
+1,orange,1,9/11/17,100,50,b,12/11/20,40,na
+2,durian,11,9/12/17,100,50,c,12/12/20,40,na
+3,mengo,5.75,9/13/17,100,50,d,12/13/20,40,na
+4,avocado,2,9/14/17,100,50,e,12/14/20,40,na
+5,apple,1.65,9/15/17,100,50,f,12/15/20,40,na
+6,pineapple,3.25,9/16/17,100,50,g,12/16/20,40,na
+7,strawberry,8,9/17/17,100,50,h,12/17/20,40,na
+8,blue berry,4.23,9/18/17,100,50,i,12/18/20,40,na
+9,tomato,12,9/19/16,120,120,j,1/1/11,10,na

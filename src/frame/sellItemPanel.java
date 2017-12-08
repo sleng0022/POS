@@ -709,6 +709,15 @@ public class sellItemPanel extends JPanel
 		logOut = df.format(now.getTime());
 	}
 	
+	public String getLogOutDate()
+	{
+		String logOutDate;
+		Calendar now = Calendar.getInstance();
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		logOutDate = df.format(now.getTime());
+		return logOutDate;
+	}
+	
 	public String getLogOut()
 	{
 		return logOut;

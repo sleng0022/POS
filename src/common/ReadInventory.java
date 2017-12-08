@@ -116,4 +116,18 @@ public class ReadInventory
 	{
 		return this.size = id_num.size();
 	}
+	
+	public void removeItemRecord(int index)
+	{
+		id_num.remove(index);
+		item.remove(index);
+		priceEach.remove(index);
+		lastOrder.remove(index);
+		totalQty.remove(index);
+		CurrentQty.remove(index);
+		SupplierName.remove(index);
+		expiration.remove(index);
+		threshold.remove(index);
+		commentItem.remove(index);
+	}
 }
