@@ -226,15 +226,13 @@ public class itemList
 			writer = new FileWriter("./data/itemOrder.csv");
 			writer.append(FILE_HEADER.toString());
 			writer.append(DLIMETER_NEW_LINE);
-			for(int i=0; i<item.size(); i++)
-			{	
-				writer.append(this.getDate());
-				writer.append(DLIMETER_COMMA);
-				writer.append(this.getItemDescription(id));
-				writer.append(DLIMETER_COMMA);
-				writer.append(Integer.toString(this.getTotalQty(name)));
-				writer.append(DLIMETER_NEW_LINE);
-			}
+			
+			writer.append(this.getDate());
+			writer.append(DLIMETER_COMMA);
+			writer.append(this.getItemDescription(id));
+			writer.append(DLIMETER_COMMA);
+			writer.append(Integer.toString(this.getTotalQty(name)));
+			writer.append(DLIMETER_NEW_LINE);
 
 			writer.close();
 		}catch (IOException e1) 
