@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import common.TrackEachRegisterSaleToday;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -33,6 +36,7 @@ public class MainFrame {
 	mainPanel mainP = new mainPanel();
 	menuPanel menuP = new menuPanel();
 	CardLayout cl = new CardLayout();
+	TrackEachRegisterSaleToday regSale = new TrackEachRegisterSaleToday();
 	
 	private final JButton btnLogIn = new JButton("LogIn");
 	
@@ -101,6 +105,7 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				cl.show(frame.getContentPane(), "1");
+				sellP.saveEmployeeSaleToday(mainP.getEmployeeID(), menuP.getLogIn(), mainP.getDrawer());	
 			}
 		});
 		buttonLogOut.setOpaque(true);
@@ -152,10 +157,9 @@ public class MainFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				sellP.setEmployeeID(mainP.getEmployeeID());
-				sellP.setDrawer(mainP.getDrawer());
-				sellP.setLogOut();
 				cl.show(frame.getContentPane(), "1");
+				sellP.saveEmployeeSaleToday(mainP.getEmployeeID(), menuP.getLogIn(), mainP.getDrawer());	
+				regSale.getRegisterSaleToday(sellP.getLogOutDate(), mainP.getDrawer(), Double.toString(sellP.getCash()));
 			}
 		});
 		sellLogOutbutton.setBounds(669, 664, 94, 56);
@@ -178,6 +182,7 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				cl.show(frame.getContentPane(), "1");
+				sellP.saveEmployeeSaleToday(mainP.getEmployeeID(), menuP.getLogIn(), mainP.getDrawer());	
 			}
 		});
 		btnLogOut.setBounds(626, 679, 141, 44);
@@ -194,5 +199,7 @@ public class MainFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}
+	
+	
 
 }
