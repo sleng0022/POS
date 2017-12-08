@@ -68,7 +68,7 @@ public class sellItemPanel extends JPanel
 		
 		JLabel lblTotal = new JLabel("0.00");
 		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal.setBounds(624, 561, 98, 33);
+		lblTotal.setBounds(624, 528, 98, 33);
 		this.add(lblTotal);
 	
 		JScrollPane scrollPane = new JScrollPane();
@@ -83,28 +83,28 @@ public class sellItemPanel extends JPanel
 		
 		JLabel lblNewLabel = new JLabel("Total: $");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel.setBounds(550, 568, 62, 21);
+		lblNewLabel.setBounds(550, 535, 62, 21);
 		this.add(lblNewLabel);
 		
 		JLabel lblChange = new JLabel("0.00");
 		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblChange.setBounds(625, 632, 94, 52);
+		lblChange.setBounds(624, 588, 94, 52);
 		this.add(lblChange);
 		
 		JLabel lblNewLabel_2 = new JLabel("Cash: $");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_2.setBounds(550, 607, 84, 33);
+		lblNewLabel_2.setBounds(550, 562, 84, 33);
 		this.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Change: $");
 		lblNewLabel_3.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblNewLabel_3.setBounds(528, 639, 84, 41);
+		lblNewLabel_3.setBounds(528, 595, 84, 41);
 		this.add(lblNewLabel_3);
 		
 		JLabel lblcashAmount = new JLabel("");
 		lblcashAmount.setHorizontalAlignment(SwingConstants.LEFT);
 		lblcashAmount.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblcashAmount.setBounds(625, 595, 115, 33);
+		lblcashAmount.setBounds(624, 562, 115, 33);
 		this.add(lblcashAmount);
 		
 		JLabel lblNewLabel_4 = new JLabel(" Employee ID:");
@@ -121,8 +121,14 @@ public class sellItemPanel extends JPanel
 		
 		JLabel lblQty = new JLabel("Qty:");
 		lblQty.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		lblQty.setBounds(560, 535, 62, 21);
+		lblQty.setBounds(568, 475, 62, 29);
 		add(lblQty);
+		
+		JLabel labelQty = new JLabel("");
+		labelQty.setHorizontalAlignment(SwingConstants.LEFT);
+		labelQty.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		labelQty.setBounds(606, 471, 98, 33);
+		add(labelQty);
 		
 		JLabel lblDate = new JLabel();
 		lblDate.setBounds(606, 11, 157, 16);
@@ -329,6 +335,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn7num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn7num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -346,6 +356,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn8num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn8num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -363,6 +377,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn9num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn9num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -380,6 +398,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn4num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn4num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -399,7 +421,8 @@ public class sellItemPanel extends JPanel
 					lblcashAmount.setText(enteringNum);
 				}else if(isQuantityButtonPress)
 				{
-							
+					String enteringNum = labelQty.getText() + btn5num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -417,6 +440,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn6num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn6num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -436,8 +463,8 @@ public class sellItemPanel extends JPanel
 					lblcashAmount.setText(enteringNum);
 				}else if(isQuantityButtonPress)
 				{
-					String enteringNum = lblQty.getText();
-					lblQty.setText(enteringNum);
+					String enteringNum = labelQty.getText() + btn1num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -455,6 +482,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn2num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn2num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -472,6 +503,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn3num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn3num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -489,6 +524,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btn0num.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btn0num.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -506,6 +545,10 @@ public class sellItemPanel extends JPanel
 				{
 					String enteringNum = lblcashAmount.getText() + btnDot.getText();
 					lblcashAmount.setText(enteringNum);
+				}else if(isQuantityButtonPress)
+				{
+					String enteringNum = labelQty.getText() + btnDot.getText();
+					labelQty.setText(enteringNum);
 				}
 			}
 		});
@@ -646,14 +689,6 @@ public class sellItemPanel extends JPanel
 			});
 			btnReturn.setBounds(17, 356, 97, 126);
 			this.add(btnReturn);
-			
-			
-			
-			JLabel labelQty = new JLabel("");
-			labelQty.setHorizontalAlignment(SwingConstants.LEFT);
-			labelQty.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			labelQty.setBounds(606, 523, 94, 33);
-			add(labelQty);
 		
 		}
 	
