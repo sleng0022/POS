@@ -658,7 +658,7 @@ public class sellItemPanel extends JPanel
 	public void setLogOut()
 	{
 		Calendar now = Calendar.getInstance();
-		DateFormat df = new SimpleDateFormat("yyyy.MM.dd, HH:mm");
+		DateFormat df = new SimpleDateFormat("HH:mm");
 		logOut = df.format(now.getTime());
 	}
 	
@@ -666,5 +666,34 @@ public class sellItemPanel extends JPanel
 	{
 		return logOut;
 	}
-
+	
+	public void saveEmployeeSaleToday(String userId, String LogIn, String drawer)
+	{
+		FileWriter writer = null;
+		String FILE_HEADER = "EmployeeID, Drawer, Date, Time Log In, Time Log Out, Sale($)";
+		String DLIMETER_COMMA = ",";
+		String DLIMETER_NEW_LINE = "\n";
+		this.setLogOut();
+		try 
+		{
+			writer = new FileWriter("./data/employee_sell_today.csv");
+			writer.append(FILE_HEADER.toString());
+			writer.append(DLIMETER_NEW_LINE);
+			writer.append(userId);
+			writer.append(DLIMETER_COMMA);
+			writer.append(drawer);
+			writer.append(DLIMETER_COMMA);
+			writer.append(LogIn);
+			writer.append(DLIMETER_COMMA);
+			writer.append(logOut);
+			writer.append(DLIMETER_COMMA);
+			writer.append(Double.toString(cashierTotalSale));
+			writer.append(DLIMETER_NEW_LINE);
+			writer.close();
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 }

@@ -152,10 +152,8 @@ public class MainFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				sellP.setEmployeeID(mainP.getEmployeeID());
-				sellP.setDrawer(mainP.getDrawer());
-				sellP.setLogOut();
 				cl.show(frame.getContentPane(), "1");
+				sellP.saveEmployeeSaleToday(mainP.getEmployeeID(), menuP.getLogIn(), mainP.getDrawer());			
 			}
 		});
 		sellLogOutbutton.setBounds(669, 664, 94, 56);
@@ -194,5 +192,7 @@ public class MainFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}
+	
+	
 
 }
