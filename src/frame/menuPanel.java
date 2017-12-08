@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -84,7 +85,8 @@ public class menuPanel extends JPanel
 	public void setLogIn()
 	{
 		Calendar now = Calendar.getInstance();
-		logIn = DateFormat.getDateTimeInstance().format(now.getTime());
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd, HH:mm");
+		logIn = df.format(now.getTime());
 	}
 	
 	public String getLogIn()

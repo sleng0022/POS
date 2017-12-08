@@ -3,6 +3,7 @@ package common;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,8 +35,8 @@ public class TrackEachRegisterSaleToday
 				continue;
 			}
 			String cols[] = line.split(",");
-			register.add(Integer.parseInt(cols[0]));
-			date.add(cols[1]);
+			date.add(cols[0]);
+			register.add(Integer.parseInt(cols[1]));
 			totalSale.add(Double.parseDouble(cols[2]));
 			size++;
 		}
@@ -60,6 +61,32 @@ public class TrackEachRegisterSaleToday
 	public int getSize()
 	{
 		return this.size;
+	}
+	
+	public void getRegisterSaleToday(String date, String draw, String qtySale)
+	{
+		FileWriter writer = null;
+		String FILE_HEADER = "Date, Draw, TotalSale";
+		String DLIMETER_COMMA = ",";
+		String DLIMETER_NEW_LINE = "\n";
+		try 
+		{
+			writer = new FileWriter("./data/registerSale.csv");
+			writer.append(FILE_HEADER.toString());
+			writer.append(DLIMETER_NEW_LINE);
+			writer.append(date);
+			writer.append(DLIMETER_COMMA);
+			writer.append(draw);
+			writer.append(DLIMETER_COMMA);
+			writer.append(qtySale);
+			writer.append(DLIMETER_NEW_LINE);
+			writer.close();
+			
+		}catch (IOException e1) 
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 }

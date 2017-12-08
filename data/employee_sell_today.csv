@@ -1,2 +1,2 @@
-EmployeeID, Date, Log In Time,Log Out Time,Sale
-19201,3-Dec,8:30 PM,12:37,200
+EmployeeID, Drawer, Date, Time Log In, Time Log Out, Sale($)
+Sinith,1,2017.12.08, 03:05,,0.0

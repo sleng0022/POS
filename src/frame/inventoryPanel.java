@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -20,10 +23,10 @@ import javax.swing.table.DefaultTableModel;
 import common.EmployeeSale;
 import common.ReadInventory;
 import common.TrackEachRegisterSaleToday;
+import common.readOrder;
 
 public class inventoryPanel extends JPanel
 {
-	private JTextField SearchtextField;
 	private JTextField IDtextField;
 	private JTextField textFieldRCdate;
 	private JTextField textFieldPrice;
@@ -33,11 +36,14 @@ public class inventoryPanel extends JPanel
 	private ReadInventory item;
 	private TrackEachRegisterSaleToday registerSaleToday;
 	private EmployeeSale saleEmployee;
+	private readOrder orderItem;
 	
 	/* Items List */
 	Object[] itemListcolumns  = {"Id", "Description", "Last Order", "Current Qty"};
+	Object[] itemListColumnAdd = {"Id", "Item", "Price", "Last Order", "Total Qty", "Current Qty", "Supplier", "Expiration", "Threshold", "Comment"};
 	Object[] saleTodayColumn = {"RegisterID", "Date", "TotalSale"};
-	Object[] employeeSaleColumn = {"Employee ID", "Date", "Time Log In", "Time Log Out", "Sale"};
+	Object[] orderItemColumn = {"Date", "Item", "Qty"};
+	Object[] employeeSaleColumn = {"Employee ID", "Drawer", "Date", "Time Log In", "Time Log Out", "Sale"};
 	DefaultTableModel modelItemList = new DefaultTableModel ();
 	private JTextField textFieldSupplier;
 	private JTextField textFieldThreshold;
@@ -54,26 +60,18 @@ public class inventoryPanel extends JPanel
 		item = new ReadInventory();
 		registerSaleToday = new TrackEachRegisterSaleToday();
 		saleEmployee = new EmployeeSale();
+		orderItem = new readOrder();
 		setLayout(null);
 		
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Employee Sale Today", "Register Sale Today", "Outstanding Order", "Add/Remove Item"}));
-		comboBox.setBounds(82, 39, 187, 27);
+		comboBox.setBounds(91, 39, 187, 27);
 		this.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("Option");
 		lblNewLabel.setBounds(27, 43, 43, 16);
 		this.add(lblNewLabel);
-		
-		JLabel lblSearch = new JLabel("Search ");
-		lblSearch.setBounds(586, 43, 45, 16);
-		this.add(lblSearch);
-		
-		SearchtextField = new JTextField();
-		SearchtextField.setBounds(635, 38, 130, 26);
-		this.add(SearchtextField);
-		SearchtextField.setColumns(10);
 		
 		JLabel lblId = new JLabel("ID");
 		lblId.setBounds(56, 82, 14, 16);
@@ -81,7 +79,7 @@ public class inventoryPanel extends JPanel
 		
 		IDtextField = new JTextField();
 		IDtextField.setColumns(10);
-		IDtextField.setBounds(82, 78, 130, 26);
+		IDtextField.setBounds(92, 78, 130, 26);
 		this.add(IDtextField);
 		
 		JLabel lblReceiveOrderDate = new JLabel("Receive Order Date");
@@ -99,7 +97,7 @@ public class inventoryPanel extends JPanel
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
-		textFieldPrice.setBounds(82, 116, 130, 26);
+		textFieldPrice.setBounds(92, 116, 130, 26);
 		this.add(textFieldPrice);
 		
 		JLabel lblTotalQuantity = new JLabel("Total Quantity");
@@ -112,17 +110,6 @@ public class inventoryPanel extends JPanel
 		this.add(textFieldTotal);
 		
 		table = new JTable();
-		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldRCdate.getText(), textFieldTotal.getText()});
-			}
-		});
-		btnAdd.setBounds(655, 228, 75, 29);
-		this.add(btnAdd);
 		
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() 
@@ -146,7 +133,7 @@ public class inventoryPanel extends JPanel
 		
 		textFieldSupplier = new JTextField();
 		textFieldSupplier.setColumns(10);
-		textFieldSupplier.setBounds(655, 116, 130, 26);
+		textFieldSupplier.setBounds(665, 116, 130, 26);
 		this.add(textFieldSupplier);
 		
 		JLabel lblThresholdOrder = new JLabel("Threshold Order");
@@ -155,7 +142,7 @@ public class inventoryPanel extends JPanel
 		
 		textFieldThreshold = new JTextField();
 		textFieldThreshold.setColumns(10);
-		textFieldThreshold.setBounds(401, 152, 130, 26);
+		textFieldThreshold.setBounds(391, 154, 130, 26);
 		this.add(textFieldThreshold);
 		
 		JLabel lblExpirationDate = new JLabel("Expiration Date");
@@ -176,36 +163,59 @@ public class inventoryPanel extends JPanel
 		textFieldComment.setBounds(92, 157, 130, 26);
 		this.add(textFieldComment);
 		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldPrice.getText(), textFieldRCdate.getText(), textFieldTotal.getText(), textFieldTotal.getText(),
+						textFieldSupplier.getText(), textFieldExpiration.getText(), textFieldThreshold.getText(), textFieldComment.getText()});
+			}
+		});
+		btnAdd.setBounds(655, 228, 75, 29);
+		this.add(btnAdd);
+		
 		JButton btnGo = new JButton("Go");
 		btnGo.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{	
-				if((String)comboBox.getSelectedItem()=="List Items")
+				try
 				{
-					ListItemOption();
-					isAllTextFieldEditable(false);
-				}else if((String)comboBox.getSelectedItem()=="Register Sale Today")
+					if((String)comboBox.getSelectedItem()=="List Items")
+					{
+						ListItemOption();
+						isAllTextFieldEditable(false);
+					}else if((String)comboBox.getSelectedItem()=="Register Sale Today")
+					{
+						registerSaleToday = new TrackEachRegisterSaleToday();
+						AllRegisterSaleToday();
+						isAllTextFieldEditable(false);
+					}else if((String)comboBox.getSelectedItem()=="Employee Sale Today")
+					{
+						EmployeeSaleToday();
+						isAllTextFieldEditable(false);
+					}else if((String)comboBox.getSelectedItem()=="Add/Remove Item")
+					{
+						EditItem();
+						isAllTextFieldEditable(true);
+					}else if((String)comboBox.getSelectedItem()=="Outstanding Order")
+					{
+						isAllTextFieldEditable(false);
+						OustandingOrderItem();
+					}
+				}catch (IOException e1)
 				{
-					AllRegisterSaleToday();
-					isAllTextFieldEditable(false);
-				}else if((String)comboBox.getSelectedItem()=="Employee Sale Today")
-				{
-					EmployeeSaleToday();
-					isAllTextFieldEditable(false);
-				}else if((String)comboBox.getSelectedItem()=="Add/Remove Item")
-				{
-					isAllTextFieldEditable(true);
-					EditItem();
+					e1.printStackTrace();
 				}
 			}
 		});
-		btnGo.setBounds(267, 38, 75, 29);
+		btnGo.setBounds(290, 38, 75, 29);
 		this.add(btnGo);
 		
 		textFieldDescription = new JTextField();
 		textFieldDescription.setColumns(10);
-		textFieldDescription.setBounds(645, 77, 130, 26);
+		textFieldDescription.setBounds(665, 77, 130, 26);
 		this.add(textFieldDescription);
 		
 		JLabel lblDescription = new JLabel("Description");
@@ -236,6 +246,7 @@ public class inventoryPanel extends JPanel
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 290, 814, 314);
 		add(scrollPane);
+		
 	}
 	
 	private void resetModel()
@@ -249,7 +260,7 @@ public class inventoryPanel extends JPanel
 		scrollPane.setViewportView(table);
 		modelItemList.setColumnIdentifiers(itemListcolumns);
 		table.setModel(modelItemList);
-		
+
 		for(int i=0; i<item.getSize(); i++)
 		{
 			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getLastOrderDate(i), item.getcurrentInStockQty(i)});
@@ -278,7 +289,8 @@ public class inventoryPanel extends JPanel
 		
 		for(int i=0; i<saleEmployee.getSize(); i++)
 		{
-			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
+			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getDrawer(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), 
+					saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
 		}
 	}
 	
@@ -297,7 +309,24 @@ public class inventoryPanel extends JPanel
 	
 	private void EditItem()
 	{
-		ListItemOption();
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(itemListColumnAdd);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<item.getSize(); i++)
+		{
+				modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getPrice(i), item.getLastOrderDate(i), item.getLastOrderQty(i), 
+					item.getcurrentInStockQty(i), item.getSupplier(i), item.getExpirationDate(i), item.getThreshold(i), item.getComment(i)});
+		}
+		
+		for(int i=0; i<modelItemList.getRowCount(); i++)
+		{
+			if(removeRecord(i) == true)
+			{
+				modelItemList.removeRow(i);
+			}
+		}
 	}
 	
 	private void SaveItemListFile() throws IOException
@@ -305,7 +334,7 @@ public class inventoryPanel extends JPanel
 		FileWriter writer = null;
 		String DLIMETER_COMMA = ",";
 		String DLIMETER_NEW_LINE = "\n";
-		String FILE_HEADER = "Id, Description, Last Order, Current Qty";
+		String FILE_HEADER = "Id, Item, Price,Last Order, Total Qty, Current Qty, Supplier, Expiration, Threshold, Comment";
 		
 		writer = new FileWriter("./data/itemList.csv");
 		writer.append(FILE_HEADER.toString());
@@ -321,4 +350,41 @@ public class inventoryPanel extends JPanel
 		}
 		writer.close();
 	}
+	
+	private void OustandingOrderItem()
+	{
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(orderItemColumn);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<orderItem.getSize(); i++)
+		{
+			modelItemList.addRow(new Object[] {orderItem.getDate(i), orderItem.getItemOrder(i), orderItem.getQtyOrder(i)});
+		}
+	}
+	
+	private boolean removeRecord(int index)
+	{
+		String[] todayDate;
+		
+		Calendar now = Calendar.getInstance();
+		DateFormat df = new SimpleDateFormat("MM/dd/yy");
+		todayDate = df.format(now.getTime()).split("/");
+		
+		String[] array = item.getLastOrderDate(index).split("/");
+			
+		if(((Integer.parseInt(todayDate[2])) - (Integer.parseInt(array[2])) >= 1)) //compare year
+		{
+			if((Integer.parseInt(todayDate[0])) >= (Integer.parseInt(array[0])))
+			{
+				if((Integer.parseInt(todayDate[0])) >= (Integer.parseInt(array[0])))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 }
