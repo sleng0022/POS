@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import common.EmployeeSale;
 import common.ReadInventory;
 import common.TrackEachRegisterSaleToday;
+import common.readOrder;
 
 public class inventoryPanel extends JPanel
 {
@@ -33,11 +34,13 @@ public class inventoryPanel extends JPanel
 	private ReadInventory item;
 	private TrackEachRegisterSaleToday registerSaleToday;
 	private EmployeeSale saleEmployee;
+	private readOrder orderItem;
 	
 	/* Items List */
 	Object[] itemListcolumns  = {"Id", "Description", "Last Order", "Current Qty"};
 	Object[] itemListColumnAdd = {"Id", "Item", "Price", "Last Order", "Total Qty", "Current Qty", "Supplier", "Expiration", "Threshold", "Comment"};
 	Object[] saleTodayColumn = {"RegisterID", "Date", "TotalSale"};
+	Object[] orderItemColumn = {"Date", "Item", "Qty"};
 	Object[] employeeSaleColumn = {"Employee ID", "Drawer", "Date", "Time Log In", "Time Log Out", "Sale"};
 	DefaultTableModel modelItemList = new DefaultTableModel ();
 	private JTextField textFieldSupplier;
@@ -55,6 +58,7 @@ public class inventoryPanel extends JPanel
 		item = new ReadInventory();
 		registerSaleToday = new TrackEachRegisterSaleToday();
 		saleEmployee = new EmployeeSale();
+		orderItem = new readOrder();
 		setLayout(null);
 		
 		
@@ -114,17 +118,6 @@ public class inventoryPanel extends JPanel
 		
 		table = new JTable();
 		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldRCdate.getText(), textFieldTotal.getText()});
-			}
-		});
-		btnAdd.setBounds(655, 228, 75, 29);
-		this.add(btnAdd);
-		
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() 
 		{
@@ -177,6 +170,18 @@ public class inventoryPanel extends JPanel
 		textFieldComment.setBounds(92, 157, 130, 26);
 		this.add(textFieldComment);
 		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldRCdate.getText(), textFieldTotal.getText(),
+						textFieldSupplier.getText(), textFieldExpiration.getText(), textFieldThreshold.getText(), textFieldComment.getText()});
+			}
+		});
+		btnAdd.setBounds(655, 228, 75, 29);
+		this.add(btnAdd);
+		
 		JButton btnGo = new JButton("Go");
 		btnGo.addActionListener(new ActionListener() 
 		{
@@ -198,6 +203,10 @@ public class inventoryPanel extends JPanel
 				{
 					isAllTextFieldEditable(true);
 					EditItem();
+				}else if((String)comboBox.getSelectedItem()=="Outstanding Order")
+				{
+					isAllTextFieldEditable(false);
+					OustandingOrderItem();
 				}
 			}
 		});
@@ -237,6 +246,7 @@ public class inventoryPanel extends JPanel
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 290, 814, 314);
 		add(scrollPane);
+		
 	}
 	
 	private void resetModel()
@@ -250,7 +260,7 @@ public class inventoryPanel extends JPanel
 		scrollPane.setViewportView(table);
 		modelItemList.setColumnIdentifiers(itemListcolumns);
 		table.setModel(modelItemList);
-		
+
 		for(int i=0; i<item.getSize(); i++)
 		{
 			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getLastOrderDate(i), item.getcurrentInStockQty(i)});
@@ -330,5 +340,18 @@ public class inventoryPanel extends JPanel
 			writer.append(DLIMETER_NEW_LINE);
 		}
 		writer.close();
+	}
+	
+	private void OustandingOrderItem()
+	{
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(orderItemColumn);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<orderItem.getSize(); i++)
+		{
+			modelItemList.addRow(new Object[] {orderItem.getDate(i), orderItem.getItemOrder(i), orderItem.getQtyOrder(i)});
+		}
 	}
 }

@@ -57,7 +57,7 @@ public class ReadInventory
 			expiration.add(cols[7]);
 			threshold.add(Integer.parseInt(cols[8]));
 			commentItem.add(cols[9]);
-			size++;
+			
 		}
 		br.close();
 	}
@@ -114,6 +114,6 @@ public class ReadInventory
 	
 	public int getSize()
 	{
-		return this.size;
+		return this.size = id_num.size();
 	}
 }

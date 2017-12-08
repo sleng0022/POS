@@ -65,11 +65,6 @@ public class sellItemPanel extends JPanel
 		
 		NumberFormat numFormat = new DecimalFormat("#0.00");
 		setLayout(null);
-
-//		setBounds(100, 100, 794, 765);
-//		contentPane = new JPanel();
-//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		contentPane.setLayout(null);
 		
 		JLabel lblTotal = new JLabel("0.00");
 		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 20));

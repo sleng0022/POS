@@ -6,7 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class itemList 
@@ -24,7 +27,7 @@ public class itemList
 	static DoublyLinkList<Integer> id_num = new DoublyLinkList<Integer>();
 	static DoublyLinkList<String> supplier = new DoublyLinkList<String>();
 	static DoublyLinkList<String> expiration = new DoublyLinkList<String>();
-	static DoublyLinkList<String> threshold = new DoublyLinkList<String>();
+	static DoublyLinkList<Integer> threshold = new DoublyLinkList<Integer>();
 	static DoublyLinkList<String> comment = new DoublyLinkList<String>();
 	
 	
@@ -57,7 +60,7 @@ public class itemList
 			CurrentQty.insertLast(Integer.parseInt(cols[5]));
 			supplier.insertLast(cols[6]);
 			expiration.insertLast(cols[7]);
-			threshold.insertLast(cols[8]);
+			threshold.insertLast(Integer.parseInt(cols[8]));
 			comment.insertLast(cols[9]);
 		}
 		br.close();
@@ -125,6 +128,20 @@ public class itemList
 		return qty;
 	}
 	
+	public int getTotalQty(String name)
+	{
+		int qty = 0;
+		int position = 0;
+		if(item.searItemForward(name) == 1)
+		{
+			position = item.getItemPosition(name);
+			qty = totalQty.getItem(position);
+			
+			return qty;
+		}
+		return qty;
+	}
+	
 	public void setUpdateNewQuantity(int newQty, String name)
 	{
 		int position = 0;
@@ -134,6 +151,12 @@ public class itemList
 			position = item.getItemPosition(name);
 			oldQty = this.getQuantity(name);
 			newVal = oldQty - newQty;
+			
+			if(newVal < threshold.getItem(position))
+			{
+				this.orderItem(name);
+			}
+			
 			CurrentQty.setItem(position, newVal);
 		}
 	}
@@ -162,7 +185,7 @@ public class itemList
 				writer.append(totalQty.getItem(i).toString());
 				writer.append(DLIMETER_COMMA);
 				writer.append(CurrentQty.getItem(i).toString());
-				writer.append(DLIMETER_NEW_LINE);
+				writer.append(DLIMETER_COMMA);
 				writer.append(supplier.getItem(i).toString());
 				writer.append(DLIMETER_COMMA);
 				writer.append(expiration.getItem(i).toString());
@@ -176,6 +199,46 @@ public class itemList
 			writer.close();
 			
 		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public String getDate()
+	{
+		String date;
+		Calendar now = Calendar.getInstance();
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+		date = df.format(now.getTime());
+		
+		return date;
+	}
+	
+	public void orderItem(String name)
+	{
+		FileWriter writer = null;
+		String FILE_HEADER = "Date, Item, Qty";
+		String DLIMETER_COMMA = ",";
+		String DLIMETER_NEW_LINE = "\n";
+		int id = getItemID(name);
+		try 
+		{
+			writer = new FileWriter("./data/itemOrder.csv");
+			writer.append(FILE_HEADER.toString());
+			writer.append(DLIMETER_NEW_LINE);
+			for(int i=0; i<item.size(); i++)
+			{	
+				writer.append(this.getDate());
+				writer.append(DLIMETER_COMMA);
+				writer.append(this.getItemDescription(id));
+				writer.append(DLIMETER_COMMA);
+				writer.append(Integer.toString(this.getTotalQty(name)));
+				writer.append(DLIMETER_NEW_LINE);
+			}
+
+			writer.close();
+		}catch (IOException e1) 
+		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
