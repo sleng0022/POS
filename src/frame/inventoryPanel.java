@@ -24,7 +24,6 @@ import common.readOrder;
 
 public class inventoryPanel extends JPanel
 {
-	private JTextField SearchtextField;
 	private JTextField IDtextField;
 	private JTextField textFieldRCdate;
 	private JTextField textFieldPrice;
@@ -64,21 +63,12 @@ public class inventoryPanel extends JPanel
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"List Items", "Employee Sale Today", "Register Sale Today", "Outstanding Order", "Add/Remove Item"}));
-		comboBox.setBounds(82, 39, 187, 27);
+		comboBox.setBounds(91, 39, 187, 27);
 		this.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("Option");
 		lblNewLabel.setBounds(27, 43, 43, 16);
 		this.add(lblNewLabel);
-		
-		JLabel lblSearch = new JLabel("Search ");
-		lblSearch.setBounds(586, 43, 45, 16);
-		this.add(lblSearch);
-		
-		SearchtextField = new JTextField();
-		SearchtextField.setBounds(635, 38, 130, 26);
-		this.add(SearchtextField);
-		SearchtextField.setColumns(10);
 		
 		JLabel lblId = new JLabel("ID");
 		lblId.setBounds(56, 82, 14, 16);
@@ -86,7 +76,7 @@ public class inventoryPanel extends JPanel
 		
 		IDtextField = new JTextField();
 		IDtextField.setColumns(10);
-		IDtextField.setBounds(82, 78, 130, 26);
+		IDtextField.setBounds(92, 78, 130, 26);
 		this.add(IDtextField);
 		
 		JLabel lblReceiveOrderDate = new JLabel("Receive Order Date");
@@ -104,7 +94,7 @@ public class inventoryPanel extends JPanel
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
-		textFieldPrice.setBounds(82, 116, 130, 26);
+		textFieldPrice.setBounds(92, 116, 130, 26);
 		this.add(textFieldPrice);
 		
 		JLabel lblTotalQuantity = new JLabel("Total Quantity");
@@ -140,7 +130,7 @@ public class inventoryPanel extends JPanel
 		
 		textFieldSupplier = new JTextField();
 		textFieldSupplier.setColumns(10);
-		textFieldSupplier.setBounds(655, 116, 130, 26);
+		textFieldSupplier.setBounds(665, 116, 130, 26);
 		this.add(textFieldSupplier);
 		
 		JLabel lblThresholdOrder = new JLabel("Threshold Order");
@@ -149,7 +139,7 @@ public class inventoryPanel extends JPanel
 		
 		textFieldThreshold = new JTextField();
 		textFieldThreshold.setColumns(10);
-		textFieldThreshold.setBounds(401, 152, 130, 26);
+		textFieldThreshold.setBounds(391, 154, 130, 26);
 		this.add(textFieldThreshold);
 		
 		JLabel lblExpirationDate = new JLabel("Expiration Date");
@@ -217,12 +207,12 @@ public class inventoryPanel extends JPanel
 				}
 			}
 		});
-		btnGo.setBounds(267, 38, 75, 29);
+		btnGo.setBounds(290, 38, 75, 29);
 		this.add(btnGo);
 		
 		textFieldDescription = new JTextField();
 		textFieldDescription.setColumns(10);
-		textFieldDescription.setBounds(645, 77, 130, 26);
+		textFieldDescription.setBounds(665, 77, 130, 26);
 		this.add(textFieldDescription);
 		
 		JLabel lblDescription = new JLabel("Description");
