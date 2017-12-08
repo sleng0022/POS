@@ -175,7 +175,7 @@ public class inventoryPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldRCdate.getText(), textFieldTotal.getText(),
+				modelItemList.addRow(new Object[] {IDtextField.getText(), textFieldDescription.getText(), textFieldPrice.getText(), textFieldRCdate.getText(), textFieldTotal.getText(), textFieldTotal.getText(),
 						textFieldSupplier.getText(), textFieldExpiration.getText(), textFieldThreshold.getText(), textFieldComment.getText()});
 			}
 		});
@@ -187,26 +187,33 @@ public class inventoryPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e) 
 			{	
-				if((String)comboBox.getSelectedItem()=="List Items")
+				try
 				{
-					ListItemOption();
-					isAllTextFieldEditable(false);
-				}else if((String)comboBox.getSelectedItem()=="Register Sale Today")
+					if((String)comboBox.getSelectedItem()=="List Items")
+					{
+						ListItemOption();
+						isAllTextFieldEditable(false);
+					}else if((String)comboBox.getSelectedItem()=="Register Sale Today")
+					{
+						AllRegisterSaleToday();
+						isAllTextFieldEditable(false);
+					}else if((String)comboBox.getSelectedItem()=="Employee Sale Today")
+					{
+						EmployeeSaleToday();
+						isAllTextFieldEditable(false);
+					}else if((String)comboBox.getSelectedItem()=="Add/Remove Item")
+					{
+						item = new ReadInventory();
+						EditItem();
+						isAllTextFieldEditable(true);
+					}else if((String)comboBox.getSelectedItem()=="Outstanding Order")
+					{
+						isAllTextFieldEditable(false);
+						OustandingOrderItem();
+					}
+				}catch (IOException e1)
 				{
-					AllRegisterSaleToday();
-					isAllTextFieldEditable(false);
-				}else if((String)comboBox.getSelectedItem()=="Employee Sale Today")
-				{
-					EmployeeSaleToday();
-					isAllTextFieldEditable(false);
-				}else if((String)comboBox.getSelectedItem()=="Add/Remove Item")
-				{
-					isAllTextFieldEditable(true);
-					EditItem();
-				}else if((String)comboBox.getSelectedItem()=="Outstanding Order")
-				{
-					isAllTextFieldEditable(false);
-					OustandingOrderItem();
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -289,7 +296,8 @@ public class inventoryPanel extends JPanel
 		
 		for(int i=0; i<saleEmployee.getSize(); i++)
 		{
-			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getDrawer(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
+			modelItemList.addRow(new Object[] {saleEmployee.getEmployeeID(i), saleEmployee.getDrawer(i), saleEmployee.getdateSale(i), saleEmployee.gettimeLogin(i), 
+					saleEmployee.gettimeLogOut(i), saleEmployee.getsaleToday(i)});
 		}
 	}
 	
@@ -315,7 +323,7 @@ public class inventoryPanel extends JPanel
 		
 		for(int i=0; i<item.getSize(); i++)
 		{
-			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getPrice(i), item.getLastOrderDate(i), item.getLastOrderQty(i),
+			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getPrice(i), item.getLastOrderDate(i), item.getLastOrderQty(i), 
 					item.getcurrentInStockQty(i), item.getSupplier(i), item.getExpirationDate(i), item.getThreshold(i), item.getComment(i)});
 		}
 	}
