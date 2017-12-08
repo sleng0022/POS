@@ -22,6 +22,10 @@ public class itemList
 	static DoublyLinkList<Integer> totalQty = new DoublyLinkList<Integer>();
 	static DoublyLinkList<Integer> CurrentQty = new DoublyLinkList<Integer>();
 	static DoublyLinkList<Integer> id_num = new DoublyLinkList<Integer>();
+	static DoublyLinkList<String> supplier = new DoublyLinkList<String>();
+	static DoublyLinkList<String> expiration = new DoublyLinkList<String>();
+	static DoublyLinkList<String> threshold = new DoublyLinkList<String>();
+	static DoublyLinkList<String> comment = new DoublyLinkList<String>();
 	
 	
 	public itemList() throws IOException
@@ -51,6 +55,10 @@ public class itemList
 			lastOrder.insertLast(cols[3]);
 			totalQty.insertLast(Integer.parseInt(cols[4]));
 			CurrentQty.insertLast(Integer.parseInt(cols[5]));
+			supplier.insertLast(cols[6]);
+			expiration.insertLast(cols[7]);
+			threshold.insertLast(cols[8]);
+			comment.insertLast(cols[9]);
 		}
 		br.close();
 	}
@@ -133,7 +141,7 @@ public class itemList
 	public void updateItemListFile()
 	{
 		FileWriter writer = null;
-		String FILE_HEADER = "Id, Item, Price,Last Order, Total Qty, Current Qty";
+		String FILE_HEADER = "Id, Item, Price,Last Order, Total Qty, Current Qty, Supplier, Expiration, Threshold, Comment";
 		String DLIMETER_COMMA = ",";
 		String DLIMETER_NEW_LINE = "\n";
 		try 
@@ -154,6 +162,14 @@ public class itemList
 				writer.append(totalQty.getItem(i).toString());
 				writer.append(DLIMETER_COMMA);
 				writer.append(CurrentQty.getItem(i).toString());
+				writer.append(DLIMETER_NEW_LINE);
+				writer.append(supplier.getItem(i).toString());
+				writer.append(DLIMETER_COMMA);
+				writer.append(expiration.getItem(i).toString());
+				writer.append(DLIMETER_COMMA);
+				writer.append(threshold.getItem(i).toString());
+				writer.append(DLIMETER_COMMA);
+				writer.append(comment.getItem(i).toString());
 				writer.append(DLIMETER_NEW_LINE);
 			}
 

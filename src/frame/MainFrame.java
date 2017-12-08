@@ -101,6 +101,7 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				cl.show(frame.getContentPane(), "1");
+				sellP.saveEmployeeSaleToday(mainP.getEmployeeID(), menuP.getLogIn(), mainP.getDrawer());	
 			}
 		});
 		buttonLogOut.setOpaque(true);
@@ -176,6 +177,7 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				cl.show(frame.getContentPane(), "1");
+				sellP.saveEmployeeSaleToday(mainP.getEmployeeID(), menuP.getLogIn(), mainP.getDrawer());	
 			}
 		});
 		btnLogOut.setBounds(626, 679, 141, 44);

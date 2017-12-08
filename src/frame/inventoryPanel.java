@@ -36,6 +36,7 @@ public class inventoryPanel extends JPanel
 	
 	/* Items List */
 	Object[] itemListcolumns  = {"Id", "Description", "Last Order", "Current Qty"};
+	Object[] itemListColumnAdd = {"Id", "Item", "Price", "Last Order", "Total Qty", "Current Qty", "Supplier", "Expiration", "Threshold", "Comment"};
 	Object[] saleTodayColumn = {"RegisterID", "Date", "TotalSale"};
 	Object[] employeeSaleColumn = {"Employee ID", "Drawer", "Date", "Time Log In", "Time Log Out", "Sale"};
 	DefaultTableModel modelItemList = new DefaultTableModel ();
@@ -297,7 +298,16 @@ public class inventoryPanel extends JPanel
 	
 	private void EditItem()
 	{
-		ListItemOption();
+		resetModel();
+		scrollPane.setViewportView(table);
+		modelItemList.setColumnIdentifiers(itemListColumnAdd);
+		table.setModel(modelItemList);
+		
+		for(int i=0; i<item.getSize(); i++)
+		{
+			modelItemList.addRow(new Object[] {item.getId(i), item.getItemDescription(i), item.getPrice(i), item.getLastOrderDate(i), item.getLastOrderQty(i),
+					item.getcurrentInStockQty(i), item.getSupplier(i), item.getExpirationDate(i), item.getThreshold(i), item.getComment(i)});
+		}
 	}
 	
 	private void SaveItemListFile() throws IOException
@@ -305,7 +315,7 @@ public class inventoryPanel extends JPanel
 		FileWriter writer = null;
 		String DLIMETER_COMMA = ",";
 		String DLIMETER_NEW_LINE = "\n";
-		String FILE_HEADER = "Id, Description, Last Order, Current Qty";
+		String FILE_HEADER = "Id, Item, Price,Last Order, Total Qty, Current Qty, Supplier, Expiration, Threshold, Comment";
 		
 		writer = new FileWriter("./data/itemList.csv");
 		writer.append(FILE_HEADER.toString());

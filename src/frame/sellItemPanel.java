@@ -667,6 +667,11 @@ public class sellItemPanel extends JPanel
 		return logOut;
 	}
 	
+	public Double getCash()
+	{
+		return cashierTotalSale;
+	}
+	
 	public void saveEmployeeSaleToday(String userId, String LogIn, String drawer)
 	{
 		FileWriter writer = null;
